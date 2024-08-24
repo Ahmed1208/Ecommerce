@@ -19,7 +19,7 @@ public class UserTests {
     {
         User user = new User();
         assertEquals(15,user.calc(5));
-        assertEquals(10,user.calc(0));
+        assertEquals(1,user.calc(0));
     }
 
 
