@@ -1,5 +1,5 @@
 package org.generatedDao;
-// Generated Aug 25, 2024, 1:33:37 AM by Hibernate Tools 6.5.0.Final
+// Generated Aug 25, 2024, 11:51:02 AM by Hibernate Tools 6.5.0.Final
 
 
 import jakarta.persistence.Column;

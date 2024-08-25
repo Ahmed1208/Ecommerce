@@ -1,19 +1,9 @@
 package org.generatedDao;
-// Generated Aug 25, 2024, 1:33:37 AM by Hibernate Tools 6.5.0.Final
+// Generated Aug 25, 2024, 11:51:02 AM by Hibernate Tools 6.5.0.Final
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,24 +26,26 @@ public class User  implements java.io.Serializable {
      private String email;
      private String password;
      private Date birthDate;
+     private String phone;
      private Set<Interests> interestses = new HashSet<Interests>(0);
      private Set<BalanceLogs> balanceLogses = new HashSet<BalanceLogs>(0);
-     private Set<Cart> carts = new HashSet<Cart>(0);
+     private Set<ProductsInsideCart> productsInsideCarts = new HashSet<ProductsInsideCart>(0);
      private Set<Order> orders = new HashSet<Order>(0);
 
     public User() {
     }
 
 	
-    public User(int userId, String userName, float balance, String address, String email, String password) {
+    public User(int userId, String userName, float balance, String address, String email, String password, String phone) {
         this.userId = userId;
         this.userName = userName;
         this.balance = balance;
         this.address = address;
         this.email = email;
         this.password = password;
+        this.phone = phone;
     }
-    public User(int userId, String userName, float balance, String address, String email, String password, Date birthDate, Set<Interests> interestses, Set<BalanceLogs> balanceLogses, Set<Cart> carts, Set<Order> orders) {
+    public User(int userId, String userName, float balance, String address, String email, String password, Date birthDate, String phone, Set<Interests> interestses, Set<BalanceLogs> balanceLogses, Set<ProductsInsideCart> productsInsideCarts, Set<Order> orders) {
        this.userId = userId;
        this.userName = userName;
        this.balance = balance;
@@ -61,9 +53,10 @@ public class User  implements java.io.Serializable {
        this.email = email;
        this.password = password;
        this.birthDate = birthDate;
+       this.phone = phone;
        this.interestses = interestses;
        this.balanceLogses = balanceLogses;
-       this.carts = carts;
+       this.productsInsideCarts = productsInsideCarts;
        this.orders = orders;
     }
    
@@ -139,6 +132,16 @@ public class User  implements java.io.Serializable {
         this.birthDate = birthDate;
     }
 
+    
+    @Column(name="phone", nullable=false, length=255)
+    public String getPhone() {
+        return this.phone;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
 @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="user_interests", catalog="ecommerce", uniqueConstraints={@UniqueConstraint(columnNames="interests_interests_id"), @UniqueConstraint(columnNames="user_user_id")}, joinColumns = { 
         @JoinColumn(name="user_user_id", unique=true, nullable=false, updatable=false) }, inverseJoinColumns = { 
@@ -161,12 +164,12 @@ public class User  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set<Cart> getCarts() {
-        return this.carts;
+    public Set<ProductsInsideCart> getProductsInsideCarts() {
+        return this.productsInsideCarts;
     }
     
-    public void setCarts(Set<Cart> carts) {
-        this.carts = carts;
+    public void setProductsInsideCarts(Set<ProductsInsideCart> productsInsideCarts) {
+        this.productsInsideCarts = productsInsideCarts;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")

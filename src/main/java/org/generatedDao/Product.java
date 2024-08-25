@@ -1,18 +1,9 @@
 package org.generatedDao;
-// Generated Aug 25, 2024, 1:33:37 AM by Hibernate Tools 6.5.0.Final
+// Generated Aug 25, 2024, 11:51:02 AM by Hibernate Tools 6.5.0.Final
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +21,9 @@ public class Product  implements java.io.Serializable {
      private Category category;
      private String productName;
      private String description;
-     private Set<Cart> carts = new HashSet<Cart>(0);
+     private Integer quantity;
+     private Integer price;
+     private Set<ProductsInsideCart> productsInsideCarts = new HashSet<ProductsInsideCart>(0);
      private Set<Order> orders = new HashSet<Order>(0);
 
     public Product() {
@@ -43,12 +36,14 @@ public class Product  implements java.io.Serializable {
         this.productName = productName;
         this.description = description;
     }
-    public Product(int productId, Category category, String productName, String description, Set<Cart> carts, Set<Order> orders) {
+    public Product(int productId, Category category, String productName, String description, Integer quantity, Integer price, Set<ProductsInsideCart> productsInsideCarts, Set<Order> orders) {
        this.productId = productId;
        this.category = category;
        this.productName = productName;
        this.description = description;
-       this.carts = carts;
+       this.quantity = quantity;
+       this.price = price;
+       this.productsInsideCarts = productsInsideCarts;
        this.orders = orders;
     }
    
@@ -94,13 +89,33 @@ public class Product  implements java.io.Serializable {
         this.description = description;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="product")
-    public Set<Cart> getCarts() {
-        return this.carts;
+    
+    @Column(name="quantity")
+    public Integer getQuantity() {
+        return this.quantity;
     }
     
-    public void setCarts(Set<Cart> carts) {
-        this.carts = carts;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    
+    @Column(name="price")
+    public Integer getPrice() {
+        return this.price;
+    }
+    
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="product")
+    public Set<ProductsInsideCart> getProductsInsideCarts() {
+        return this.productsInsideCarts;
+    }
+    
+    public void setProductsInsideCarts(Set<ProductsInsideCart> productsInsideCarts) {
+        this.productsInsideCarts = productsInsideCarts;
     }
 
 @ManyToMany(fetch=FetchType.LAZY)

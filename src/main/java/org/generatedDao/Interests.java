@@ -1,16 +1,9 @@
 package org.generatedDao;
-// Generated Aug 25, 2024, 1:33:37 AM by Hibernate Tools 6.5.0.Final
+// Generated Aug 25, 2024, 11:51:02 AM by Hibernate Tools 6.5.0.Final
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 

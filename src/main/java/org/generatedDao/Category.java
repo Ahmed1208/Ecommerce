@@ -1,13 +1,9 @@
 package org.generatedDao;
-// Generated Aug 25, 2024, 1:33:37 AM by Hibernate Tools 6.5.0.Final
+// Generated Aug 25, 2024, 11:51:02 AM by Hibernate Tools 6.5.0.Final
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +20,7 @@ public class Category  implements java.io.Serializable {
      private int categoryId;
      private String categoryName;
      private String mainCategoryId;
+     private String description;
      private Set<Product> products = new HashSet<Product>(0);
 
     public Category() {
@@ -34,10 +31,11 @@ public class Category  implements java.io.Serializable {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
-    public Category(int categoryId, String categoryName, String mainCategoryId, Set<Product> products) {
+    public Category(int categoryId, String categoryName, String mainCategoryId, String description, Set<Product> products) {
        this.categoryId = categoryId;
        this.categoryName = categoryName;
        this.mainCategoryId = mainCategoryId;
+       this.description = description;
        this.products = products;
     }
    
@@ -71,6 +69,16 @@ public class Category  implements java.io.Serializable {
     
     public void setMainCategoryId(String mainCategoryId) {
         this.mainCategoryId = mainCategoryId;
+    }
+
+    
+    @Column(name="description", length=255)
+    public String getDescription() {
+        return this.description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="category")
