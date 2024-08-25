@@ -1,10 +1,16 @@
 package org.example.entity;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Person {
 
     private String name;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private GENDER gender;
 
 
