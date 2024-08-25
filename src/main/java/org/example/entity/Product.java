@@ -1,7 +1,6 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import org.generatedDao.Category;
 
 import java.io.Serializable;
 @Entity
@@ -10,7 +9,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id",unique = true, nullable = false)
     private int productId;
-    @Column(nullable = false)
+
     @ManyToOne()
     @JoinColumn(name="category_id", nullable=false)
     private Category category;
@@ -19,7 +18,8 @@ public class Product implements Serializable {
     private Integer quantity;
     private Integer price;
     public Product() {}
-    public Product(int productId, Category category, String productName, String description, Integer quantity, Integer price) {
+    public Product(int productId, Category category, String productName,
+                   String description, Integer quantity, Integer price) {
         this.productId = productId;
         this.category = category;
         this.productName = productName;
