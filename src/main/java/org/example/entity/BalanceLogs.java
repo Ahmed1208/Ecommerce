@@ -1,15 +1,30 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "balance_logs")
 public class BalanceLogs implements java.io.Serializable {
 
-    private int id;
-    private Double amount;
-    private String paymentType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public int getId() {
+    private Double amount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="payment_type")
+    private PAYMENT paymentType;
+
+    @ManyToOne
+    private User user;
+
+
+
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -20,10 +35,29 @@ public class BalanceLogs implements java.io.Serializable {
         this.amount = amount;
     }
 
-    public String getPaymentType() {
+    public PAYMENT getPaymentType() {
         return paymentType;
     }
-    public void setPaymentType(String paymentType) {
+    public void setPaymentType(PAYMENT paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "BalanceLogs{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", paymentType='" + paymentType + '\'' +
+                ", user=" + user.getId() +
+                '}';
     }
 }

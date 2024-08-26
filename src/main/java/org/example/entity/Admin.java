@@ -1,12 +1,18 @@
 package org.example.entity;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+@Entity
+@Table(name="admin")
 public class Admin extends Person implements Serializable {
 
-    private int id;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public int getId() {
+
+    public Integer getId() {
         return id;
     }
     public void setId(Integer id) {

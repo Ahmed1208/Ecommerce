@@ -3,21 +3,47 @@ package org.example.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
+@Entity
+@Table(name="product")
 public class Product implements Serializable {
 
-    private int productId;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name="product_name")
     private String productName;
     private String description;
     private Integer quantity;
     private Double price;
+    private String image;
+
+    @ManyToOne
+    private Category category;
+
+    @OneToMany(mappedBy = "product")
+    private Set<OrderProductList> OrderProductList;
+
+    @OneToMany(mappedBy = "product")
+    private Set<UserProductCart> userProductCarts;
 
 
-    public int getProductId() {
-        return productId;
+
+    public String getImage() {
+        return image;
     }
-    public void setProductId(int productId) {
-        this.productId = productId;
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getProductId() {
+        return id;
+    }
+    public void setProductId(Integer id) {
+        this.id = id;
     }
 
     public String getProductName() {
@@ -46,5 +72,28 @@ public class Product implements Serializable {
     }
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<UserProductCart> getUserProductCarts() {
+        return userProductCarts;
+    }
+
+    public void setUserProductCarts(Set<UserProductCart> userProductCarts) {
+        this.userProductCarts = userProductCarts;
+    }
+
+    public Set<org.example.entity.OrderProductList> getOrderProductList() {
+        return OrderProductList;
+    }
+
+    public void setOrderProductList(Set<org.example.entity.OrderProductList> orderProductList) {
+        OrderProductList = orderProductList;
     }
 }
