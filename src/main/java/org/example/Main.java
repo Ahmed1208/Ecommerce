@@ -17,36 +17,25 @@ public class Main {
 
         entityManager.getTransaction().begin();
 
-
         User u= new User();
         u.setName("Moemen");
+        u.setBalance(12.0);
 
-        BalanceLogs balanceLogs = new BalanceLogs();
-        balanceLogs.setUser(u);
-        balanceLogs.setAmount(122.0);
+        Address address = new Address();
+        address.setCity("Cairo");
+        address.setCountry("Egypt");
+        address.setUser(u);
 
-        entityManager.persist(u);             //insert
-        entityManager.persist(balanceLogs);  // insert
+
+        entityManager.persist(u);
+        entityManager.persist(address);
 
         entityManager.getTransaction().commit();
 
-
-        entityManager.detach(balanceLogs);
         entityManager.detach(u);
+        entityManager.detach(address);
 
-        entityManager.find(BalanceLogs.class,1);     //select
-
-
-//        Interest i1= new Interest();
-//        i1.setName("travel");
-//        Interest i2= new Interest();
-//        i2.setName("swim");
-//        Set<Interest> interests= new HashSet<Interest>();
-//        interests.add(i1);
-//        interests.add(i2);
-//        u.setInterests(interests);
-
-
+        entityManager.find(User.class,2);
 
 
     }

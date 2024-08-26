@@ -2,11 +2,12 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name="interest")
-public class Interest implements java.io.Serializable {
+public class Interest implements Serializable {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

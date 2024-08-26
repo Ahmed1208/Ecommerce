@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +17,11 @@ public class User extends Person implements Serializable {
     private Integer id;
 
     private Double balance;
-    private String address;
+
+    @OneToOne(mappedBy = "user")
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    private Address address;
+
     private Date dateOfBirth;
     private String phone;
 
@@ -49,10 +55,10 @@ public class User extends Person implements Serializable {
         this.balance = balance;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
