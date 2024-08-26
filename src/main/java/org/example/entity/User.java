@@ -19,7 +19,7 @@ public class User extends Person implements Serializable {
     private Date dateOfBirth;
     private String phone;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<BalanceLogs> balanceLogs;
 
     @OneToMany(mappedBy = "user")

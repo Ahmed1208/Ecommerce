@@ -15,11 +15,28 @@ public class Main {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-      //  entityManager.getTransaction().begin();
+        entityManager.getTransaction().begin();
 
 
-//        User u= new User();
-//        u.setName("Moemen");
+        User u= new User();
+        u.setName("Moemen");
+
+        BalanceLogs balanceLogs = new BalanceLogs();
+        balanceLogs.setUser(u);
+        balanceLogs.setAmount(122.0);
+
+        entityManager.persist(u);             //insert
+        entityManager.persist(balanceLogs);  // insert
+
+        entityManager.getTransaction().commit();
+
+
+        entityManager.detach(balanceLogs);
+        entityManager.detach(u);
+
+        entityManager.find(BalanceLogs.class,1);     //select
+
+
 //        Interest i1= new Interest();
 //        i1.setName("travel");
 //        Interest i2= new Interest();
@@ -30,7 +47,6 @@ public class Main {
 //        u.setInterests(interests);
 
 
-      //  entityManager.getTransaction().commit();
 
 
     }

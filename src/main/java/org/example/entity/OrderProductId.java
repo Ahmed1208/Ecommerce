@@ -1,6 +1,5 @@
 package org.example.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
@@ -9,10 +8,9 @@ import java.util.Objects;
 
 @Embeddable
 public class OrderProductId implements Serializable {
-
-    @Column(name = "order_id", nullable = false)
+    @Column(name = "order_id", nullable=false)
     private int orderId;
-    @Column(name = "product_id", nullable = false)
+    @Column(name= "product_id", nullable=false)
     private int productId;
 
     public OrderProductId(int orderId, int productId) {
