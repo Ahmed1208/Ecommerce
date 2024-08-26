@@ -6,25 +6,31 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
+@Entity
+@Table(name = "category")
 public class Category implements Serializable {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String name;
     private String description;
+
+    @Column(name="main_category_id")
     private int mainCategoryId;
 
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products;
 
-    public Category() {}
-    public Category(String name, String description, int mainCategoryId) {
-        this.name = name;
-        this.description = description;
-        this.mainCategoryId = mainCategoryId;
-    }
 
-    public int getId() {
+
+
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,5 +53,12 @@ public class Category implements Serializable {
     }
     public void setMainCategoryId(int mainCategoryId) {
         this.mainCategoryId = mainCategoryId;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }

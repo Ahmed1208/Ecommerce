@@ -3,33 +3,34 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.example.entity.Admin;
-import org.example.entity.Category;
-import org.example.entity.GENDER;
+import org.example.entity.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Main {
     public static void main(String[] args) {
-//        Category category = new Category();
-//        category.setName("Fashion");
+
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-          Admin a= new Admin();
-          a.setName("salem");
-          a.setGender(GENDER.MALE);
 
-        Admin b= new Admin();
-        b.setName("sohaila");
-        b.setGender(GENDER.FEMALE);
+      //  entityManager.getTransaction().begin();
 
 
+//        User u= new User();
+//        u.setName("Moemen");
+//        Interest i1= new Interest();
+//        i1.setName("travel");
+//        Interest i2= new Interest();
+//        i2.setName("swim");
+//        Set<Interest> interests= new HashSet<Interest>();
+//        interests.add(i1);
+//        interests.add(i2);
+//        u.setInterests(interests);
 
-        entityManager.getTransaction().begin();
-        //entityManager.persist(a);
-        entityManager.persist(b);
-        a.setId(1000);
-       // entityManager.merge(a);
-        entityManager.getTransaction().commit();
+
+      //  entityManager.getTransaction().commit();
 
 
     }

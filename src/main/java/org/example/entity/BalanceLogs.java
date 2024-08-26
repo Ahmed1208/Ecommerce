@@ -5,25 +5,26 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "balance_logs")
 public class BalanceLogs implements java.io.Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
     private Double amount;
-    private String paymentType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="payment_type")
+    private PAYMENT paymentType;
+
     @ManyToOne
     private User user;
-    public BalanceLogs() {}
 
-    public BalanceLogs(Double amount, String paymentType, User user) {
-        this.amount = amount;
-        this.paymentType = paymentType;
-        this.user = user;
-    }
 
-    public int getId() {
+
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -34,12 +35,21 @@ public class BalanceLogs implements java.io.Serializable {
         this.amount = amount;
     }
 
-    public String getPaymentType() {
+    public PAYMENT getPaymentType() {
         return paymentType;
     }
-    public void setPaymentType(String paymentType) {
+    public void setPaymentType(PAYMENT paymentType) {
         this.paymentType = paymentType;
     }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 
     @Override
     public String toString() {

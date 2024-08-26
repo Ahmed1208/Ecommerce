@@ -9,34 +9,36 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User extends Person implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
     private Double balance;
     private String address;
     private Date dateOfBirth;
     private String phone;
+
     @OneToMany(mappedBy = "user")
     private Set<BalanceLogs> balanceLogs;
 
-    public User() {}
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders;
 
-    public User(Double balance, String phone) {
-        this.balance = balance;
-        this.phone = phone;
-    }
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="user_has_interests", catalog="ecommerce", joinColumns = {
+            @JoinColumn(name="user_id", nullable=false) }, inverseJoinColumns = {
+            @JoinColumn(name="interest_id", nullable=false) })
+    private Set<Interest> interests;
+    @OneToMany(mappedBy = "user")
+    private Set<UserProductCart> userProductCarts;
 
-    public User(Double balance, String address, Date dateOfBirth, String phone) {
-        this.balance = balance;
-        this.address = address;
-        this.dateOfBirth = dateOfBirth;
-        this.phone = phone;
-    }
 
-    public int getId() {
+
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -71,8 +73,31 @@ public class User extends Person implements Serializable {
     public Set<BalanceLogs> getBalanceLogs() {
         return balanceLogs;
     }
-
     public void setBalanceLogs(Set<BalanceLogs> balanceLogs) {
         this.balanceLogs = balanceLogs;
     }
+
+    public Set<Interest> getInterests() {
+        return interests;
+    }
+    public void setInterests(Set<Interest> interests) {
+        this.interests = interests;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Set<UserProductCart> getUserProductCarts() {
+        return userProductCarts;
+    }
+
+    public void setUserProductCarts(Set<UserProductCart> userProductCarts) {
+        this.userProductCarts = userProductCarts;
+    }
+
+
 }
