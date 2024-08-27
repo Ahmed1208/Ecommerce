@@ -1,57 +1,40 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "balance_logs")
+@Setter
+@Getter
+@NoArgsConstructor
 public class BalanceLogs implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private Double amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="payment_type")
+    @Column(name="payment_type",nullable = false)
     private PAYMENT paymentType;
 
     @ManyToOne
+    @JoinColumn(nullable=false)
     private User user;
 
-
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-    public void setAmount(Double amount) {
+    public BalanceLogs(Double amount, PAYMENT paymentType, User user) {
         this.amount = amount;
-    }
-
-    public PAYMENT getPaymentType() {
-        return paymentType;
-    }
-    public void setPaymentType(PAYMENT paymentType) {
         this.paymentType = paymentType;
-    }
-
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
         this.user = user;
     }
-
-
 
     @Override
     public String toString() {

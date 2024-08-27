@@ -1,6 +1,9 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
@@ -10,16 +13,19 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@Setter
+@Getter
+@NoArgsConstructor
 public class User extends Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Double balance;
+    private double balance;
 
     @OneToOne(mappedBy = "user")
-    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @JoinColumn(nullable = false)
     private Address address;
 
     private Date dateOfBirth;
@@ -39,71 +45,10 @@ public class User extends Person implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<UserProductCart> userProductCarts;
 
-
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-    public void setBalance(Double balance) {
+    public User(String name, String email, String password, GENDER gender, Double balance, Date dateOfBirth, String phone) {
+        super(name, email, password, gender);
         this.balance = balance;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public Set<BalanceLogs> getBalanceLogs() {
-        return balanceLogs;
-    }
-    public void setBalanceLogs(Set<BalanceLogs> balanceLogs) {
-        this.balanceLogs = balanceLogs;
-    }
-
-    public Set<Interest> getInterests() {
-        return interests;
-    }
-    public void setInterests(Set<Interest> interests) {
-        this.interests = interests;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
-    public Set<UserProductCart> getUserProductCarts() {
-        return userProductCarts;
-    }
-
-    public void setUserProductCarts(Set<UserProductCart> userProductCarts) {
-        this.userProductCarts = userProductCarts;
-    }
-
-
 }

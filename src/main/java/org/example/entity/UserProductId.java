@@ -3,11 +3,17 @@ package org.example.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Setter
+@Getter
+@NoArgsConstructor
 public class UserProductId  implements Serializable {
 
     @Column(name = "user_id", nullable = false)
@@ -18,21 +24,6 @@ public class UserProductId  implements Serializable {
 
     public UserProductId(int userId, int productId) {
         this.userId = userId;
-        this.productId = productId;
-    }
-    public UserProductId() {}
-
-    public int getUserId() {
-        return userId;
-    }
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-    public void setProductId(int productId) {
         this.productId = productId;
     }
 

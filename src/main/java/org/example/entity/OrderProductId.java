@@ -2,11 +2,17 @@ package org.example.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Setter
+@Getter
+@NoArgsConstructor
 public class OrderProductId implements Serializable {
     @Column(name = "order_id", nullable=false)
     private int orderId;
@@ -19,21 +25,6 @@ public class OrderProductId implements Serializable {
     }
 
 
-    public OrderProductId() {}
-
-    public int getOrderId() {
-        return orderId;
-    }
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,17 +1,24 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name="interest")
+@Setter
+@Getter
+@NoArgsConstructor
 public class Interest implements Serializable {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable=false)
     private String name;
 
     @ManyToMany(fetch=FetchType.LAZY)
@@ -20,27 +27,16 @@ public class Interest implements Serializable {
             @JoinColumn(name="user_id", nullable=false) })
     private Set<User> users;
 
-
-
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
+    public Interest(String name) {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    @Override
+    public String toString() {
+        return "Interest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                '}';
     }
 }
