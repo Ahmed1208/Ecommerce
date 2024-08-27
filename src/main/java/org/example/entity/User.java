@@ -42,6 +42,8 @@ public class User extends Person implements Serializable {
             @JoinColumn(name="user_id", nullable=false) }, inverseJoinColumns = {
             @JoinColumn(name="interest_id", nullable=false) })
     private Set<Interest> interests;
+
+
     @OneToMany(mappedBy = "user")
     private Set<UserProductCart> userProductCarts;
 
