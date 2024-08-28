@@ -1,9 +1,13 @@
 package org.example;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 public class Factory {
 
     static final public EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
+
+    static final public EntityManager entityManager = entityManagerFactory.createEntityManager();
+
 }

@@ -28,6 +28,13 @@ public class Product implements Serializable {
     private Double price;
     private String image;
 
+    public Product(String productName, Integer quantity, Double price, Category category) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+    }
+
     @ManyToOne
     @JoinColumn(nullable=false)
     private Category category;

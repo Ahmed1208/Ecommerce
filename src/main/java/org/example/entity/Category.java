@@ -27,11 +27,11 @@ public class Category implements Serializable {
     @Column(nullable=false)
     private String description;
 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="parent_category")
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory",fetch = FetchType.LAZY)
     private Set<Category> childCategories ;
 
     @OneToMany(mappedBy = "category")
