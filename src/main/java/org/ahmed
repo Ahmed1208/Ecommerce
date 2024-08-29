@@ -1,39 +1,3 @@
-package org.example;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import org.example.dao.UserDao;
-import org.example.entity.*;
-
-import java.util.HashSet;
-import java.util.Set;
-
-
-public class Main {
-
-
-    static public void getCategory(Category c,Set<Category> categorySet)
-    {
-        categorySet.add(c);
-        //base cases
-        if(c.getChildCategories().size() == 0)
-        {
-            return;
-        }
-
-        //call
-        for(Category i : c.getChildCategories())
-        {
-            getCategory(i,categorySet);
-        }
-
-        //return
-
-    }
-
-
-    public static void main(String[] args) {
-
         EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 //        entityManager.getTransaction().begin();
@@ -153,9 +117,3 @@ public class Main {
         userDAO1.findByName("ahmed");
 
 
-
-
-
-       }
-
-}
