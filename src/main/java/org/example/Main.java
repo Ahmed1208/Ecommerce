@@ -34,8 +34,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
 //        entityManager.getTransaction().begin();
 //        // add new user WITH ADDRESS
 //        User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
@@ -117,23 +117,23 @@ public class Main {
 //        entityManager.getTransaction().commit();
 
 
-
-        Category temp = entityManager.find(Category.class,1);
-        Set<Category> list = new HashSet<Category>();
-        getCategory(temp,list);
-
-
-        Set<Product> products = new HashSet<Product>();
-        for(Category c : list)
-        {
-            System.out.println(c.getName());
-            //c.getProducts().forEach(product -> products.add(product));
-            c.getProducts().forEach(x -> System.out.println(x.getProductName()));
-        }
-
-
-        UserDao userDAO = new UserDao();
-        System.out.println(userDAO.findByName("ahmed"));
+//
+//        Category temp = entityManager.find(Category.class,1);
+//        Set<Category> list = new HashSet<Category>();
+//        getCategory(temp,list);
+//
+//
+//        Set<Product> products = new HashSet<Product>();
+//        for(Category c : list)
+//        {
+//            System.out.println(c.getName());
+//            //c.getProducts().forEach(product -> products.add(product));
+//            c.getProducts().forEach(x -> System.out.println(x.getProductName()));
+//        }
+//
+//
+//        UserDao userDAO = new UserDao();
+//        System.out.println(userDAO.findByName("ahmed"));
 
 
 //        System.out.println(temp.getName());
@@ -149,8 +149,8 @@ public class Main {
 //        System.out.println(user.getName());
 
 
-        UserDao userDAO1 = new UserDao();
-        userDAO1.findByName("ahmed");
+//        UserDao userDAO1 = new UserDao();
+//        userDAO1.findByName("ahmed");
 
 
 
