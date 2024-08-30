@@ -33,5 +33,4 @@ public class UserProductCart  implements Serializable {
     @JoinColumn(nullable = false)
     private User user;
 
-
 }

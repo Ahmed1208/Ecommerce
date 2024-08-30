@@ -2,19 +2,21 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
 public abstract class Repository<T> {
-    public Class<T> className;
-    public EntityManager entityManager;
+    private final Class<T> className;
+    protected EntityManager entityManager;
 
     public Repository(Class<T> className, EntityManager entityManager)
     {
         this.entityManager=entityManager;
         this.className = className;
     }
-
 
     public T findById(int id)
     {
@@ -45,7 +47,6 @@ public abstract class Repository<T> {
         }
 
     }
-
     public boolean update(T t)
     {
         try{
@@ -57,20 +58,16 @@ public abstract class Repository<T> {
             e.printStackTrace();
             return false;
         }
-
     }
 
+    protected <G> List<T> findBy(String ColumnName,G value)
+    {
 
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(className);
+        Root<T> root = criteriaQuery.from(className);
 
-
-//    public <G> T findById(String columnName,G g)
-//    {
-//
-//        CriteriaBuilder criteriaBuilder = Factory.entityManager.getCriteriaBuilder();
-//        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(className);
-//        Root<T> root = criteriaQuery.from(className);
-//
-//        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(columnName),g));
-//        return Factory.entityManager.createQuery(criteriaQuery).getSingleResult();
-//    }
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(ColumnName),value));
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
 }

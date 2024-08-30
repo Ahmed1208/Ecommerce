@@ -8,6 +8,6 @@ public class Factory {
 
     static final public EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
 
-    static final public EntityManager entityManager = entityManagerFactory.createEntityManager();
+
 
 }
