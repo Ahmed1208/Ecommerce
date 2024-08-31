@@ -196,6 +196,13 @@ public class Main {
 
 
 
+
+        UserDao userDao=new UserDao(entityManager);
+        userDao.findUsersPerCity("Berlin").forEach((X)->System.out.println(X.getName()));
+        userDao.findUsersPerCountry("Germany").forEach((X)->System.out.println(X.getName()));
+        userDao.findUsersByGender(GENDER.FEMALE).forEach((X)->System.out.println(X.getName()));
+        userDao.findUserByEmail("men3m@yahoo.com").getInterests().forEach(System.out::println);
+
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();
 ////        category.setName("Cold Drinks");

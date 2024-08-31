@@ -35,8 +35,7 @@ public class Interest implements Serializable {
     public String toString() {
         return "Interest{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", users=" + users +
+                ", name='" + name +
                 '}';
     }
 }

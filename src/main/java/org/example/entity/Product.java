@@ -3,6 +3,7 @@ package org.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -28,13 +29,6 @@ public class Product implements Serializable {
     private Double price;
     private String image;
 
-    public Product(String productName, Integer quantity, Double price, Category category) {
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-        this.category = category;
-    }
-
     @ManyToOne
     @JoinColumn(nullable=false)
     private Category category;
@@ -45,5 +39,23 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     private Set<UserProductCart> userProductCarts;
 
+    public Product(String productName, Integer quantity, Double price, Category category) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+    }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                ", category=" + category.getName() +
+                '}';
+    }
 }
