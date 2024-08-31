@@ -2,6 +2,7 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.example.dao.CategoryDao;
 import org.example.dao.UserDao;
 import org.example.entity.*;
 
@@ -47,7 +48,7 @@ public class Main {
 //        address.setCountry("Germany");
 //        address.setStreet("ahmed");
 //        address.setUser(u);
-          entityManager.persist(u);
+//          entityManager.persist(u);
 //        entityManager.persist(address);
 //
 //        //add interests for user
@@ -154,7 +155,14 @@ public class Main {
 //        userDAO1.findByName("ahmed");
 
 
+        CategoryDao categoryDao = new CategoryDao();
 
+        Category category = categoryDao.findById(1);
+
+
+        categoryDao.getParentCategories().forEach(System.out::println);
+
+        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);
 
 
        }
