@@ -24,7 +24,7 @@ public class User extends Person implements Serializable {
 
     private double balance;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Address address;
 

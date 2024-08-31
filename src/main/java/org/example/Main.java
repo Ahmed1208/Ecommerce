@@ -3,6 +3,7 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.example.dao.CategoryDao;
+import org.example.dao.ProductDao;
 import org.example.dao.UserDao;
 import org.example.entity.*;
 
@@ -37,8 +38,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-//   EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
-//     EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
 //     entityManager.getTransaction().begin();
 ////        // add new user WITH ADDRESS
 //       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
@@ -156,15 +157,18 @@ public class Main {
 //        userDAO1.findByName("ahmed");
 
 
-        CategoryDao categoryDao = new CategoryDao();
 
-        Category category = categoryDao.findById(1);
+        CategoryDao categoryDao = new CategoryDao(entityManager);
+        Category category = categoryDao.findById(2);  //food
+
+        categoryDao.getParentCategories().forEach(System.out::println);  //food
+        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
 
 
-        categoryDao.getParentCategories().forEach(System.out::println);
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+        ProductDao productDao = new ProductDao(entityManager2);
 
-        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);
-
+        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
 
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();

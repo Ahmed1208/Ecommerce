@@ -24,64 +24,34 @@ public abstract class Repository<T> {
         return entityManager.find(className, id);
     }
 
-    public List<T> findAll()
+    public List<T> findAll() throws Exception
     {
         TypedQuery<T> query = entityManager.createQuery("select s from "+className.getSimpleName() +" s",className);
         return query.getResultList();
     }
-    public boolean delete(int id)
+    public boolean delete(int id)throws Exception
     {
-        try{
-            entityManager.getTransaction().begin();
             int row= entityManager.createQuery("delete from "+className.getSimpleName() +" u  where u.id = :id")
                     .setParameter("id", id).executeUpdate();
             entityManager.getTransaction().commit();
             return row == 1;
-
-        }catch (Exception e){
-            entityManager.getTransaction().rollback();
-            return false;
-        }
-
-
     }
 
-    public boolean insert(T t)
+    public void create(T t) throws Exception
     {
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.persist(t);
-            entityManager.getTransaction().commit();
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            entityManager.getTransaction().rollback();
-            return false;
-        }
-
+        entityManager.persist(t);
     }
-    public boolean update(T t)
-    {
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.merge(t);
-            entityManager.getTransaction().commit();
-            return true;
 
-        }catch (Exception e){
-            e.printStackTrace();
-            entityManager.getTransaction().rollback();
-            return false;
-        }
+    public void update(T t) throws Exception
+    {
+        entityManager.merge(t);
     }
 
     protected <G> List<T> findBy(String ColumnName,G value)
     {
-
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(className);
         Root<T> root = criteriaQuery.from(className);
-
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(ColumnName),value));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }

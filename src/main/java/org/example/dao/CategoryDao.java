@@ -1,5 +1,7 @@
 package org.example.dao;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.example.Factory;
 import org.example.entity.Category;
@@ -8,35 +10,13 @@ import java.util.*;
 
 public class CategoryDao extends Repository<Category> {
 
-    public CategoryDao() {
-        super(Category.class, Factory.entityManagerFactory.createEntityManager());
+    public CategoryDao(EntityManager entityManager) {
+        super(Category.class, entityManager);
     }
 
-    public boolean createCategory(Category category)
-    {
-        return true;
-    }
 
-    public Category getCategoryById(int id)
-    {
-        return null;
-    }
-
-    public List<Category> getAllCategories()
-    {
-        return new ArrayList<Category>();
-    }
-
-    public boolean updateCategory(Category category)
-    {
-        return false;
-    }
-    public Category findByName(String name) {
-        return findBy("name",name).get(0);
-    }
-    public boolean deleteCategory(int id)
-    {
-        return false;
+    public Category findByCategoryName(String categoryName) {
+        return findBy("name",categoryName).get(0);
     }
 
     public List<Category> getParentCategories()
