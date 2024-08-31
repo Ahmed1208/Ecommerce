@@ -156,6 +156,15 @@ public class Main {
 //        userDAO1.findByName("ahmed");
 
 
+        CategoryDao categoryDao = new CategoryDao();
+
+        Category category = categoryDao.findById(1);
+
+
+        categoryDao.getParentCategories().forEach(System.out::println);
+
+        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);
+
 
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();
