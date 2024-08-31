@@ -35,7 +35,7 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable=false)
     private Category category;
 

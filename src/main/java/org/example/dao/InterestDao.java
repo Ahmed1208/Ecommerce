@@ -8,4 +8,10 @@ public class InterestDao extends Repository<Interest>{
     public InterestDao() {
         super(Interest.class, Factory.entityManagerFactory.createEntityManager());
     }
+
+
+
+    //interests for user
+
+
 }

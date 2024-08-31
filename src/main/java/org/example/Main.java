@@ -158,17 +158,17 @@ public class Main {
 
 
 
-        CategoryDao categoryDao = new CategoryDao(entityManager);
-        Category category = categoryDao.findById(2);  //food
-
-        categoryDao.getParentCategories().forEach(System.out::println);  //food
-        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
-
-
-        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
-        ProductDao productDao = new ProductDao(entityManager2);
-
-        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
+//        CategoryDao categoryDao = new CategoryDao(entityManager);
+//        Category category = categoryDao.findById(2);  //food
+//
+//        categoryDao.getParentCategories().forEach(System.out::println);  //food
+//        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
+//
+//
+//        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+//        ProductDao productDao = new ProductDao(entityManager2);
+//
+//        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
 
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();
@@ -186,6 +186,13 @@ public class Main {
 //       System.out.println( categoryDao.delete(4));
 //        Category category=categoryDao.findByName("pasta");
 //        System.out.println(category.getName()+" : "+category.getId());
+
+
+        ProductDao productDao1=new ProductDao(entityManager);
+
+        List<Product> list=productDao1.findProductsBySubCategory(2);
+
+        list.forEach(x -> x.getProductName());
        }
 
 }

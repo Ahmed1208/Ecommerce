@@ -23,10 +23,15 @@ public class ProductDao extends Repository<Product>
     }
 
 
-    public List<Product> findProductsBySubCategory(Category subCategory)
+    public List<Product> findProductsBySubCategory(int subCategoryId)
     {
-        return new ArrayList<Product>(subCategory.getProducts());
+        String s = "from Product p where p.category.id = :subCategoryId";
+        Query q = entityManager.createQuery(s).setParameter("subCategoryId",subCategoryId);
+
+        return q.getResultList();
     }
+
+
 
 
 

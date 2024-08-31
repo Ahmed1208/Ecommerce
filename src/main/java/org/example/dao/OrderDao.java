@@ -9,6 +9,9 @@ public class OrderDao extends Repository<Order>{
     public OrderDao() {super(Order.class, Factory.entityManagerFactory.createEntityManager());
     }
 
+    //user Orders
+    //products per Order
+
 
 
 }
