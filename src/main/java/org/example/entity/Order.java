@@ -25,8 +25,9 @@ public class Order implements Serializable {
     @Column(name="order_date",nullable=false)
     private Date orderDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable=false)
-    private String status;
+    private STATUS status;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)

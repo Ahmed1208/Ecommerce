@@ -3,6 +3,7 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.example.dao.CategoryDao;
+import org.example.dao.OrderDao;
 import org.example.dao.ProductDao;
 import org.example.dao.UserDao;
 import org.example.entity.*;
@@ -157,18 +158,43 @@ public class Main {
 //        userDAO1.findByName("ahmed");
 
 
+//
+//        CategoryDao categoryDao = new CategoryDao(entityManager);
+//        Category category = categoryDao.findById(2);  //food
+//
+//        categoryDao.getParentCategories().forEach(System.out::println);  //food
+//        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
+//
+//
+//        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+//        ProductDao productDao = new ProductDao(entityManager2);
+//
+//        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
 
-        CategoryDao categoryDao = new CategoryDao(entityManager);
-        Category category = categoryDao.findById(2);  //food
+//         User user= entityManager.find(User.class,1);
+//       Order a=new Order();
+//       a.setStatus(STATUS.CANCELED);
+//       a.setTotalPrice(600.0);
+//        a.setOrderDate(new Date(2022, 5, 5));
+//        a.setPaymentType(PAYMENT.CASH);
+//        a.setUser(user);
+//        Order b= new Order();
+//        b.setStatus(STATUS.PENDING);
+//        b.setTotalPrice(1900.0);
+//        b.setOrderDate(new Date(2023, 5, 5));
+//        b.setPaymentType(PAYMENT.VISA);
+//        b.setUser(user);
+//        entityManager.persist(a);
+//        entityManager.persist(b);
+//        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().commit();
 
-        categoryDao.getParentCategories().forEach(System.out::println);  //food
-        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
+//        OrderDao orderDao= new OrderDao(entityManager);
+//        List<Order> orders=orderDao.findByOrderDateBetween(new Date(2020, 1, 1),new Date(2021, 12, 30));
+//        orders.forEach(x ->System.out.println(x.getId()));
 
 
-        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
-        ProductDao productDao = new ProductDao(entityManager2);
 
-        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
 
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();
