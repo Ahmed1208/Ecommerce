@@ -5,6 +5,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -25,24 +26,36 @@ public abstract class Repository<T> {
 
     public List<T> findAll()
     {
-        TypedQuery<T> query = entityManager.createQuery("select s from "+className +" s",className);
+        TypedQuery<T> query = entityManager.createQuery("select s from "+className.getSimpleName() +" s",className);
         return query.getResultList();
     }
-
     public boolean delete(int id)
     {
-        return entityManager.createQuery("delete from "+className +" u  where u.id = :id")
-                .setParameter("id", id).executeUpdate() == 1;
+        try{
+            entityManager.getTransaction().begin();
+            int row= entityManager.createQuery("delete from "+className.getSimpleName() +" u  where u.id = :id")
+                    .setParameter("id", id).executeUpdate();
+            entityManager.getTransaction().commit();
+            return row == 1;
+
+        }catch (Exception e){
+            entityManager.getTransaction().rollback();
+            return false;
+        }
+
+
     }
 
     public boolean insert(T t)
     {
         try{
+            entityManager.getTransaction().begin();
             entityManager.persist(t);
-            entityManager.flush();
+            entityManager.getTransaction().commit();
             return true;
         }catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             return false;
         }
 
@@ -50,12 +63,14 @@ public abstract class Repository<T> {
     public boolean update(T t)
     {
         try{
+            entityManager.getTransaction().begin();
             entityManager.merge(t);
-            entityManager.flush();
+            entityManager.getTransaction().commit();
             return true;
 
         }catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             return false;
         }
     }

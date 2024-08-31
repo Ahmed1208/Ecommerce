@@ -2,11 +2,13 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.example.dao.CategoryDao;
 import org.example.dao.UserDao;
 import org.example.entity.*;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -35,19 +37,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-   EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
-     EntityManager entityManager = entityManagerFactory.createEntityManager();
-     entityManager.getTransaction().begin();
-//        // add new user WITH ADDRESS
-       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
-               , new Date(2000, 6, 7), "0102030454");
+//   EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
+//     EntityManager entityManager = entityManagerFactory.createEntityManager();
+//     entityManager.getTransaction().begin();
+////        // add new user WITH ADDRESS
+//       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
+//               , new Date(2000, 6, 7), "0102030454");
 //
 //        Address address = new Address();
 //        address.setCity("Berlin");
 //        address.setCountry("Germany");
 //        address.setStreet("ahmed");
 //        address.setUser(u);
-          entityManager.persist(u);
+//          entityManager.persist(u);
 //        entityManager.persist(address);
 //
 //        //add interests for user
@@ -89,7 +91,7 @@ public class Main {
 //        entityManager.persist(c);
 //
 //
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().commit();
 
 //        Category c1 = entityManager.find(Category.class,2);
 //        Category c2 = entityManager.find(Category.class,3);
@@ -155,8 +157,22 @@ public class Main {
 
 
 
-
-
+//        CategoryDao categoryDao=new CategoryDao();
+////        Category category=new Category();
+////        category.setName("Cold Drinks");
+////        category.setDescription("this is for cold drinks");
+// //       Category parent=categoryDao.findById(1);
+////        category.setParentCategory(parent);
+////        categoryDao.insert(category);
+//
+////        parent.setDescription("this the parent category FOOD");
+////        parent.setName("FOOD");
+////        categoryDao.update(parent);
+//        List<Category> categories=categoryDao.findAll();
+//        categories.forEach((c)->System.out.println(c.getName()));
+//       System.out.println( categoryDao.delete(4));
+//        Category category=categoryDao.findByName("pasta");
+//        System.out.println(category.getName()+" : "+category.getId());
        }
 
 }
