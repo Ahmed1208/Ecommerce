@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -25,8 +26,9 @@ public class Order implements Serializable {
     @Column(name="order_date",nullable=false)
     private Date orderDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable=false)
-    private String status;
+    private STATUS status;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
@@ -39,7 +41,16 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order")
     private Set<OrderProductList> OrderProductList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) && Objects.equals(totalPrice, order.totalPrice) && Objects.equals(orderDate, order.orderDate) && status == order.status && paymentType == order.paymentType && Objects.equals(user, order.user) && Objects.equals(OrderProductList, order.OrderProductList);
+    }
 
-
-
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, totalPrice, orderDate, status, paymentType, user, OrderProductList);
+    }
+}

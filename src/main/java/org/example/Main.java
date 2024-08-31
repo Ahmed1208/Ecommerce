@@ -3,6 +3,7 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.example.dao.CategoryDao;
+import org.example.dao.OrderDao;
 import org.example.dao.ProductDao;
 import org.example.dao.UserDao;
 import org.example.entity.*;
@@ -157,6 +158,18 @@ public class Main {
 //        userDAO1.findByName("ahmed");
 
 
+//
+//        CategoryDao categoryDao = new CategoryDao(entityManager);
+//        Category category = categoryDao.findById(2);  //food
+//
+//        categoryDao.getParentCategories().forEach(System.out::println);  //food
+//        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
+//
+//
+//        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+//        ProductDao productDao = new ProductDao(entityManager2);
+//
+//        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
 
 //        CategoryDao categoryDao = new CategoryDao(entityManager);
 //        Category category = categoryDao.findById(2);  //food
@@ -169,6 +182,39 @@ public class Main {
 //        ProductDao productDao = new ProductDao(entityManager2);
 //
 //        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
+
+
+//         User user= entityManager.find(User.class,1);
+//       Order a=new Order();
+//       a.setStatus(STATUS.CANCELED);
+//       a.setTotalPrice(600.0);
+//        a.setOrderDate(new Date(2022, 5, 5));
+//        a.setPaymentType(PAYMENT.CASH);
+//        a.setUser(user);
+//        Order b= new Order();
+//        b.setStatus(STATUS.PENDING);
+//        b.setTotalPrice(1900.0);
+//        b.setOrderDate(new Date(2023, 5, 5));
+//        b.setPaymentType(PAYMENT.VISA);
+//        b.setUser(user);
+//        entityManager.persist(a);
+//        entityManager.persist(b);
+//        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().commit();
+
+//        OrderDao orderDao= new OrderDao(entityManager);
+//        List<Order> orders=orderDao.findByOrderDateBetween(new Date(2020, 1, 1),new Date(2021, 12, 30));
+//        orders.forEach(x ->System.out.println(x.getId()));
+
+
+
+
+
+//        UserDao userDao=new UserDao(entityManager);
+//        userDao.findUsersPerCity("Berlin").forEach((X)->System.out.println(X.getName()));
+//        userDao.findUsersPerCountry("Germany").forEach((X)->System.out.println(X.getName()));
+//        userDao.findUsersByGender(GENDER.FEMALE).forEach((X)->System.out.println(X.getName()));
+//        userDao.findUserByEmail("men3m@yahoo.com").getInterests().forEach(System.out::println);
 
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();
@@ -188,11 +234,19 @@ public class Main {
 //        System.out.println(category.getName()+" : "+category.getId());
 
 
-        ProductDao productDao1=new ProductDao(entityManager);
+//        ProductDao productDao1=new ProductDao(entityManager);
+//
+//        List<Product> list=productDao1.findProductsBySubCategory(2);
+//
+//        list.forEach(x -> x.getProductName());
 
-        List<Product> list=productDao1.findProductsBySubCategory(2);
 
-        list.forEach(x -> x.getProductName());
+        OrderDao orderDao = new OrderDao(entityManager);
+
+        List<Order> products = orderDao.filterOrders(null,null,new Date(2023, 5, 5),new Date(2023, 5, 5));
+
+        products.forEach(x -> System.out.println(x.getId()));
+
        }
 
 }
