@@ -248,7 +248,7 @@ public class Main {
 //        products.forEach(x -> System.out.println(x.getId()));
 
 
-        User user = entityManager.find(User.class,1);
+        User user = entityManager.find(User.class,2);
 
         for(int i=1;i<5;i++)
         {
@@ -256,7 +256,6 @@ public class Main {
             UserProductCart userProductCart = new UserProductCart(user,product,5);
             entityManager.persist(userProductCart);
         }
-
 
         entityManager.getTransaction().begin();
         entityManager.getTransaction().commit();
