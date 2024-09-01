@@ -171,6 +171,19 @@ public class Main {
 //
 //        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
 
+//        CategoryDao categoryDao = new CategoryDao(entityManager);
+//        Category category = categoryDao.findById(2);  //food
+//
+//        categoryDao.getParentCategories().forEach(System.out::println);  //food
+//        categoryDao.getSubCategoriesByCategory(category).forEach(System.out::println);  //pasta -> tomato sauce
+//
+//
+//        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+//        ProductDao productDao = new ProductDao(entityManager2);
+//
+//        productDao.findProductsBySubCategory(category).forEach(x ->System.out.println(x.getProductName()));
+
+
 //         User user= entityManager.find(User.class,1);
 //       Order a=new Order();
 //       a.setStatus(STATUS.CANCELED);
@@ -197,11 +210,11 @@ public class Main {
 
 
 
-        UserDao userDao=new UserDao(entityManager);
-        userDao.findUsersPerCity("Berlin").forEach((X)->System.out.println(X.getName()));
-        userDao.findUsersPerCountry("Germany").forEach((X)->System.out.println(X.getName()));
-        userDao.findUsersByGender(GENDER.FEMALE).forEach((X)->System.out.println(X.getName()));
-        userDao.findUserByEmail("men3m@yahoo.com").getInterests().forEach(System.out::println);
+//        UserDao userDao=new UserDao(entityManager);
+//        userDao.findUsersPerCity("Berlin").forEach((X)->System.out.println(X.getName()));
+//        userDao.findUsersPerCountry("Germany").forEach((X)->System.out.println(X.getName()));
+//        userDao.findUsersByGender(GENDER.FEMALE).forEach((X)->System.out.println(X.getName()));
+//        userDao.findUserByEmail("men3m@yahoo.com").getInterests().forEach(System.out::println);
 
 //        CategoryDao categoryDao=new CategoryDao();
 ////        Category category=new Category();
@@ -219,6 +232,21 @@ public class Main {
 //       System.out.println( categoryDao.delete(4));
 //        Category category=categoryDao.findByName("pasta");
 //        System.out.println(category.getName()+" : "+category.getId());
+
+
+//        ProductDao productDao1=new ProductDao(entityManager);
+//
+//        List<Product> list=productDao1.findProductsBySubCategory(2);
+//
+//        list.forEach(x -> x.getProductName());
+
+
+        OrderDao orderDao = new OrderDao(entityManager);
+
+        List<Order> products = orderDao.filterOrders(null,null,new Date(2023, 5, 5),new Date(2023, 5, 5));
+
+        products.forEach(x -> System.out.println(x.getId()));
+
        }
 
 }

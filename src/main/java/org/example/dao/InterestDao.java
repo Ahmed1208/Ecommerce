@@ -15,7 +15,9 @@ public class InterestDao extends Repository<Interest>{
         super(Interest.class, entityManager);
     }
 
-    public List<Interest> findOrdersByUser(User user)
+
+    //interests for user
+    public List<Interest> findInterestsByUser(User user)
     {
         return new ArrayList<Interest>(user.getInterests());
     }

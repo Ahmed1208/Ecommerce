@@ -27,11 +27,11 @@ public class ProductDao extends Repository<Product>
         return query.getResultList();
     }
 
-
-    
-    public List<Product> findProductsBySubCategory(Category subCategory)
+    public List<Product> findProductsBySubCategory(int subCategoryId)
     {
-        return new ArrayList<Product>(subCategory.getProducts());
+        String s = "from Product p where p.category.id = :subCategoryId";
+        Query q = entityManager.createQuery(s).setParameter("subCategoryId",subCategoryId);
+        return q.getResultList();
     }
 
     public List<Product> sortProductsByPriceAsc(){
@@ -58,6 +58,8 @@ public class ProductDao extends Repository<Product>
                 .setParameter("low",lowestPrice).setParameter("high",highestPrice);
         return query.getResultList();
     }
+
+
 
 
 

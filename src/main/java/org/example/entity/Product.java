@@ -29,7 +29,14 @@ public class Product implements Serializable {
     private Double price;
     private String image;
 
-    @ManyToOne
+    public Product(String productName, Integer quantity, Double price, Category category) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable=false)
     private Category category;
 
@@ -38,13 +45,6 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product")
     private Set<UserProductCart> userProductCarts;
-
-    public Product(String productName, Integer quantity, Double price, Category category) {
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-        this.category = category;
-    }
 
     @Override
     public String toString() {
