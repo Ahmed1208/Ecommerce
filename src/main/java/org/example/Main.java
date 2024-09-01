@@ -241,12 +241,25 @@ public class Main {
 //        list.forEach(x -> x.getProductName());
 
 
-        OrderDao orderDao = new OrderDao(entityManager);
+//        OrderDao orderDao = new OrderDao(entityManager);
+//
+//        List<Order> products = orderDao.filterOrders(null,null,new Date(2023, 5, 5),new Date(2023, 5, 5));
+//
+//        products.forEach(x -> System.out.println(x.getId()));
 
-        List<Order> products = orderDao.filterOrders(null,null,new Date(2023, 5, 5),new Date(2023, 5, 5));
 
-        products.forEach(x -> System.out.println(x.getId()));
+        User user = entityManager.find(User.class,1);
 
-       }
+        for(int i=1;i<5;i++)
+        {
+            Product product = entityManager.find(Product.class,i);
+            UserProductCart userProductCart = new UserProductCart(user,product,5);
+            entityManager.persist(userProductCart);
+        }
+
+
+        entityManager.getTransaction().begin();
+        entityManager.getTransaction().commit();
+    }
 
 }

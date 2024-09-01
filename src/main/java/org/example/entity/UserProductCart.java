@@ -20,17 +20,24 @@ public class UserProductCart  implements Serializable {
     @AttributeOverrides( {
             @AttributeOverride(name="userId", column=@Column(name="user_id", nullable=false,insertable=false, updatable=false) ),
             @AttributeOverride(name="productId", column=@Column(name="product_id", nullable=false,insertable=false, updatable=false) ) } )
-    private UserProductId userProductId;
+    private UserProductId userProductId = new UserProductId();
 
     @Column(name="product_quantity", nullable=false)
     private Integer productQuantity;
 
     @ManyToOne
+    @MapsId("productId")
     @JoinColumn(nullable = false)
     private Product product;
 
     @ManyToOne
+    @MapsId("userId")
     @JoinColumn(nullable = false)
     private User user;
 
+    public UserProductCart(User user, Product product, Integer productQuantity) {
+        this.user = user;
+        this.product = product;
+        this.productQuantity = productQuantity;
+    }
 }

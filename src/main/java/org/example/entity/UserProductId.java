@@ -17,7 +17,7 @@ import java.util.Objects;
 public class UserProductId  implements Serializable {
 
     @Column(name = "user_id", nullable = false)
-    private int userId;
+    private Integer userId;
     @Column(name = "product_id", nullable = false)
     private int productId;
 
