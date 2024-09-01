@@ -250,6 +250,18 @@ public class Main {
 //
 //        products.forEach(x -> System.out.println(x.getId()));
 
-       }
+
+        User user = entityManager.find(User.class,2);
+
+        for(int i=1;i<5;i++)
+        {
+            Product product = entityManager.find(Product.class,i);
+            UserProductCart userProductCart = new UserProductCart(user,product,5);
+            entityManager.persist(userProductCart);
+        }
+
+        entityManager.getTransaction().begin();
+        entityManager.getTransaction().commit();
+    }
 
 }
