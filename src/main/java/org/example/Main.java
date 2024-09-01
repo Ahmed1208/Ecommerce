@@ -41,18 +41,21 @@ public class Main {
 
     EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
     EntityManager entityManager = entityManagerFactory.createEntityManager();
-//     entityManager.getTransaction().begin();
+    entityManager.getTransaction().begin();
 ////        // add new user WITH ADDRESS
-//       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
-//               , new Date(2000, 6, 7), "0102030454");
-//
-//        Address address = new Address();
-//        address.setCity("Berlin");
-//        address.setCountry("Germany");
-//        address.setStreet("ahmed");
-//        address.setUser(u);
-//          entityManager.persist(u);
-//        entityManager.persist(address);
+       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
+               , new Date(2000, 6, 7), "0102030454");
+
+        Address address = new Address();
+        address.setCity("Berlin");
+        address.setCountry("Germany");
+        address.setStreet("ahmed");
+        address.setUser(u);
+          entityManager.persist(u);
+        entityManager.persist(address);
+
+        entityManager.getTransaction().commit();
+
 //
 //        //add interests for user
 //        Interest interest = new Interest("Writing");
@@ -241,11 +244,11 @@ public class Main {
 //        list.forEach(x -> x.getProductName());
 
 
-        OrderDao orderDao = new OrderDao(entityManager);
-
-        List<Order> products = orderDao.filterOrders(null,null,new Date(2023, 5, 5),new Date(2023, 5, 5));
-
-        products.forEach(x -> System.out.println(x.getId()));
+//        OrderDao orderDao = new OrderDao(entityManager);
+//
+//        List<Order> products = orderDao.filterOrders(null,null,new Date(2023, 5, 5),new Date(2023, 5, 5));
+//
+//        products.forEach(x -> System.out.println(x.getId()));
 
        }
 

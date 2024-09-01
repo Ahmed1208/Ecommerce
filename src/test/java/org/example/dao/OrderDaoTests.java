@@ -28,7 +28,7 @@ public class OrderDaoTests {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-        User user = entityManager.find(User.class,1);
+        User user = entityManager.find(User.class,2);
 
         Order a=new Order();
         a.setStatus(STATUS.CANCELED);
