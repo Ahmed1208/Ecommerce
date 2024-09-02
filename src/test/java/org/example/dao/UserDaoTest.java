@@ -86,7 +86,8 @@ class UserDaoTest {
     @Test
     void deleteUser() {
         em.getTransaction().begin();
-        assertTrue(userDao.delete(27));
+        User user=userDao.findUserByEmail("Mohamed@gmail.com");
+        assertTrue(userDao.delete(user.getId()));
         em.getTransaction().commit();
         em.getTransaction().begin();
         assertFalse(userDao.delete(20));
