@@ -24,23 +24,31 @@ public class UserDao extends Repository<User> {
 
         }
 
+        @Override
+        public boolean delete(int id) {
+                entityManager.createQuery("delete from Address a where a.id=:id").setParameter("id",id).executeUpdate();
+                return super.delete(id);
+        }
+
         public List<User> findUsersPerCity(String city){
                 TypedQuery<User> query = entityManager
-                        .createQuery("select u from User u join Address a on a.city = :city ", User.class)
+                        .createQuery("select u from User u where u.address.city = :city ", User.class)
                         .setParameter("city", city);
 
                 return query.getResultList();
         }
         public List<User> findUsersPerCountry(String country){
                 TypedQuery<User> query = entityManager
-                        .createQuery("select u from User u join Address a on a.country = :country ", User.class)
+                        .createQuery("select u from User u where u.address.country = :country ", User.class)
                         .setParameter("country", country);
 
                 return query.getResultList();
         }
 
         public User findUserByEmail(String email){
-                return findBy("email",email).get(0);
+                List<User> users=findBy("email",email);
+
+                return users.isEmpty()?null:users.get(0);
         }
         public List<User> findUsersByName(String name){
                 return findBy("name",name);

@@ -24,25 +24,24 @@ public abstract class Repository<T> {
         return entityManager.find(className, id);
     }
 
-    public List<T> findAll() throws Exception
+    public List<T> findAll()
     {
         TypedQuery<T> query = entityManager.createQuery("select s from "+className.getSimpleName() +" s",className);
         return query.getResultList();
     }
-    public boolean delete(int id)throws Exception
+    public boolean delete(int id)
     {
             int row= entityManager.createQuery("delete from "+className.getSimpleName() +" u  where u.id = :id")
                     .setParameter("id", id).executeUpdate();
-            entityManager.getTransaction().commit();
             return row == 1;
     }
 
-    public void create(T t) throws Exception
+    public void create(T t)
     {
         entityManager.persist(t);
     }
 
-    public void update(T t) throws Exception
+    public void update(T t)
     {
         entityManager.merge(t);
     }

@@ -25,7 +25,7 @@ public class User extends Person implements Serializable {
 
     private double balance;
 
-    @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(nullable = false)
     private Address address;
 
@@ -66,5 +66,16 @@ public class User extends Person implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, balance, address, dateOfBirth, phone, balanceLogs, orders, interests, userProductCarts);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", balance=" + balance +
+                ", address=" + address +
+                ", dateOfBirth=" + dateOfBirth +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }
