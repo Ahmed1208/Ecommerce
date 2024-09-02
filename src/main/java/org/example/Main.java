@@ -5,10 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.example.dao.*;
 import org.example.entity.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Main {
@@ -40,18 +37,18 @@ public class Main {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     entityManager.getTransaction().begin();
 ////        // add new user WITH ADDRESS
-       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
-               , new Date(2000, 6, 7), "0102030454");
-
-        Address address = new Address();
-        address.setCity("Berlin");
-        address.setCountry("Germany");
-        address.setStreet("ahmed");
-        address.setUser(u);
-          entityManager.persist(u);
-        entityManager.persist(address);
-
-        entityManager.getTransaction().commit();
+//       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
+//               , new Date(2000, 6, 7), "0102030454");
+//
+//        Address address = new Address();
+//        address.setCity("Berlin");
+//        address.setCountry("Germany");
+//        address.setStreet("ahmed");
+//        address.setUser(u);
+//          entityManager.persist(u);
+//        entityManager.persist(address);
+//
+//        entityManager.getTransaction().commit();
 
 //
 //        //add interests for user
@@ -71,7 +68,7 @@ public class Main {
 //        Admin admin = new Admin("Moamen", "mo2@eti.com", "14785", GENDER.MALE);
 //        entityManager.persist(admin);
 //
-//        //add category
+        //add category
 //        Category food = new Category();
 //        food.setName("food");
 //        food.setDescription("this is food category");
@@ -82,18 +79,27 @@ public class Main {
 //        pasta.setParentCategory(food);
 //        pasta.setDescription("this is pasta category");
 //
-//        Category c = new Category();
-//        c.setName("tomato sauce");
-//        c.setParentCategory(pasta);
-//        c.setDescription("this is Sauces Category");
+//        Category rice = new Category();
+//        rice.setName("rice");
+//        rice.setParentCategory(food);
+//        rice.setDescription("this is rice category");
 //
+//        Category kofta = new Category();
+//        kofta.setName("kofta");
+//        kofta.setParentCategory(food);
+//        kofta.setDescription("this is kofta category");
 //
 //        entityManager.persist(food);
 //        entityManager.persist(pasta);
-//        entityManager.persist(c);
+//        entityManager.persist(rice);
+//        entityManager.persist(kofta);
 //
-//
+////
+////
 //        entityManager.getTransaction().commit();
+
+
+
 
 //        Category c1 = entityManager.find(Category.class,2);
 //        Category c2 = entityManager.find(Category.class,3);
@@ -101,25 +107,25 @@ public class Main {
 //
 //        entityManager.getTransaction().begin();
 //
-//        Product product1 = new Product("a",10,10.0,c1);
-//        Product product2 = new Product("b",20,20.0,c1);
+//        Product product1 = new Product("pasta1",50,10.0,pasta);
+//        Product product2 = new Product("pasta2",60,20.0,pasta);
 //
-//        Product product3 = new Product("c",30,30.0,c2);
-//        Product product4 = new Product("d",40,40.0,c2);
-//        Product product5 = new Product("e",50,50.0,c2);
-//        Product product6 = new Product("f",60,60.0,c2);
-//        Product product7 = new Product("g",70,70.0,c2);
+//        Product product3 = new Product("rice1",20,30.0,rice);
+//        Product product4 = new Product("rice2",10,40.0,rice);
+//        //Product product5 = new Product("e",90,50.0,rice);
+//        Product product6 = new Product("kofta1",5,60.0,kofta);
+//        Product product7 = new Product("kofta2",1,70.0,kofta);
 //
 //        entityManager.persist(product1);
 //        entityManager.persist(product2);
 //        entityManager.persist(product3);
 //        entityManager.persist(product4);
-//        entityManager.persist(product5);
+//        //entityManager.persist(product5);
 //        entityManager.persist(product6);
 //        entityManager.persist(product7);
-//
-//
-//        entityManager.getTransaction().commit();
+////
+////
+//       entityManager.getTransaction().commit();
 
 
 //
@@ -258,25 +264,40 @@ public class Main {
 //        }
 
 
-        OrderDao orderDao = new OrderDao(entityManager);
+//        OrderDao orderDao = new OrderDao(entityManager);
+//
+//        List<Order> list = orderDao.filterOrders(STATUS.PENDING,
+//                                                PAYMENT.CASH,
+//                                                null,null,
+//                                                null,null,
+//                                                true);
+//
+//        for(Order o : list)
+//        {
+//            System.out.println(o);
+//        }
+//
+//
+//        List<Object[]> list1 = orderDao.getOrdersByGroupBy(GROUPBY.PAYMENT);
+//
+//        for(Object[] o: list1)
+//        {
+//            System.out.println(o[0] + "  " + o[1]);
+//        }
 
-        List<Order> list = orderDao.filterOrders(STATUS.PENDING,
-                                                PAYMENT.CASH,
-                                                null,null,
-                                                null,null,
-                                                true);
+        Category a= entityManager.find(Category.class,10);
+        Category b= entityManager.find(Category.class,12);
+        List<Category> categories = new ArrayList<>();
+        categories.add(a);
+        categories.add(b);
 
-        for(Order o : list)
+        ProductDao productDao = new ProductDao(entityManager);
+
+        List<Product> list = productDao.filterProducts(categories,1.0,70.0,true,true);
+
+        for(Product o : list)
         {
             System.out.println(o);
-        }
-
-
-        List<Object[]> list1 = orderDao.getOrdersByGroupBy(GROUPBY.PAYMENT);
-
-        for(Object[] o: list1)
-        {
-            System.out.println(o[0] + "  " + o[1]);
         }
 
     }
