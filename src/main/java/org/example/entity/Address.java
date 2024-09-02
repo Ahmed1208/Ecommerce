@@ -1,9 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -31,5 +29,10 @@ public class Address implements Serializable {
     @MapsId
     private User user;
 
-
+    public Address(String street, String city, String country, User user) {
+        this.street = street;
+        this.city = city;
+        this.country = country;
+        this.user = user;
+    }
 }
