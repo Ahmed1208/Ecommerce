@@ -2,10 +2,7 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.example.dao.CategoryDao;
-import org.example.dao.OrderDao;
-import org.example.dao.ProductDao;
-import org.example.dao.UserDao;
+import org.example.dao.*;
 import org.example.entity.*;
 
 import java.util.Date;
@@ -248,17 +245,37 @@ public class Main {
 //        products.forEach(x -> System.out.println(x.getId()));
 
 
-        User user = entityManager.find(User.class,2);
+//        User user = entityManager.find(User.class,2);
+//
+//        for(int i=1;i<5;i++)
+//        {
+//            Product product = entityManager.find(Product.class,i);
+//            UserProductCart userProductCart = new UserProductCart(user,product,5);
+//            entityManager.persist(userProductCart);
+//        }
 
-        for(int i=1;i<5;i++)
+
+        OrderDao orderDao = new OrderDao(entityManager);
+
+        List<Order> list = orderDao.filterOrders(STATUS.PENDING,
+                                                PAYMENT.CASH,
+                                                null,null,
+                                                null,null,
+                                                true);
+
+        for(Order o : list)
         {
-            Product product = entityManager.find(Product.class,i);
-            UserProductCart userProductCart = new UserProductCart(user,product,5);
-            entityManager.persist(userProductCart);
+            System.out.println(o);
         }
 
-        entityManager.getTransaction().begin();
-        entityManager.getTransaction().commit();
+
+        List<Object[]> list1 = orderDao.getOrdersByGroupBy(GROUPBY.PAYMENT);
+
+        for(Object[] o: list1)
+        {
+            System.out.println(o[0] + "  " + o[1]);
+        }
+
     }
 
 }

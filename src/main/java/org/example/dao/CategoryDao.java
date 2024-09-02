@@ -15,7 +15,7 @@ public class CategoryDao extends Repository<Category> {
     }
 
 
-    public Category findByCategoryName(String categoryName) {
+    public Category findCategoryByName(String categoryName) {
         return findBy("name",categoryName).get(0);
     }
 
@@ -33,7 +33,7 @@ public class CategoryDao extends Repository<Category> {
         return q.getResultList();
     }
 
-    public void getCategory(Category c, Set<Category> categorySet)
+    public void extractCategory(Category c, Set<Category> categorySet)
     {
         categorySet.add(c);
         //base cases
@@ -45,7 +45,7 @@ public class CategoryDao extends Repository<Category> {
         //call
         for(Category i : c.getChildCategories())
         {
-            getCategory(i,categorySet);
+            extractCategory(i,categorySet);
         }
 
         //return
@@ -55,7 +55,7 @@ public class CategoryDao extends Repository<Category> {
     public List<Category> getSubCategoriesByCategory(Category parentCategory)
     {
         Set<Category> result = new HashSet<Category>();
-        getCategory(parentCategory, result);
+        extractCategory(parentCategory, result);
         result.remove(parentCategory);
 
         return new ArrayList<Category>(result);

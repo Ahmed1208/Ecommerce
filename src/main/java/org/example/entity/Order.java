@@ -53,4 +53,17 @@ public class Order implements Serializable {
     public int hashCode() {
         return Objects.hash(id, totalPrice, orderDate, status, paymentType, user, OrderProductList);
     }
+
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", totalPrice=" + totalPrice +
+                ", orderDate=" + orderDate +
+                ", status=" + status +
+                ", paymentType=" + paymentType +
+                ", user_id=" + user.getId() +
+                '}';
+    }
 }

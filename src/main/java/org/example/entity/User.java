@@ -9,6 +9,7 @@ import org.hibernate.annotations.LazyToOneOption;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -52,5 +53,18 @@ public class User extends Person implements Serializable {
         this.balance = balance;
         this.dateOfBirth = dateOfBirth;
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Double.compare(balance, user.balance) == 0 && Objects.equals(id, user.id) && Objects.equals(address, user.address) && Objects.equals(dateOfBirth, user.dateOfBirth) && Objects.equals(phone, user.phone) && Objects.equals(balanceLogs, user.balanceLogs) && Objects.equals(orders, user.orders) && Objects.equals(interests, user.interests) && Objects.equals(userProductCarts, user.userProductCarts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, balance, address, dateOfBirth, phone, balanceLogs, orders, interests, userProductCarts);
     }
 }

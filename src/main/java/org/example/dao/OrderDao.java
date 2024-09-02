@@ -28,29 +28,8 @@ public class OrderDao extends Repository<Order>{
         return query.getResultList();
     }
 
-    public List<Order> findOrdersByStatus(STATUS status)
+    public List<Order> filterOrders(STATUS status,PAYMENT payment,Date startDate, Date endDate,Double minPrice,Double maxPrice,boolean sortByPrice)
     {
-        String queryString  = "SELECT o FROM Order o WHERE o.status = :status";
-        Query query = entityManager.createQuery(queryString).setParameter("status", status);
-        return query.getResultList();
-    }
-
-    public List<Order> findOrdersByPayment(PAYMENT payment)
-    {
-        String queryString  = "SELECT o FROM Order o WHERE o.paymentType = :payment";
-        Query query = entityManager.createQuery(queryString).setParameter("payment", payment);
-        return query.getResultList();
-    }
-
-    public List<Order> findOrdersByDateBetween(Date startDate, Date endDate) {
-        String queryString = "SELECT o FROM Order o WHERE o.orderDate BETWEEN :startDate AND :endDate";
-        Query query = entityManager.createQuery(queryString)
-                      .setParameter("startDate", startDate)
-                       .setParameter("endDate", endDate);
-        return query.getResultList();
-    }
-
-    public List<Order> filterOrders(STATUS status,PAYMENT payment,Date startDate, Date endDate) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> query = criteriaBuilder.createQuery(Order.class);
@@ -69,20 +48,34 @@ public class OrderDao extends Repository<Order>{
         if(startDate != null && endDate != null)
             predicates.add( criteriaBuilder.and(criteriaBuilder.between(root.get("orderDate"),startDate,endDate) ) );
 
+        if(minPrice != null && maxPrice != null)
+            predicates.add( criteriaBuilder.and(criteriaBuilder.between(root.get("totalPrice"),minPrice,maxPrice) ) );
 
-        Predicate result = null;
-        for(Predicate p : predicates) {
-            if (result == null) {
-                result = p;
-            } else {
-                result = criteriaBuilder.and(p);
-            }
+
+
+        // Apply predicates to the query
+        if (!predicates.isEmpty()) {
+            query.select(root).where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
         }
-        // Combine all predicates with AND operation
-        if(result == null)
-            query.select(root);
-        else
-            query.select(root).where(result);
+
+
+        if(sortByPrice == true)
+            query.orderBy(criteriaBuilder.asc(root.get("totalPrice") ));
+
+        return entityManager.createQuery(query).getResultList();
+    }
+
+
+    public List<Object[]> getOrdersByGroupBy(GROUPBY gb)
+    {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = criteriaBuilder.createQuery(Object[].class);
+        Root<Order> root = query.from(Order.class);
+
+
+        query.multiselect(root.get("user").get("id"), criteriaBuilder.count(root));
+                query.groupBy(root.get("user").get("id"));
 
 
         return entityManager.createQuery(query).getResultList();

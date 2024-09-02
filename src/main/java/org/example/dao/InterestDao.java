@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InterestDao extends Repository<Interest>{
+
     public InterestDao(EntityManager entityManager) {
         super(Interest.class, entityManager);
     }
@@ -22,7 +23,7 @@ public class InterestDao extends Repository<Interest>{
         return new ArrayList<Interest>(user.getInterests());
     }
 
-    public Interest findByInterestName(String interestName) {
+    public Interest findInterestByName(String interestName) {
         return findBy("name",interestName).get(0);
     }
 
