@@ -81,7 +81,7 @@ class UserDaoTest {
     void userLogin() {
         assertNull(userDao.userLogin("Mo@gmail.com","123"));
         assertNull(userDao.userLogin("Moha@gmail.com","123"));
-        assertNotNull(userDao.userLogin("Mo@gmail.com","12345"));
+        assertNotNull(userDao.userLogin("men3m@yahoo.com","123"));
     }
     @Test
     void deleteUser() {
@@ -94,12 +94,29 @@ class UserDaoTest {
         em.getTransaction().commit();
     }
 
+    @Test
+    void updateUser(){
+        User user=userDao.findUsersByName("Men3m").get(0);
+        user.setPhone("01014789456");
+        em.getTransaction().begin();
+        userDao.update(user);
+        em.getTransaction().commit();
+
+        assertEquals("01014789456",userDao.findById(1).getPhone());
+    }
+
+    @Test
+    void getAllUsers(){
+        List<User> users=userDao.findAll();
+        assertEquals(1,users.size());
+        assertEquals(1,users.get(0).getId());
+    }
 
     @Test
     @Order(2)
     void findUsersPerCity() {
         List<User> user=userDao.findUsersPerCity("Maadi");
-        assertTrue(!user.isEmpty());
+        assertFalse(user.isEmpty());
         assertEquals(1,user.size());
         List<User> user2=userDao.findUsersPerCity("Alex");
         assertTrue(user2.isEmpty());
@@ -119,26 +136,28 @@ class UserDaoTest {
     @Test
     @Order(3)
     void findUserByEmail() {
-        User u=userDao.findUserByEmail("Mo@gmail.com");
+        User u=userDao.findUserByEmail("men3m@yahoo.com");
         assertNotNull(u);
-        assertEquals(4,u.getId());
+        assertEquals(1,u.getId());
     }
 
     @Test
     @Order(4)
     void findUsersByName() {
-        List<User> user=userDao.findUsersByName("mohamed");
-        assertEquals(2,user.size());
-        assertEquals(4,user.get(0).getId());
+        List<User> user=userDao.findUsersByName("Men3m");
+        assertEquals(1,user.size());
+        assertEquals(1,user.get(0).getId());
+        List<User> user1=userDao.findUsersByName("moh");
+        assertEquals(0,user1.size());
     }
 
     @Test
     @Order(5)
     void findUsersByGender() {
         List<User> user=userDao.findUsersByGender(GENDER.MALE);
-        assertEquals(2,user.size());
+        assertEquals(0,user.size());
         List<User> user2=userDao.findUsersByGender(GENDER.FEMALE);
-        assertEquals(0,user2.size());
+        assertEquals(1,user2.size());
 
     }
 }
