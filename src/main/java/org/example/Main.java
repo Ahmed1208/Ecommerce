@@ -2,13 +2,11 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.dao.*;
 import org.example.entity.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Main {
@@ -257,25 +255,41 @@ public class Main {
 
         OrderDao orderDao = new OrderDao(entityManager);
 
-        List<Order> list = orderDao.filterOrders(STATUS.PENDING,
-                                                PAYMENT.CASH,
-                                                null,null,
-                                                null,null,
-                                                true);
+//        List<Order> list = orderDao.filterOrders(STATUS.PENDING,
+//                                                PAYMENT.CASH,
+//                                                null,null,
+//                                                null,null,
+//                                                true);
+//
+//        for(Order o : list)
+//        {
+//            System.out.println(o);
+//        }
 
-        for(Order o : list)
-        {
-            System.out.println(o);
-        }
+//        User user = entityManager.find(User.class,4);
+//        Order order1 = new Order();
+//        order1.setUser(user);
+//        order1.setOrderDate(new Date(2024,4,3));
+//        order1.setStatus(STATUS.PENDING);
+//        order1.setPaymentType(PAYMENT.VISA);
+//        order1.setTotalPrice(5566.0);
+//
+//        entityManager.persist(order1);
+//        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().commit();
 
 
-        List<Object[]> list1 = orderDao.getOrdersByGroupBy(GROUPBY.PAYMENT);
+        Map<Object,List<Integer>> list1 = orderDao.getOrdersByGroupBy("o.paymentType");
 
-        for(Object[] o: list1)
-        {
-            System.out.println(o[0] + "  " + o[1]);
+
+        for (Map.Entry<Object, List<Integer>> entry : list1.entrySet()) {
+            Object payment =  entry.getKey();
+            List<Integer> orderIds = entry.getValue();
+            System.out.println("Payment: " + payment + ", Order ID: " +orderIds);
         }
 
     }
 
 }
+
+

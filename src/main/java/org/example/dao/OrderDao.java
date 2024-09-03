@@ -10,9 +10,7 @@ import jakarta.persistence.criteria.Root;
 
 import org.example.entity.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class OrderDao extends Repository<Order>{
 
@@ -66,19 +64,26 @@ public class OrderDao extends Repository<Order>{
     }
 
 
-    public List<Object[]> getOrdersByGroupBy(GROUPBY gb)
+    public <T> Map<T, List<Integer>> getOrdersByGroupBy(Object t)
     {
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Object[]> query = criteriaBuilder.createQuery(Object[].class);
-        Root<Order> root = query.from(Order.class);
+        String s = "SELECT " + t + ", o.id FROM orders o";
 
+        Query q = entityManager.createNativeQuery(s);
 
-        query.multiselect(root.get("user").get("id"), criteriaBuilder.count(root));
-                query.groupBy(root.get("user").get("id"));
+        List<Object[]> list = q.getResultList();
 
+        Map<T, List<Integer>> entry = new HashMap<T, List<Integer>>();
 
-        return entityManager.createQuery(query).getResultList();
+        for(Object[] objects: list)
+        {
+            if(entry.get((T) objects[0]) == null)
+                entry.put((T) objects[0],new ArrayList<Integer>());
+
+            entry.get((T) objects[0]).add((Integer) objects[1]);
+        }
+
+        return entry;
     }
 
 }
