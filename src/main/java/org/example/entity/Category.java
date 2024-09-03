@@ -34,7 +34,7 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "parentCategory",fetch = FetchType.LAZY)
     private Set<Category> childCategories ;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     private Set<Product> products;
 
 

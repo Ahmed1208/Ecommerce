@@ -25,7 +25,7 @@ public class Address implements Serializable {
     @Column(nullable=false)
     private String country;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private User user;
 

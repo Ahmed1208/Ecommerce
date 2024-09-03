@@ -26,7 +26,7 @@ public class BalanceLogs implements Serializable {
     @Column(name="payment_type",nullable = false)
     private PAYMENT paymentType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable=false)
     private User user;
 

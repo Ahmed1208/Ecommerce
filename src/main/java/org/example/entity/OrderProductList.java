@@ -17,7 +17,7 @@ public class OrderProductList  implements Serializable {
     @AttributeOverrides( {
             @AttributeOverride(name="orderId", column=@Column(name="order_id", nullable=false,insertable=false, updatable=false) ),
             @AttributeOverride(name="productId", column=@Column(name="product_id", nullable=false,insertable=false, updatable=false) ) } )
-    private OrderProductId orderProductId;
+    private OrderProductId orderProductId = new OrderProductId();
 
     @Column(name="product_quantity",nullable=false)
     private Integer productQuantity;
@@ -25,11 +25,13 @@ public class OrderProductList  implements Serializable {
     @Column(name="product_price",nullable = false)
     private Double productPrice;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("productId")
     @JoinColumn(nullable = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("orderId")
     @JoinColumn(nullable=false)
     private Order order;
 

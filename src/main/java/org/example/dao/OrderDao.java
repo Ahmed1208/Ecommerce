@@ -50,7 +50,6 @@ public class OrderDao extends Repository<Order>{
             predicates.add( criteriaBuilder.and(criteriaBuilder.between(root.get("totalPrice"),minPrice,maxPrice) ) );
 
 
-
         // Apply predicates to the query
         if (!predicates.isEmpty()) {
             query.select(root).where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));

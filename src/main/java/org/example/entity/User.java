@@ -25,6 +25,7 @@ public class User extends Person implements Serializable {
 
     private double balance;
 
+    //will be eager by default
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(nullable = false)
     private Address address;
@@ -35,7 +36,7 @@ public class User extends Person implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<BalanceLogs> balanceLogs;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<Order> orders;
 
     @ManyToMany(fetch=FetchType.LAZY)
@@ -45,7 +46,7 @@ public class User extends Person implements Serializable {
     private Set<Interest> interests;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<UserProductCart> userProductCarts;
 
     public User(String name, String email, String password, GENDER gender, Double balance, Date dateOfBirth, String phone) {

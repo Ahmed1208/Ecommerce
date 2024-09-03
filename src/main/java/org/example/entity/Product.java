@@ -40,10 +40,10 @@ public class Product implements Serializable {
     @JoinColumn(nullable=false)
     private Category category;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
     private Set<OrderProductList> OrderProductList;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
     private Set<UserProductCart> userProductCarts;
 
     @Override

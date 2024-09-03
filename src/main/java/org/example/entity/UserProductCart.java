@@ -25,12 +25,12 @@ public class UserProductCart  implements Serializable {
     @Column(name="product_quantity", nullable=false)
     private Integer productQuantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productId")
     @JoinColumn(nullable = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     @JoinColumn(nullable = false)
     private User user;

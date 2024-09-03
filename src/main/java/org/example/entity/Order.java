@@ -34,11 +34,11 @@ public class Order implements Serializable {
     @Column(nullable=false)
     private PAYMENT paymentType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable=false)
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",fetch = FetchType.LAZY)
     private Set<OrderProductList> OrderProductList;
 
     @Override
