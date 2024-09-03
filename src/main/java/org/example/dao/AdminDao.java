@@ -7,13 +7,18 @@ import org.example.entity.GENDER;
 import org.example.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AdminDao extends Repository<Admin> {
 
     public AdminDao(EntityManager entityManager) {super(Admin.class, entityManager);}
 
-    public Admin findAdminByEmail(String email){
-        return findBy("email",email).get(0);
+    public Optional<Admin> findAdminByEmail(String email){
+        List<Admin> list = findBy("email",email);
+        if(list.isEmpty())
+            return Optional.ofNullable( null );
+        else
+        return Optional.ofNullable(list.get(0));
     }
     public List<Admin> findAdminsByName(String name){
         return findBy("name",name);

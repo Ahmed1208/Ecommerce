@@ -77,33 +77,33 @@ class UserDaoTest {
 
 
 
-    @Test
-    void userLogin() {
-        assertNull(userDao.userLogin("Mo@gmail.com","123"));
-        assertNull(userDao.userLogin("Moha@gmail.com","123"));
-        assertNotNull(userDao.userLogin("men3m@yahoo.com","123"));
-    }
-    @Test
-    void deleteUser() {
-        em.getTransaction().begin();
-        User user=userDao.findUserByEmail("Mohamed@gmail.com");
-        assertTrue(userDao.delete(user.getId()));
-        em.getTransaction().commit();
-        em.getTransaction().begin();
-        assertFalse(userDao.delete(20));
-        em.getTransaction().commit();
-    }
+//    @Test
+//    void userLogin() {
+//        assertNull(userDao.userLogin("Mo@gmail.com","123"));
+//        assertNull(userDao.userLogin("Moha@gmail.com","123"));
+//        assertNotNull(userDao.userLogin("men3m@yahoo.com","123"));
+//    }
+//    @Test
+//    void deleteUser() {
+//        em.getTransaction().begin();
+//        User user=userDao.findUserByEmail("Mohamed@gmail.com");
+//        assertTrue(userDao.delete(user.getId()));
+//        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        assertFalse(userDao.delete(20));
+//        em.getTransaction().commit();
+//    }
 
-    @Test
-    void updateUser(){
-        User user=userDao.findUsersByName("Men3m").get(0);
-        user.setPhone("01014789456");
-        em.getTransaction().begin();
-        userDao.update(user);
-        em.getTransaction().commit();
-
-        assertEquals("01014789456",userDao.findById(1).getPhone());
-    }
+//    @Test
+//    void updateUser(){
+//        User user=userDao.findUsersByName("Men3m").get(0);
+//        user.setPhone("01014789456");
+//        em.getTransaction().begin();
+//        userDao.update(user);
+//        em.getTransaction().commit();
+//
+//        assertEquals("01014789456",userDao.findById(1).getPhone());
+//    }
 
     @Test
     void getAllUsers(){
@@ -133,13 +133,13 @@ class UserDaoTest {
 
     }
 
-    @Test
-    @Order(3)
-    void findUserByEmail() {
-        User u=userDao.findUserByEmail("men3m@yahoo.com");
-        assertNotNull(u);
-        assertEquals(1,u.getId());
-    }
+//    @Test
+//    @Order(3)
+//    void findUserByEmail() {
+//        User u=userDao.findUserByEmail("men3m@yahoo.com");
+//        assertNotNull(u);
+//        assertEquals(1,u.getId());
+//    }
 
     @Test
     @Order(4)

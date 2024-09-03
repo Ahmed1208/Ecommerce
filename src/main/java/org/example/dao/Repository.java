@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Repository<T> {
     private final Class<T> className;
@@ -19,9 +20,9 @@ public abstract class Repository<T> {
         this.className = className;
     }
 
-    public T findById(int id)
+    public Optional<T> findById(int id)
     {
-        return entityManager.find(className, id);
+        return Optional.ofNullable( entityManager.find(className, id) );
     }
 
     public List<T> findAll()

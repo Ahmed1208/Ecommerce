@@ -16,7 +16,6 @@ import java.io.Serializable;
 public class BalanceLogs implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
@@ -27,7 +26,7 @@ public class BalanceLogs implements Serializable {
     private PAYMENT paymentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable=false)
+    @MapsId("id")    //this id is refering to the Integer id here in this class
     private User user;
 
     public BalanceLogs(Double amount, PAYMENT paymentType, User user) {

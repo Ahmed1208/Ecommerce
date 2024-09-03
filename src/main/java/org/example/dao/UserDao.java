@@ -2,10 +2,12 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import org.example.entity.Admin;
 import org.example.entity.GENDER;
 import org.example.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserDao extends Repository<User> {
 
@@ -14,15 +16,6 @@ public class UserDao extends Repository<User> {
             super(User.class, entityManager);
         }
 
-        public User userLogin(String email,String password){
-                User user = findUserByEmail(email);
-                if(user != null && user.getPassword().equals(password)){
-                        return user;
-                }else {
-                        return null;
-                }
-
-        }
 
         @Override
         public boolean delete(int id) {
@@ -45,10 +38,13 @@ public class UserDao extends Repository<User> {
                 return query.getResultList();
         }
 
-        public User findUserByEmail(String email){
-                List<User> users=findBy("email",email);
+        public Optional<User> findUserByEmail(String email){
 
-                return users.isEmpty()?null:users.get(0);
+                List<User> list = findBy("email",email);
+                if(list.isEmpty())
+                        return Optional.ofNullable( null );
+                else
+                        return Optional.ofNullable(list.get(0));
         }
         public List<User> findUsersByName(String name){
                 return findBy("name",name);

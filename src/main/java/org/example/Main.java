@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.dao.*;
 import org.example.entity.*;
+import org.example.service.UserService;
 
 import java.util.*;
 
@@ -29,6 +30,20 @@ public class Main {
 
         //return
 
+    }
+
+
+    public static void printGroupByOrder(EntityManager entityManager)
+    {
+        OrderDao orderDao = new OrderDao(entityManager);
+        Map<Object,List<Integer>> list1 = orderDao.getOrdersByGroupBy(GROUPBY.GROUPBYDATE);
+
+
+        for (Map.Entry<Object, List<Integer>> entry : list1.entrySet()) {
+            Object payment =  entry.getKey();
+            List<Integer> orderIds = entry.getValue();
+            System.out.println("Payment: " + payment + ", Order ID: " +orderIds);
+        }
     }
 
 
@@ -286,11 +301,11 @@ public class Main {
 //            System.out.println(o[0] + "  " + o[1]);
 //        }
 
-        Category a= entityManager.find(Category.class,10);
-        Category b= entityManager.find(Category.class,12);
-        List<Category> categories = new ArrayList<>();
-        categories.add(a);
-        categories.add(b);
+//        Category a= entityManager.find(Category.class,10);
+//        Category b= entityManager.find(Category.class,12);
+//        List<Category> categories = new ArrayList<>();
+//        categories.add(a);
+//        categories.add(b);
 
 //        List<Order> list = orderDao.filterOrders(STATUS.PENDING,
 //                                                PAYMENT.CASH,
@@ -316,14 +331,29 @@ public class Main {
 //        entityManager.getTransaction().commit();
 
 
-        Map<Object,List<Integer>> list1 = orderDao.getOrdersByGroupBy("o.paymentType");
+        User user = new User("ahmed","ahmed@yahoo.com", "123456",GENDER.MALE, 0.0, new Date(2024,2,22), "012345");
+
+        UserDao userDao = new UserDao(entityManager);
+        userDao.create(user);
+//
+//        userDao.findById(1).ifPresent(user -> System.out.println(user));
+
+            entityManager.getTransaction().begin();
+            entityManager.getTransaction().commit();
 
 
-        for (Map.Entry<Object, List<Integer>> entry : list1.entrySet()) {
-            Object payment =  entry.getKey();
-            List<Integer> orderIds = entry.getValue();
-            System.out.println("Payment: " + payment + ", Order ID: " +orderIds);
-        }
+
+
+//        UserService userService = new UserService(entityManager);
+//
+//
+//        try {
+//            userService.loginCheck("ahmed@yahoo.com","123456");
+//        }catch (RuntimeException e)
+//        {
+//            e.printStackTrace();
+//        }
+
 
     }
 

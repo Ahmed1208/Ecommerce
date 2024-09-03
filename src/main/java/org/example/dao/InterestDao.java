@@ -9,6 +9,7 @@ import org.example.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InterestDao extends Repository<Interest>{
 
@@ -23,8 +24,13 @@ public class InterestDao extends Repository<Interest>{
         return new ArrayList<Interest>(user.getInterests());
     }
 
-    public Interest findInterestByName(String interestName) {
-        return findBy("name",interestName).get(0);
+    public Optional<Interest> findInterestByName(String interestName) {
+
+        List<Interest> list = findBy("name",interestName);
+        if(list.isEmpty())
+            return Optional.ofNullable( null );
+        else
+            return Optional.ofNullable(list.get(0));
     }
 
 }

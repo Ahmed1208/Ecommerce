@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.example.Factory;
+import org.example.entity.Admin;
 import org.example.entity.Category;
 
 import java.util.*;
@@ -15,8 +16,13 @@ public class CategoryDao extends Repository<Category> {
     }
 
 
-    public Category findCategoryByName(String categoryName) {
-        return findBy("name",categoryName).get(0);
+    public Optional<Category> findCategoryByName(String categoryName) {
+
+        List<Category> list = findBy("name",categoryName);
+        if(list.isEmpty())
+            return Optional.ofNullable( null );
+        else
+            return Optional.ofNullable(list.get(0));
     }
 
     public List<Category> getParentCategories()

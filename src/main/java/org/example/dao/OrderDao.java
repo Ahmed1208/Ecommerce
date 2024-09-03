@@ -63,8 +63,26 @@ public class OrderDao extends Repository<Order>{
     }
 
 
-    public <T> Map<T, List<Integer>> getOrdersByGroupBy(Object t)
+    public <T> Map<T, List<Integer>> getOrdersByGroupBy(GROUPBY type)
     {
+        Object t = null;
+
+        switch(type)
+        {
+            case GROUPBYPAYMENT:
+                t = "o.paymentType";
+                break;
+            case GROUPBYSTATUS:
+                t = "o.status";
+                break;
+            case GROUPBYUSER:
+                t = "o.user_id";
+                break;
+            case GROUPBYDATE:
+                t = "o.order_date";
+                break;
+        }
+
 
         String s = "SELECT " + t + ", o.id FROM orders o";
 

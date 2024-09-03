@@ -27,7 +27,6 @@ public class User extends Person implements Serializable {
 
     //will be eager by default
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(nullable = false)
     private Address address;
 
     private Date dateOfBirth;
