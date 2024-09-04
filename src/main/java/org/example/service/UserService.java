@@ -93,4 +93,18 @@ public class UserService {
         }
     }
 
+    public User findUserById(int id) throws RuntimeException
+    {
+
+        Optional<User> user = userDao.findById(id);
+
+        if(user.isPresent())
+        {
+            return user.get();
+        }
+        else{
+            throw new RuntimeException("User not found");
+        }
+    }
+
 }

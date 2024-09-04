@@ -27,6 +27,16 @@
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userDetails</servlet-name>
+        <servlet-class>org.example.servlet.UserDetailsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userDetails</servlet-name>
+        <url-pattern>/user-details</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->
