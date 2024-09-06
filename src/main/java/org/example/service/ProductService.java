@@ -1,12 +1,14 @@
 package org.example.service;
 
 import jakarta.persistence.EntityManager;
+import org.example.bean.ProductBean;
 import org.example.dao.CategoryDao;
 import org.example.dao.ProductDao;
 import org.example.dao.UserDao;
 import org.example.entity.Category;
 import org.example.entity.Product;
 import org.example.entity.User;
+import org.example.mapper.ProductMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +23,10 @@ public class ProductService {
         this.productDao = new ProductDao(entityManager);
         this.categoryDao= new CategoryDao(entityManager);
     }
-    public Product addNewProduct(Product product) throws RuntimeException
+    public Product addNewProduct(ProductBean productbean) throws RuntimeException
     {
+        ProductMapper productMapper=new ProductMapper(categoryDao);
+        Product product= productMapper.toEntity(productbean);
         try {
             em.getTransaction().begin();
             productDao.create(product);

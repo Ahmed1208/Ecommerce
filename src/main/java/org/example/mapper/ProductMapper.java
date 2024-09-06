@@ -45,9 +45,11 @@ public class ProductMapper {
 
         return new Product(
                 bean.getProductName(),
+                bean.getDescription(),
                 bean.getQuantity(),
                 bean.getPrice(),
-                category
+                category,
+                bean.getImage()
         );
     }
 }

@@ -37,6 +37,15 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public Product(String productName,String description, Integer quantity, Double price, Category category,String image) {
+        this.productName = productName;
+        this.description= description;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+        this.image=image;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable=false)
     private Category category;
