@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -45,6 +46,7 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
     private Set<UserProductCart> userProductCarts;
+
 
     @Override
     public String toString() {
