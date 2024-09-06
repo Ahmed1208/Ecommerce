@@ -354,7 +354,7 @@ public class Main {
         LocalDate dateFromString = LocalDate.parse("2025-09-15");
         System.out.println(dateFromString);
         User user = entityManager.find(User.class,1);
-        user.setDateOfBirth(dateFromString);
+        //user.setDateOfBirth(dateFromString);
 
         entityManager.merge(user);
         entityManager.getTransaction().begin();

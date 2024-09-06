@@ -42,8 +42,8 @@ public class UserService {
 
                if(!userDao.findUserByEmail(email).isPresent()){
                    GENDER g=gender.equals("Female")?GENDER.FEMALE:GENDER.MALE;
-                   LocalDate date=LocalDate.parse(dob);
-                   user = new User(name,email,password,g,0.0,date,phone);
+
+                   user = new User(name,email,password,g,0.0,dob,phone);
                    Address a = new Address(street,city,country,user);
                    user.setAddress(a);
                    try {
