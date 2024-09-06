@@ -25,7 +25,7 @@ public class ProductService {
     }
     public Product addNewProduct(ProductBean productbean) throws RuntimeException
     {
-        ProductMapper productMapper=new ProductMapper(categoryDao);
+        ProductMapper productMapper=new ProductMapper(categoryDao,em);
         Product product= productMapper.toEntity(productbean);
         try {
             em.getTransaction().begin();
