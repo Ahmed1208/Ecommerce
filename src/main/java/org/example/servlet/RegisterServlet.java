@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.example.entity.User;
 import org.example.service.UserService;
 
@@ -29,18 +30,9 @@ public class RegisterServlet extends HttpServlet {
         UserService userService=new UserService(emf.createEntityManager());
         User u=  userService.registerNewUser(name, email, password, street, city, country, phone, dob, gender);
         if (u!=null){
-            resp.setContentType("text/html");
-            PrintWriter out = resp.getWriter();
-            out.println("<h1>Registration Details</h1>");
-            out.println("<p>Name: " + name + "</p>");
-            out.println("<p>Email: " + email + "</p>");
-            out.println("<p>Password: " + password + "</p>");
-            out.println("<p>Gender: " + gender + "</p>");
-            out.println("<p>DOB: " + dob + "</p>");
-            out.println("<p>Street: " + street + "</p>");
-            out.println("<p>City: " + city + "</p>");
-            out.println("<p>Country: " + country + "</p>");
-            out.println("<p>Phone: " + phone + "</p>");
+            HttpSession session= req.getSession(true);
+            session.setAttribute("user", u);
+            req.getRequestDispatcher("/home.jsp").forward(req, resp);
 
         }else {
             resp.setContentType("text/html");
