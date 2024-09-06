@@ -11,6 +11,7 @@ import java.security.PublicKey;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class UserService {
@@ -41,15 +42,8 @@ public class UserService {
 
                if(!userDao.findUserByEmail(email).isPresent()){
                    GENDER g=gender.equals("Female")?GENDER.FEMALE:GENDER.MALE;
-                   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                   java.util.Date parsed = null;
-                   try {
-                       parsed = format.parse(dob);
-                   } catch (ParseException e) {
-                       throw new RuntimeException(e);
-                   }
-                   Date date = new java.sql.Date(parsed.getTime());
-                    user = new User(name,email,password,g,0.0,date,phone);
+                   LocalDate date=LocalDate.parse(dob);
+                   user = new User(name,email,password,g,0.0,date,phone);
                    Address a = new Address(street,city,country,user);
                    user.setAddress(a);
                    try {

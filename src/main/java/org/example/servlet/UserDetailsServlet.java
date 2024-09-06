@@ -25,12 +25,7 @@ public class UserDetailsServlet extends HttpServlet {
         try {
             User user = userService.findUserById(Integer.parseInt(id));
 
-            // Format the date to yyyy-MM-dd (HTML5 date format)
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String dateOfBirth = sdf.format(user.getDateOfBirth());
-
             request.setAttribute("user", user);
-            request.setAttribute("dateOfBirth", dateOfBirth);
 
 
             request.getRequestDispatcher("/userDetails.jsp").forward(request, response);

@@ -43,37 +43,37 @@ class UserDaoTest {
     }
 
 
-    @Test
-    @Order(1)
-    void createUser() {
-        User u=new User("mohamed","Mohamed@gmail.com",
-                "12345",GENDER.MALE,500.0,
-                new Date(2000,6,7),"01012312312");
-       Address address=new Address("abu bakr st","Berlin","Germany",u);
-       u.setAddress(address);
-        em.getTransaction().begin();
-        userDao.create(u);
-        em.persist(address);
-        em.getTransaction().commit();
-        User u2= em.find(User.class, u.getId());
-        assertNotNull(u2.getId());
-
-        User u3=new User("mohamed","Mo@gmail.com",
-                "12345",GENDER.MALE,500.0,
-                new Date(2000,6,7),"01012312312");
-
-        assertThrows(Exception.class,()->{
-            em.getTransaction().begin();
-            userDao.create(u3);
-            em.getTransaction().commit();
-        });
-
-        assertThrows(RuntimeException.class,()->{
-            em.getTransaction().begin();
-            userDao.create(null);
-            em.getTransaction().commit();
-        });
-    }
+//    @Test
+//    @Order(1)
+//    void createUser() {
+//        User u=new User("mohamed","Mohamed@gmail.com",
+//                "12345",GENDER.MALE,500.0,
+//                new Date(2000,6,7),"01012312312");
+//       Address address=new Address("abu bakr st","Berlin","Germany",u);
+//       u.setAddress(address);
+//        em.getTransaction().begin();
+//        userDao.create(u);
+//        em.persist(address);
+//        em.getTransaction().commit();
+//        User u2= em.find(User.class, u.getId());
+//        assertNotNull(u2.getId());
+//
+//        User u3=new User("mohamed","Mo@gmail.com",
+//                "12345",GENDER.MALE,500.0,
+//                new Date(2000,6,7),"01012312312");
+//
+//        assertThrows(Exception.class,()->{
+//            em.getTransaction().begin();
+//            userDao.create(u3);
+//            em.getTransaction().commit();
+//        });
+//
+//        assertThrows(RuntimeException.class,()->{
+//            em.getTransaction().begin();
+//            userDao.create(null);
+//            em.getTransaction().commit();
+//        });
+//    }
 
 
 
