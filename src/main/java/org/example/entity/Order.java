@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public class Order implements Serializable {
     private Double totalPrice;
 
     @Column(name="order_date",nullable=false)
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
@@ -40,6 +40,26 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "order",fetch = FetchType.LAZY)
     private Set<OrderProductList> OrderProductList;
+
+    public Order(Double totalPrice, LocalDate orderDate, STATUS status, PAYMENT paymentType, User user) {
+        this.totalPrice = totalPrice;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.paymentType = paymentType;
+        this.user = user;
+    }
+    public Order(Double totalPrice, String orderDate, STATUS status, PAYMENT paymentType, User user) {
+        this.totalPrice = totalPrice;
+        this.orderDate = LocalDate.parse(orderDate);
+        this.status = status;
+        this.paymentType = paymentType;
+        this.user = user;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = LocalDate.parse(orderDate);
+
+    }
 
     @Override
     public boolean equals(Object o) {
