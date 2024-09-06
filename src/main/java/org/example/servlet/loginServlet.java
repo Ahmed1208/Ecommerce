@@ -15,8 +15,8 @@ public class loginServlet extends HttpServlet {
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+//        response.setContentType("text/html");
+//        PrintWriter out = response.getWriter();
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -27,12 +27,18 @@ public class loginServlet extends HttpServlet {
 
 
         try {
-            userService.loginCheck(email,password);
-            out.println("DONEEEEEEEEEEEEEEEEEEEEE");
+
+           User user= userService.loginCheck(email,password);
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+            response.sendRedirect("/ecommerce");
         }
         catch (RuntimeException e)
         {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
             out.println(e);
+            request.getRequestDispatcher("login.html").include(request, response);
         }
 
 

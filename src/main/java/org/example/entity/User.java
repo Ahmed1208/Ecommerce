@@ -96,7 +96,9 @@ public class User extends Person implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", balance=" + balance +
-                ", address=" + address +
+                ", street=" + address.getStreet() +
+                ", city=" + address.getCity() +
+                ", country=" + address.getCountry() +
                 ", dateOfBirth=" + dateOfBirth +
                 ", phone='" + phone + '\'' +
                 '}';

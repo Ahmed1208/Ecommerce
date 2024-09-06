@@ -15,7 +15,7 @@ public class UserDashboardServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session != null) {
             User user = (User) session.getAttribute("user");
-            resp.getWriter().println(user);
+            resp.getWriter().println(user.toString());
            // resp.sendRedirect( "/dashboard");
         }else {
             resp.sendRedirect(getServletContext().getContextPath() + "/login.html");
