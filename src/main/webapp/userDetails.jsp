@@ -83,8 +83,8 @@
                 <!-- Date of Birth -->
                 <div class="data-item">
                     <label>Date of Birth:</label>
-                    <span>${requestScope.dateOfBirth}</span>
-<%--                    <INPUT TYPE="text" name="dateOfBirth" value="${requestScope.dateOfBirth}">--%>
+                    <span>${requestScope.user.dateOfBirth}</span>
+<%--                    <INPUT TYPE="text" name="dateOfBirth" value="${requestScope.user.dateOfBirth}">--%>
                 </div>
 
                 <!-- Balance -->

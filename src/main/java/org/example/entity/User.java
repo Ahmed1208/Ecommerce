@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "user")
@@ -29,8 +31,7 @@ public class User extends Person implements Serializable {
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private Address address;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String phone;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -49,7 +50,7 @@ public class User extends Person implements Serializable {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<UserProductCart> userProductCarts;
 
-    public User(String name, String email, String password, GENDER gender, Double balance, Date dateOfBirth, String phone) {
+    public User(String name, String email, String password, GENDER gender, Double balance, LocalDate dateOfBirth, String phone) {
         super(name, email, password, gender);
         this.balance = balance;
         this.dateOfBirth = dateOfBirth;
