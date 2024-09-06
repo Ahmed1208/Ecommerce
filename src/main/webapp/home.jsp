@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <%@ page session="false" %>
     <meta charset="utf-8">
     <title>Fruitables - Vegetable Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">

@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
         if (u!=null){
             HttpSession session= req.getSession(true);
             session.setAttribute("user", u);
-            req.getRequestDispatcher("/home.jsp").forward(req, resp);
+            resp.sendRedirect("/ecommerce");
 
         }else {
             resp.setContentType("text/html");
