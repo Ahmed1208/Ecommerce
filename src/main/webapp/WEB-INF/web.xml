@@ -47,9 +47,21 @@
         <servlet-name>updateUser</servlet-name>
         <url-pattern>/update-user</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>org.example.servlet.UserDashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->
-
+<welcome-file-list>
+    <welcome-file>home.jsp</welcome-file>
+</welcome-file-list>
 
 </web-app>

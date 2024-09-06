@@ -5,14 +5,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jdk.vm.ci.meta.Local;
+
 import org.example.entity.User;
 import org.example.service.UserService;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
+
 
 public class updateUserServlet extends HttpServlet {
 
