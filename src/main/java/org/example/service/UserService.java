@@ -100,10 +100,29 @@ public class UserService {
 
         if(user.isPresent())
         {
+            System.out.println("Birthdate: " + user.get().getDateOfBirth());
             return user.get();
         }
         else{
             throw new RuntimeException("User not found");
+        }
+    }
+
+    public void updateUser(User user) throws RuntimeException
+    {
+        try {
+            em.getTransaction().begin();
+            System.out.println("transatction has begun");
+            userDao.update(user);
+            System.out.println("merge operation applied");
+
+            em.getTransaction().commit();
+            System.out.println("commit done");
+
+        }catch (RuntimeException e)
+        {
+            System.out.println("exception happened, commit is rolled back");
+            throw new RuntimeException("Can't update this user");
         }
     }
 

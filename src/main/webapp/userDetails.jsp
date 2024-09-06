@@ -48,40 +48,60 @@
     <c:if test="${not empty user}">
         <h2>User Information</h2>
         <div class="data-container">
-            <!-- Name -->
-            <div class="data-item">
-                <label>Name:</label>
-                <span>${requestScope.user.name}</span>
-            </div>
-            <!-- Email -->
-            <div class="data-item">
-                <label>Email:</label>
-                <span>${requestScope.user.email}</span>
-            </div>
+            <form method="post" action="/ecommerce/submitUser.jsp">
 
-            <!-- Password (Masked) -->
-            <div class="data-item">
-                <label>Password:</label>
-                <span>${requestScope.user.password}</span>
-            </div>
+                <!-- ID -->
+                <div class="data-item">
+                    <label>ID:</label>
+                    <span>${requestScope.user.id}</span>
+                    <INPUT TYPE="hidden" name="id" value="${requestScope.user.id}">
+                </div>
 
-            <!-- Phone Number -->
-            <div class="data-item">
-                <label>Phone Number:</label>
-                <span>${requestScope.user.phone}</span>
-            </div>
+                <!-- Name -->
+                <div class="data-item">
+                    <label>Name:</label>
+                    <INPUT TYPE="text" name="name" value="${requestScope.user.name}">
+                </div>
+                <!-- Email -->
+                <div class="data-item">
+                    <label>Email:</label>
+                    <INPUT TYPE="email" name="email" value="${requestScope.user.email}">
+                </div>
 
-            <!-- Date of Birth -->
-            <div class="data-item">
-                <label>Date of Birth:</label>
-                <span>${requestScope.user.dateOfBirth}</span>
-            </div>
+                <!-- Password (Masked) -->
+                <div class="data-item">
+                    <label>Password:</label>
+                    <INPUT TYPE="text" name="password" value="${requestScope.user.password}" required>
+                </div>
 
-            <!-- Balance -->
-            <div class="data-item">
-                <label>Balance:</label>
-                <span>${requestScope.user.balance}</span>
-            </div>
+                <!-- Phone Number -->
+                <div class="data-item">
+                    <label>Phone Number:</label>
+                    <INPUT TYPE="text" name="phone" value="${requestScope.user.phone}">
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="data-item">
+                    <label>Date of Birth:</label>
+                    <span>${requestScope.dateOfBirth}</span>
+<%--                    <INPUT TYPE="text" name="dateOfBirth" value="${requestScope.dateOfBirth}">--%>
+                </div>
+
+                <!-- Balance -->
+                <div class="data-item">
+                    <label>Balance:</label>
+                    <INPUT TYPE="text" name="balance" value="${requestScope.user.balance}">
+                </div>
+
+                <!-- Gender -->
+                <div class="data-item">
+                    <label>Gender:</label>
+                    <INPUT TYPE="text" name="gender" value="${requestScope.user.gender}">
+                </div>
+
+                <BR> <INPUT type="submit" value="Update">
+
+            </form>
         </div>
     </c:if>
 

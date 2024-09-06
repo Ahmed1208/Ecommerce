@@ -37,6 +37,16 @@
         <servlet-name>userDetails</servlet-name>
         <url-pattern>/user-details</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>updateUser</servlet-name>
+        <servlet-class>org.example.servlet.updateUserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>updateUser</servlet-name>
+        <url-pattern>/update-user</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->

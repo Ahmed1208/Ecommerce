@@ -21,7 +21,7 @@ public class Interest implements Serializable {
     @Column(nullable=false)
     private String name;
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name="user_has_interests", catalog="ecommerce", joinColumns = {
             @JoinColumn(name="interest_id", nullable=false) }, inverseJoinColumns = {
             @JoinColumn(name="user_id", nullable=false) })

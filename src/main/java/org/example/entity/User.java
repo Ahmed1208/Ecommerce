@@ -29,6 +29,7 @@ public class User extends Person implements Serializable {
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private Address address;
 
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
     private String phone;
 
@@ -38,7 +39,7 @@ public class User extends Person implements Serializable {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<Order> orders;
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name="user_has_interests", catalog="ecommerce", joinColumns = {
             @JoinColumn(name="user_id", nullable=false) }, inverseJoinColumns = {
             @JoinColumn(name="interest_id", nullable=false) })

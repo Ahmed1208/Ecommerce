@@ -10,34 +10,34 @@ import org.example.service.UserService;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class UserDetailsServlet extends HttpServlet {
+public class updateUserServlet extends HttpServlet {
 
     @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        String id = request.getParameter("userId");
+        User user = (User) request.getAttribute("userBean");
+
+        //need to delete this line
+        user.setDateOfBirth(new Date(2012,05,6));
+
+        System.out.println("printing user id inside log from updateUserServlet " + user.getId());
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
         UserService userService = new UserService(emf.createEntityManager());
+        System.out.println("entity manager created");
 
         try {
-            User user = userService.findUserById(Integer.parseInt(id));
-
-            // Format the date to yyyy-MM-dd (HTML5 date format)
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String dateOfBirth = sdf.format(user.getDateOfBirth());
-
-            request.setAttribute("user", user);
-            request.setAttribute("dateOfBirth", dateOfBirth);
-
-
+            userService.updateUser(user);
             request.getRequestDispatcher("/userDetails.jsp").forward(request, response);
+
         }catch (RuntimeException e)
         {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher("/userDetails.jsp").forward(request, response);
         }
+
     }
 }
