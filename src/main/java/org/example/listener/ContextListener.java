@@ -4,6 +4,12 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+import org.example.entity.Category;
+import org.example.mapper.CategoryPropertyEditor;
+import org.example.mapper.LocalDatePropertyEditor;
+
+import java.beans.PropertyEditorManager;
+import java.time.LocalDate;
 
 public class ContextListener implements ServletContextListener {
 
@@ -17,6 +23,9 @@ public class ContextListener implements ServletContextListener {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
 
         sce.getServletContext().setAttribute("emf",entityManagerFactory);
+
+        PropertyEditorManager.registerEditor(LocalDate.class, LocalDatePropertyEditor.class);
+        PropertyEditorManager.registerEditor(Category.class, CategoryPropertyEditor.class);
 
     }
 

@@ -65,19 +65,6 @@ public class User extends Person implements Serializable {
         this.phone = phone;
     }
 
-    // Custom setter to handle String input from form (for JSP)
-    public void setDateOfBirth(String dateOfBirth) {
-        if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
-            this.dateOfBirth = LocalDate.parse(dateOfBirth);
-        }
-    }
-
-//    public void setDateOfBirth(LocalDate dateOfBirth) {
-//        this.dateOfBirth = dateOfBirth;
-//    }
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

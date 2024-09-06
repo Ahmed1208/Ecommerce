@@ -332,7 +332,7 @@ public class Main {
 //        entityManager.getTransaction().commit();
 
 
-        User user1 = new User("ahmed","ahmed@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
+        User user1 = new User("ahmed","ahmedali@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
 //
         entityManager.getTransaction().begin();
 //
@@ -354,7 +354,7 @@ public class Main {
         LocalDate dateFromString = LocalDate.parse("2025-09-15");
         System.out.println(dateFromString);
         User user = entityManager.find(User.class,1);
-        //user.setDateOfBirth(dateFromString);
+        user.setDateOfBirth(dateFromString);
 
         entityManager.merge(user);
         entityManager.getTransaction().begin();
