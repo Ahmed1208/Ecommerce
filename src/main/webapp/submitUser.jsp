@@ -10,14 +10,6 @@
     <jsp:useBean id="userBean" class="org.example.entity.User" scope="request"/>
     <jsp:setProperty name="userBean" property="*" />
 
-    <%
-        // Manually handle the password field
-        String date = request.getParameter("dateOfBirth");
-        if (date != null && !date.isEmpty()) {
-            userBean.setDateOfBirth(LocalDate.parse(date));
-        }
-    %>
-
 <%--    <span>${userBean.id}</span>--%>
 
     <jsp:forward page="/update-user"/>

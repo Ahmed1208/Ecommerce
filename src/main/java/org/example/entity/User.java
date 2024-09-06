@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -56,6 +57,26 @@ public class User extends Person implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.phone = phone;
     }
+
+    public User(String name, String email, String password, GENDER gender, Double balance, String dateOfBirth, String phone) {
+        super(name, email, password, gender);
+        this.balance = balance;
+        this.dateOfBirth = LocalDate.parse( dateOfBirth );
+        this.phone = phone;
+    }
+
+    // Custom setter to handle String input from form (for JSP)
+    public void setDateOfBirth(String dateOfBirth) {
+        if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
+            this.dateOfBirth = LocalDate.parse(dateOfBirth);
+        }
+    }
+
+//    public void setDateOfBirth(LocalDate dateOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//    }
+
+
 
     @Override
     public boolean equals(Object o) {
