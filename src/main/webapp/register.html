@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
     <style>
+        .message {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
@@ -54,21 +67,30 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        input[type="submit"]:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Registration Form</h2>
-    <form action="register" method="post">
+    <form action="register" method="post" onsubmit="return validateForm()">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" onblur="checkEmail()" required>
+        <div id="emailMessage" class="message"></div><br>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" onblur="checkPassword()" required>
+
+        <label for="confirmpassword">Confirm Password:</label>
+        <input type="password" id="confirmpassword" name="confirmpassword" onblur="checkPassword()" required>
+        <div id="passwordmessage" class="message"></div><br>
 
         <label for="gender">Gender:</label>
         <select id="gender" name="gender" required>
@@ -91,9 +113,89 @@
         <label for="phone">Phone Number:</label>
         <input type="tel" id="phone" name="phone" required>
 
-        <input type="submit" value="Register">
+        <input type="submit" value="Register" id="subBTN" >
     </form>
 </div>
+<script>
+    var isEmailValid = false;
+    var isPasswordValid = false;
+    var pass = document.getElementById("password");
+    var confirmpass = document.getElementById("confirmpassword");
 
+    function checkPassword() {
+        var passwordmessage = document.getElementById("passwordmessage");
+        passwordmessage.classList.add("message");
+
+        if (pass.value !== confirmpass.value || pass.value === "" || confirmpass.value === "") {
+            passwordmessage.innerHTML = "The passwords don't match";
+            passwordmessage.classList.remove("success");
+            passwordmessage.classList.add("error");
+            isPasswordValid = false;
+        } else {
+            passwordmessage.innerHTML = "Passwords match";
+            passwordmessage.classList.add("success");
+            passwordmessage.classList.remove("error");
+            isPasswordValid = true;
+        }
+    }
+
+    var req1 = null;
+
+    function checkEmail() {
+        var email = document.getElementById("email").value;
+        req1 = new XMLHttpRequest();
+        req1.onreadystatechange = handleEmail;
+        req1.open("GET", "register?email=" + email, true);
+        req1.send(null);
+    }
+
+    function handleEmail() {
+        if (req1.readyState === 4 && req1.status === 200) {
+            var emailMessage = document.getElementById("emailMessage");
+            emailMessage.classList.add("message");
+            if (req1.responseText.includes("error")) {
+                emailMessage.innerHTML = "Email Already Exists";
+                emailMessage.classList.remove("success");
+                emailMessage.classList.add("error");
+                isEmailValid = false;
+            } else {
+                emailMessage.innerHTML = "Email is accepted";
+                emailMessage.classList.remove("error");
+                emailMessage.classList.add("success");
+                isEmailValid = true;
+            }
+        }
+    }
+
+    function checkform() {
+        var name = document.getElementById("name").value;
+        var city = document.getElementById("city").value;
+        var street = document.getElementById("street").value;
+        var country = document.getElementById("country").value;
+        var phone = document.getElementById("phone").value;
+        var dob = document.getElementById("dob").value;
+        var userpass = document.getElementById("password").value;
+
+        return name !== "" && city !== "" && street !== "" && country !== "" &&
+            phone !== "" && dob !== "" && userpass !== "";
+    }
+
+    function validateForm() {
+        if (!isEmailValid) {
+            alert("Please use a valid email address.");
+            return false;
+        }
+        if (!isPasswordValid) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        if (!checkform()) {
+            alert("Please fill in all required fields.");
+            return false;
+        }
+        return true;
+    }
+
+</script>
 </body>
 </html>

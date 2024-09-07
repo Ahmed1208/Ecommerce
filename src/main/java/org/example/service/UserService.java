@@ -22,6 +22,13 @@ public class UserService {
         em = entityManager;
         this.userDao = new UserDao(entityManager);
     }
+    public boolean checkIfEmailExist(String email){
+
+        Optional<User> u= userDao.findUserByEmail(email);
+
+        return u.isPresent();
+
+    }
     public User loginCheck(String email,String password) throws RuntimeException
     {
         Optional<User> result = userDao.findUserByEmail(email);

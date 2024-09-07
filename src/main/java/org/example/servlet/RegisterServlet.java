@@ -15,8 +15,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class RegisterServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        EntityManagerFactory emf=(EntityManagerFactory) getServletContext().getAttribute("emf");
+        UserService userService=new UserService(emf.createEntityManager());
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -26,8 +29,6 @@ public class RegisterServlet extends HttpServlet {
         String city = req.getParameter("city");
         String country = req.getParameter("country");
         String phone = req.getParameter("phone");
-        EntityManagerFactory emf=(EntityManagerFactory) req.getServletContext().getAttribute("emf");
-        UserService userService=new UserService(emf.createEntityManager());
         User u=  userService.registerNewUser(name, email, password, street, city, country, phone, dob, gender);
         if (u!=null){
             HttpSession session= req.getSession(true);
@@ -41,5 +42,18 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        EntityManagerFactory emf=(EntityManagerFactory) getServletContext().getAttribute("emf");
+        UserService userService=new UserService(emf.createEntityManager());
+        String email=req.getParameter("email");
+        resp.setContentType("text/plain");
+        PrintWriter out=resp.getWriter();
 
+        if(userService.checkIfEmailExist(email)) {
+            out.println("error");
+        }
+
+
+    }
 }

@@ -202,7 +202,9 @@
             <h2>User Information</h2>
 
             <c:if test="${not empty errorMessage}">
-                <div>${requestScope.errorMessage}</div>
+                <script>
+                    alert("${requestScope.errorMessage}");
+                </script>
             </c:if>
             <form action="/ecommerce/submitUser.jsp" method="post">
 
