@@ -37,6 +37,18 @@ public class ProductService {
         }
        return product;
     }
+    public Product addNewProduct(Product product) throws RuntimeException
+    {
+        try {
+            em.getTransaction().begin();
+            productDao.create(product);
+            em.getTransaction().commit();
+        }catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException(e);
+        }
+        return product;
+    }
 
     public List<Category> getSubCategories() throws RuntimeException
     {

@@ -7,7 +7,7 @@
     <title>Process Product</title>
 </head>
 <body>
-<jsp:useBean id="productBean" class="org.example.bean.ProductBean" scope="request"/>
+<jsp:useBean id="productBean" class="org.example.entity.Product" scope="request"/>
 <jsp:setProperty name="productBean" property="*"/>
 
 <%--<c:if test="${not empty productBean}">--%>

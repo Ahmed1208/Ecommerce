@@ -23,7 +23,7 @@
   <input type="file" id="image" name="image" accept="image/*"><br>
 
     <label for="category">Category:</label>
-    <select id="category" name="categoryName" required>
+    <select id="category" name="category" required>
         <c:forEach var="category" items="${subCategories}">
             <option value="${category.name}">${category.name}</option>
         </c:forEach>

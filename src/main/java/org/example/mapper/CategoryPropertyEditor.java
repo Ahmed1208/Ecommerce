@@ -1,20 +1,26 @@
 package org.example.mapper;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import org.example.Factory;
 import org.example.dao.CategoryDao;
+import org.example.dao.ProductDao;
 import org.example.entity.Category;
+import org.example.listener.ContextListener;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Optional;
 
 public class CategoryPropertyEditor extends PropertyEditorSupport {
-
     // Simulating retrieval from a database or service
-    private Category getCategoryById(String categoryName) {
+    private Category getCategoryByName(String categoryName) {
         // This is just a stub; replace with actual category lookup logic
-        EntityManager em = Factory.entityManagerFactory.createEntityManager();
-        Optional<Category> category = new CategoryDao(em).findCategoryByName(categoryName);
+        EntityManagerFactory emf = (EntityManagerFactory) ContextListener.getServletContext().getAttribute("emf");
+        EntityManager em = emf.createEntityManager();
+        CategoryDao categoryDao = new CategoryDao(em);
+
+        Optional<Category> category= categoryDao.findCategoryByName(categoryName);
+
         return category.orElse(null);
     }
 
@@ -24,7 +30,7 @@ public class CategoryPropertyEditor extends PropertyEditorSupport {
             setValue(null);  // If the input is null or empty, set Category as null
         } else {
             try {
-                Category category = getCategoryById(text);
+                Category category = getCategoryByName(text);
                 setValue(category);  // Set the Category object
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid category ID: " + text);

@@ -6,8 +6,7 @@ import jakarta.persistence.Persistence;
 
 public class Factory {
 
-    static final public EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
-
+    static public EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");;
 
 
 }

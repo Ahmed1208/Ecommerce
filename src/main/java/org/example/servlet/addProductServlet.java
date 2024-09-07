@@ -27,12 +27,19 @@ public class addProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ProductBean productbean = (ProductBean) request.getAttribute("productBean");
+//        ProductBean productbean = (ProductBean) request.getAttribute("productBean");
+//
+//        EntityManagerFactory emf=(EntityManagerFactory) request.getServletContext().getAttribute("emf");
+//        ProductService prductService=new ProductService(emf.createEntityManager());
+//
+//        prductService.addNewProduct(productbean);
+
+        Product product = (Product) request.getAttribute("productBean");
 
         EntityManagerFactory emf=(EntityManagerFactory) request.getServletContext().getAttribute("emf");
         ProductService prductService=new ProductService(emf.createEntityManager());
 
-        prductService.addNewProduct(productbean);
+        prductService.addNewProduct(product);
     }
 
 }
