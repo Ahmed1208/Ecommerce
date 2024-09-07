@@ -20,6 +20,7 @@ public class loginServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String role = request.getParameter("role");
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
@@ -29,9 +30,15 @@ public class loginServlet extends HttpServlet {
         try {
 
            User user= userService.loginCheck(email,password);
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", user);
-            response.sendRedirect("/ecommerce");
+           if(user!=null){
+               HttpSession session = request.getSession(true);
+               session.setAttribute("user", user);
+               session.setAttribute("role",role);
+               response.sendRedirect("/ecommerce");
+           }else {
+               response.sendRedirect(getServletContext().getContextPath() + "/login");
+           }
+
         }
         catch (RuntimeException e)
         {

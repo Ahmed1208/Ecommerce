@@ -20,7 +20,7 @@
 
     <servlet>
         <servlet-name>register</servlet-name>
-        <servlet-class>org.example.servlet.addProductServlet</servlet-class>
+        <servlet-class>org.example.servlet.RegisterServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -50,7 +50,7 @@
 
     <servlet>
         <servlet-name>profile</servlet-name>
-        <servlet-class>org.example.servlet.UserDashboardServlet</servlet-class>
+        <servlet-class>org.example.servlet.ProfileServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

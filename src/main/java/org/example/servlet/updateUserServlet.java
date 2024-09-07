@@ -17,9 +17,9 @@ public class updateUserServlet extends HttpServlet {
     @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        User user = (User) request.getAttribute("userBean");
+        User user = (User) request.getAttribute("userDetailes");
 
-        System.out.println("printing user id inside log from updateUserServlet " + user.getId());
+        //System.out.println("printing user id inside log from updateUserServlet " + user.getId());
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
@@ -28,12 +28,13 @@ public class updateUserServlet extends HttpServlet {
 
         try {
             userService.updateUser(user);
-            request.getRequestDispatcher("/userDetails.jsp").forward(request, response);
+            request.getSession(false).setAttribute("user", user);
+            response.sendRedirect("/ecommerce/profile");
 
         }catch (RuntimeException e)
         {
             request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher("/userDetails.jsp").forward(request, response);
+            request.getRequestDispatcher("/userDashboard.jsp").forward(request, response);
         }
 
     }
