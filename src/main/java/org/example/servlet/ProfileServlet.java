@@ -15,9 +15,14 @@ public class ProfileServlet extends HttpServlet {
         if (session != null) {
             User user = (User) session.getAttribute("user");
           //  resp.getWriter().println(user.toString());
-            req.getRequestDispatcher("userDashboard.jsp").forward(req, resp);
+            if (user != null) {
+                req.getRequestDispatcher("userDashboard.jsp").forward(req, resp);
+            }else {
+                resp.sendRedirect(getServletContext().getContextPath() + "/login.jsp");
+            }
+
         }else {
-            resp.sendRedirect(getServletContext().getContextPath() + "/login.html");
+            resp.sendRedirect(getServletContext().getContextPath() + "/login.jsp");
         }
 
     }

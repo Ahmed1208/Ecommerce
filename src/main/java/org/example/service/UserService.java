@@ -24,61 +24,63 @@ public class UserService {
     }
     public boolean checkIfEmailExist(String email){
 
-        Optional<User> u= userDao.findUserByEmail(email);
+        Optional<User> u = userDao.findUserByEmail(email);
 
         return u.isPresent();
 
     }
-    public User loginCheck(String email,String password) throws RuntimeException
-    {
+
+    public User loginCheck(String email, String password) throws RuntimeException {
         Optional<User> result = userDao.findUserByEmail(email);
 
-        if(result.isPresent())
-        {
-            if(password.equals(result.get().getPassword()))
+        if (result.isPresent()) {
+            if (password.equals(result.get().getPassword())) {
                 return result.get();
+            }
         }
         throw new RuntimeException("Wrong email or password, user not found");
     }
+
     public User registerNewUser(String name, String email, String password
-            ,String street,String city,String country,String phone,String dob,String gender) {
+            , String street, String city, String country, String phone, String dob, String gender) throws RuntimeException {
         User user = new User();
-        if (checkData(name, email, password, street, city, country, phone, dob, gender)){
-            System.out.println("username:"+name);
-            if (EmailValidator.getInstance().isValid(email)){
+        if (checkData(name, email, password, street, city, country, phone, dob, gender)) {
+            System.out.println("username:" + name);
+            if (EmailValidator.getInstance().isValid(email)) {
 
-               if(!userDao.findUserByEmail(email).isPresent()){
-                   GENDER g=gender.equals("Female")?GENDER.FEMALE:GENDER.MALE;
+                if (!userDao.findUserByEmail(email).isPresent()) {
+                    GENDER g = gender.equals("Female") ? GENDER.FEMALE : GENDER.MALE;
 
-                   user = new User(name,email,password,g,0.0,dob,phone);
-                   Address a = new Address(street,city,country,user);
-                   user.setAddress(a);
-                   try {
-                       em.getTransaction().begin();
-                       userDao.create(user);
-                       em.getTransaction().commit();
-                   }catch (Exception e) {
-                       em.getTransaction().rollback();
-                       throw new RuntimeException(e);
-                   }
-               }else {
-                   System.out.println("Email already in use");
-                   return null;
-               }
-            }else {
-                System.out.println("invalid email");
-                return null;
+                    user = new User(name, email, password, g, 0.0, dob, phone);
+                    Address a = new Address(street, city, country, user);
+                    user.setAddress(a);
+                    try {
+                        em.getTransaction().begin();
+                        userDao.create(user);
+                        em.getTransaction().commit();
+                    } catch (Exception e) {
+                        em.getTransaction().rollback();
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    throw new RuntimeException("Email already in use");
+
+                }
+            } else {
+                throw new RuntimeException("invalid email");
+
             }
-        }else {
-            System.out.println("enter all fields please");
-            return null;
+        } else {
+            throw new RuntimeException("enter all fields please");
+
         }
 
         return user;
 
     }
+
     private boolean checkData(String name, String email, String password
-            ,String street,String city,String country,String phone,String dob,String gender){
+            , String street, String city, String country, String phone, String dob, String gender) {
         if (name != null && !name.trim().isEmpty() &&
                 email != null && !email.trim().isEmpty() &&
                 password != null && !password.trim().isEmpty() &&
@@ -87,30 +89,26 @@ public class UserService {
                 country != null && !country.trim().isEmpty() &&
                 phone != null && !phone.trim().isEmpty() &&
                 dob != null && !dob.trim().isEmpty() &&
-                gender != null && !gender.trim().isEmpty()){
+                gender != null && !gender.trim().isEmpty()) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public User findUserById(int id) throws RuntimeException
-    {
+    public User findUserById(int id) throws RuntimeException {
 
         Optional<User> user = userDao.findById(id);
 
-        if(user.isPresent())
-        {
+        if (user.isPresent()) {
             System.out.println("Birthdate: " + user.get().getDateOfBirth());
             return user.get();
-        }
-        else{
+        } else {
             throw new RuntimeException("User not found");
         }
     }
 
-    public void updateUser(User user) throws RuntimeException
-    {
+    public void updateUser(User user) throws RuntimeException {
         try {
             em.getTransaction().begin();
             System.out.println("transatction has begun");
@@ -120,8 +118,7 @@ public class UserService {
             em.getTransaction().commit();
             System.out.println("commit done");
 
-        }catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             System.out.println("exception happened, commit is rolled back");
             throw new RuntimeException("Can't update this user");
         }

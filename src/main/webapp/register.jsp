@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -76,6 +76,11 @@
 <body>
 
 <div class="container">
+    <c:if test="${not empty requestScope.errormsg}">
+        <script>
+            alert("${requestScope.errormsg}");
+        </script>
+    </c:if>
     <h2>Registration Form</h2>
     <form action="register" method="post" onsubmit="return validateForm()">
         <label for="name">Name:</label>

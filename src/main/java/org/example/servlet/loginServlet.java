@@ -13,8 +13,7 @@ import java.util.Date;
 
 public class loginServlet extends HttpServlet {
 
-    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        response.setContentType("text/html");
 //        PrintWriter out = response.getWriter();
 
@@ -24,38 +23,27 @@ public class loginServlet extends HttpServlet {
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
-        UserService userService = new UserService(emf.createEntityManager());
+        if (role.equals("User")) {
+            UserService userService = new UserService(emf.createEntityManager());
+            try {
+                User user = userService.loginCheck(email, password);
+                if (user != null) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("user", user);
+                    session.setAttribute("role", role);
+                    response.sendRedirect("/ecommerce");
+//                } else {
+//                    request.setAttribute("error", "Invalid email or password");
+//                    request.getRequestDispatcher( "/login.jsp").include(request, response);
+//
+//                   // response.sendRedirect();
+                }
 
+            } catch (RuntimeException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher( "/login.jsp").include(request, response);
 
-        try {
-
-           User user= userService.loginCheck(email,password);
-           if(user!=null){
-               HttpSession session = request.getSession(true);
-               session.setAttribute("user", user);
-               session.setAttribute("role",role);
-               response.sendRedirect("/ecommerce");
-           }else {
-               response.sendRedirect(getServletContext().getContextPath() + "/login");
-           }
-
+            }
         }
-        catch (RuntimeException e)
-        {
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            out.println(e);
-            request.getRequestDispatcher("login.html").include(request, response);
-        }
-
-
-
-
-
-
     }
-
-
-
-
 }

@@ -191,6 +191,7 @@
         <ul>
             <li><a href="javascript:void(0)" onclick="showSection('user-info')">User Information</a></li>
             <li><a href="javascript:void(0)" onclick="showSection('order-history')">Order History</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('balancelogs-history')">Balance Logs History</a></li>
         </ul>
     </nav>
 
@@ -259,12 +260,39 @@
                 </tr>
                 </thead>
                 <tbody>
+                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
                 <c:forEach var="order" items="${sessionScope.user.orders}">
                     <tr>
-                        <td>${order.orderId}</td>
-                        <td>${order.date}</td>
-                        <td>${order.total}</td>
+                        <script>console.log("i'm here inside")</script>
+                        <td>${order.id}</td>
+                        <td>${order.orderDate}</td>
+                        <td>${order.totalPrice}</td>
                         <td>${order.status}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Balance Logs History Section -->
+        <section id="balancelogs-history" class="dashboard-section" style="display:none;">
+            <h2>Balance Logs History</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Amount</th>
+                    <th>Payment_Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
+                <c:forEach var="log" items="${sessionScope.user.balanceLogs}">
+                    <tr>
+                        <script>console.log("i'm here inside")</script>
+                        <td>${log.id}</td>
+                        <td>${log.amount}</td>
+                        <td>${log.paymentType}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
