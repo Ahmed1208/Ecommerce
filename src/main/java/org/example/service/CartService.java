@@ -19,7 +19,7 @@ public class CartService {
 
     public CartService(EntityManager entityManager)
     {
-        entityManager = entityManager;
+        this.entityManager = entityManager;
         this.cartDao = new UserProductCartDao(entityManager);
     }
 
