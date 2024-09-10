@@ -67,6 +67,48 @@
         <servlet-name>addProduct</servlet-name>
         <url-pattern>/add-product</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>uploadServlet</servlet-name>
+        <servlet-class>org.example.servlet.UploadServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>uploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>productDetailsServlet</servlet-name>
+        <servlet-class>org.example.servlet.showProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>productDetailsServlet</servlet-name>
+        <url-pattern>/show-product</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>showProductsServlet</servlet-name>
+        <servlet-class>org.example.servlet.showProductsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>showProductsServlet</servlet-name>
+        <url-pattern>/all-products</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddProductToCartServlet</servlet-name>
+        <servlet-class>org.example.servlet.AddToCartServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddProductToCartServlet</servlet-name>
+        <url-pattern>/add-to-cart</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->

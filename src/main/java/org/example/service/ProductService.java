@@ -67,4 +67,23 @@ public class ProductService {
             return false;
         }
     }
+
+    public Product findProductById(int id)
+    {
+        Optional<Product> product = productDao.findById(id);
+
+        if(product.isPresent())
+        {
+            return product.get();
+        }
+        else{
+            throw new RuntimeException("Product not found");
+        }
+    }
+
+
+    public List<Product> findAllProducts()
+    {
+        return productDao.filterProducts(null,null, null, false, false);
+    }
 }

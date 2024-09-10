@@ -1,19 +1,4 @@
 package org.example.dao;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import org.example.Factory;
-import org.example.entity.Order;
-import org.example.entity.PAYMENT;
-import org.example.entity.STATUS;
-import org.example.entity.User;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

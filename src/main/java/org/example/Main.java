@@ -2,11 +2,8 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.dao.*;
 import org.example.entity.*;
-import org.example.service.UserService;
-import java.time.LocalDate;
 
 import java.util.*;
 
@@ -332,18 +329,18 @@ public class Main {
 //        entityManager.getTransaction().commit();
 
 
-        User user1 = new User("ahmed","ahmedali@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
-//
-        entityManager.getTransaction().begin();
-//
-        UserDao userDao = new UserDao(entityManager);
-        userDao.create(user1);
+//        User user1 = new User("ahmed","ahmedali@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
+////
+//        entityManager.getTransaction().begin();
+////
+//        UserDao userDao = new UserDao(entityManager);
+//        userDao.create(user1);
 //
 ////
 ////        userDao.findById(1).ifPresent(user -> System.out.println(user));
 //
     //            entityManager.getTransaction().begin();
-            entityManager.getTransaction().commit();
+//            entityManager.getTransaction().commit();
 
 //        BalanceLogs balanceLogs = new BalanceLogs(25.2,PAYMENT.CASH,user1);
 //        BalanceLogs balanceLogs2 = new BalanceLogs(25.2,PAYMENT.CASH,user1);
@@ -351,17 +348,25 @@ public class Main {
 //        entityManager.persist(balanceLogs2);
 //        entityManager.getTransaction().commit();
 
-        LocalDate dateFromString = LocalDate.parse("2025-09-15");
-        System.out.println(dateFromString);
-        User user = entityManager.find(User.class,1);
-        user.setDateOfBirth(dateFromString);
+//        LocalDate dateFromString = LocalDate.parse("2025-09-15");
+//        System.out.println(dateFromString);
+//        User user = entityManager.find(User.class,1);
+//        user.setDateOfBirth(dateFromString);
+//
+//        entityManager.merge(user);
+//        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().commit();
 
-        entityManager.merge(user);
-        entityManager.getTransaction().begin();
-        entityManager.getTransaction().commit();
 
 
-
+//        User user = entityManager.find(User.class,1);
+//        System.out.println(user.getOrders().size());
+//
+//        OrderDao orderDao = new OrderDao(entityManager);
+//        System.out.println( orderDao.findOrdersByUser(1).size() );
+//
+//        Order order = entityManager.find(Order.class,1);
+//        System.out.println(order.getStatus());
 
 
 //        UserService userService = new UserService(entityManager);
@@ -375,6 +380,9 @@ public class Main {
 //        }
 
 
+
+        UserProductCart xc = entityManager.find(UserProductCart.class,new UserProductId(25,1));
+        System.out.println(xc.getProductQuantity());
     }
 
 }

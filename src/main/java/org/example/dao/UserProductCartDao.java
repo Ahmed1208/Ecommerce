@@ -2,11 +2,22 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import org.example.Factory;
-import org.example.entity.Order;
-import org.example.entity.UserProductCart;
+import org.example.entity.*;
 
-public class UserProductCartDao extends Repository<UserProductCart>{
-    public UserProductCartDao() {
-        super(UserProductCart.class, Factory.entityManagerFactory.createEntityManager());
+import java.util.Optional;
+
+public class UserProductCartDao extends Repository<UserProductCart>
+{
+    public UserProductCartDao(EntityManager entityManager) {
+        super(UserProductCart.class, entityManager);
     }
+
+
+    public Optional<UserProductCart> findUserProduct(int userId,int productId)
+    {
+        UserProductCart userProductCart = entityManager.find(UserProductCart.class,new UserProductId(userId,productId));
+
+        return Optional.ofNullable(userProductCart);
+    }
+
 }
