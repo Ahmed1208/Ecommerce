@@ -9,6 +9,22 @@
     </listener>
 
     <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class> org.example.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>getCart</servlet-name>
+        <servlet-class> org.example.servlet.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getCart</servlet-name>
+        <url-pattern>/getCart</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>org.example.servlet.loginServlet</servlet-class>
     </servlet>
@@ -108,6 +124,36 @@
     <servlet-mapping>
         <servlet-name>AddProductToCartServlet</servlet-name>
         <url-pattern>/add-to-cart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addCategory</servlet-name>
+        <servlet-class>org.example.servlet.addCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>addCategory</servlet-name>
+        <url-pattern>/add-category</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listCategory</servlet-name>
+        <servlet-class>org.example.servlet.listCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>listCategory</servlet-name>
+        <url-pattern>/list-category</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>shop-page</servlet-name>
+        <servlet-class>org.example.servlet.ShopSetupServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>shop-page</servlet-name>
+        <url-pattern>/shop-page</url-pattern>
     </servlet-mapping>
     <!-- web server -->
 

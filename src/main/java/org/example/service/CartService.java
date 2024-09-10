@@ -10,24 +10,25 @@ import org.example.entity.UserProductCart;
 import org.example.entity.UserProductId;
 
 import java.util.Optional;
+import java.util.List;
 
 public class CartService {
 
-    private UserProductCartDao userProductCartDao;
-    private EntityManager em;
+    private UserProductCartDao cartDao;
+    private EntityManager entityManager;
 
     public CartService(EntityManager entityManager)
     {
-        em = entityManager;
-        this.userProductCartDao = new UserProductCartDao(entityManager);
+        entityManager = entityManager;
+        this.cartDao = new UserProductCartDao(entityManager);
     }
 
 
     public void addProductToCart(int userId,int productId)
     {
 
-        Optional<User> user = new UserDao(em).findById(userId);
-        Optional<Product> product = new ProductDao(em).findById(productId);
+        Optional<User> user = new UserDao(entityManager).findById(userId);
+        Optional<Product> product = new ProductDao(entityManager).findById(productId);
 
         if(user.isPresent() && product.isPresent())
         {
@@ -37,18 +38,22 @@ public class CartService {
             //no need to decrease product qunatity here, beacuse no action taken to make an order yet
 
             //check if there is old history before
-            Optional<UserProductCart> oldUserProductCart = userProductCartDao.findUserProduct(userId,productId);
+            Optional<UserProductCart> oldUserProductCart = cartDao.findUserProduct(userId,productId);
             if(oldUserProductCart.isPresent())
             {
                 //update
                 oldUserProductCart.get().setProductQuantity(oldUserProductCart.get().getProductQuantity()+1);
-                userProductCartDao.update(oldUserProductCart.get());
+                cartDao.update(oldUserProductCart.get());
             }
             else
             {
                 //create new object
                 UserProductCart userProductCart = new UserProductCart(user.get(),product.get(),1);
 
+    public List<UserProductCart> getUserCartProducts(User user){
+        List<UserProductCart> productCartList= cartDao.getCartByUser(user);
+        return productCartList;
+    }
                 //create in persistance context
                 userProductCartDao.create(userProductCart);
             }

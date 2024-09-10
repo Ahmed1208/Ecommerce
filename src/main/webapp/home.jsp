@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <%@ page session="false" %>
+<%--    <%@ page session="false" %>--%>
     <meta charset="utf-8">
     <title>Fruitables - Vegetable Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -63,12 +63,12 @@
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
                     <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="shop.html" class="nav-item nav-link">Shop</a>
+                    <a href="/ecommerce/shop-page" class="nav-item nav-link">Shop</a>
                     <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="cart.html" class="dropdown-item">Cart</a>
+                            <a href="cart.jsp" class="dropdown-item">Cart</a>
                             <a href="chackout.html" class="dropdown-item">Chackout</a>
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                             <a href="404.html" class="dropdown-item">404 Page</a>
@@ -76,16 +76,94 @@
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
-                <div class="d-flex m-3 me-0">
-                    <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                    <a href="#" class="position-relative me-4 my-auto">
-                        <i class="fa fa-shopping-bag fa-2x"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                <div class="d-flex align-items-center justify-content-end m-3">
+                    <!-- Search Button -->
+                    <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal" style="position: relative;">
+                        <i class="fas fa-search text-primary"></i>
+                        <span class="tooltip-text">Search</span>
+                    </button>
+
+                    <!-- Cart Icon with Badge -->
+                    <a href="/ecommerce/getCart" class="position-relative me-4 my-auto" style="position: relative;">
+                        <i class="fa fa-shopping-bag fa-2x text-dark"></i>
+                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white" style="top: -5px; left: 15px; height: 20px; min-width: 20px; font-size: 12px;">3</span>
+                        <span class="tooltip-text">Cart</span>
                     </a>
-                    <a href="/ecommerce/profile" class="my-auto">
-                        <i class="fas fa-user fa-2x"></i>
+
+                    <!-- Profile Icon -->
+                    <a href="/ecommerce/profile" class="my-auto" style="position: relative;">
+                        <i class="fas fa-user fa-2x text-dark"></i>
+                        <span class="tooltip-text">Profile</span>
                     </a>
+                    <script>
+                        console.log("i'm outside" +
+                            " the if condition for id : ${not empty sessionScope}")
+                    </script>
+                    <c:if test="${not empty sessionScope.user}">
+                        <script>
+                            console.log("i'm inside the if condition for id : ${sessionScope.user.id}")
+                        </script>
+                        <!-- Logout Icon -->
+                        <a href="/ecommerce/logout" class="my-auto ms-4" style="position: relative;">
+                            <i class="fas fa-sign-out-alt fa-2x text-dark"></i>
+                            <span class="tooltip-text">Logout</span>
+                        </a>
+                    </c:if>
+
                 </div>
+
+                <style>
+                    /* Basic styling for icons and layout */
+                    .d-flex .my-auto {
+                        position: relative;
+                    }
+
+                    /* Hover Effects */
+                    a, button {
+                        transition: transform 0.3s ease, color 0.3s ease;
+                    }
+
+                    a:hover i, button:hover i {
+                        transform: scale(1.1);
+                        color: #007bff; /* Highlight color on hover */
+                    }
+
+                    /* Tooltip Text */
+                    .tooltip-text {
+                        display: none;
+                        position: absolute;
+                        bottom: -30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: rgba(0, 0, 0, 0.7);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 5px;
+                        font-size: 12px;
+                        white-space: nowrap;
+                    }
+
+                    /* Show tooltip on hover */
+                    a:hover .tooltip-text, button:hover .tooltip-text {
+                        display: block;
+                    }
+
+                    /* Shopping Bag Badge */
+                    .fa-shopping-bag {
+                        color: #333;
+                    }
+
+                    .position-absolute {
+                        font-size: 12px;
+                        padding: 0 6px;
+                    }
+
+                    /* Additional Spacing for Logout Icon */
+                    .ms-4 {
+                        margin-left: 20px;
+                    }
+                </style>
+
             </div>
         </nav>
     </div>

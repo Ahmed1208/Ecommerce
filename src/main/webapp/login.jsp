@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -96,6 +97,11 @@
     </style>
 </head>
 <body>
+<c:if test="${not empty requestScope.error}">
+    <script>
+        alert("${requestScope.error}");
+    </script>
+</c:if>
 <div class="login-container" >
     <h2>Login</h2>
     <form id="loginForm" method="post" action="login">
@@ -121,7 +127,7 @@
             <button type="submit" class="btn">Login</button>
         </div>
     </form>
-    <p>Don't have an account? <a href="register.html">Sign up here</a></p>
+    <p>Don't have an account? <a href="register.jsp">Sign up here</a></p>
 </div>
 
 <script src="login.js"></script>

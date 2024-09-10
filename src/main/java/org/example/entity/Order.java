@@ -56,22 +56,20 @@ public class Order implements Serializable {
         this.user = user;
     }
 
-    public void setOrderDate(String orderDate) {
-        this.orderDate = LocalDate.parse(orderDate);
 
-    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(totalPrice, order.totalPrice) && Objects.equals(orderDate, order.orderDate) && status == order.status && paymentType == order.paymentType && Objects.equals(user, order.user) && Objects.equals(OrderProductList, order.OrderProductList);
+        return Objects.equals(id, order.id) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, totalPrice, orderDate, status, paymentType, user, OrderProductList);
+        return Objects.hash(id);
     }
 
 
