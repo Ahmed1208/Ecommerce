@@ -83,6 +83,26 @@
         <servlet-name>addProduct</servlet-name>
         <url-pattern>/add-product</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addCategory</servlet-name>
+        <servlet-class>org.example.servlet.addCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>addCategory</servlet-name>
+        <url-pattern>/add-category</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listCategory</servlet-name>
+        <servlet-class>org.example.servlet.listCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>listCategory</servlet-name>
+        <url-pattern>/list-category</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->
