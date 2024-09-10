@@ -31,12 +31,9 @@ public class loginServlet extends HttpServlet {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("user", user);
                     session.setAttribute("role", role);
+                    System.out.println("User added to session: " + session.getAttribute("user"));
                     response.sendRedirect("/ecommerce");
-//                } else {
-//                    request.setAttribute("error", "Invalid email or password");
-//                    request.getRequestDispatcher( "/login.jsp").include(request, response);
-//
-//                   // response.sendRedirect();
+
                 }
 
             } catch (RuntimeException e) {

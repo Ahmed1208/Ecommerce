@@ -201,7 +201,10 @@
         <!-- User Info Section -->
         <section id="user-info" class="dashboard-section">
             <h2>User Information</h2>
-
+            <script>
+                console.log("i'm outside" +
+                    " the if condition for id : ${not empty sessionScope}")
+            </script>
             <c:if test="${not empty errorMessage}">
                 <script>
                     alert("${requestScope.errorMessage}");
