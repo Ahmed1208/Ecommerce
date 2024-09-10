@@ -50,19 +50,14 @@ public class CartService {
                 //create new object
                 UserProductCart userProductCart = new UserProductCart(user.get(),product.get(),1);
 
-    public List<UserProductCart> getUserCartProducts(User user){
-        List<UserProductCart> productCartList= cartDao.getCartByUser(user);
-        return productCartList;
-    }
                 //create in persistance context
-                userProductCartDao.create(userProductCart);
+                cartDao.create(userProductCart);
             }
-
 
             try {
 
-                em.getTransaction().begin();
-                em.getTransaction().commit();
+                entityManager.getTransaction().begin();
+                entityManager.getTransaction().commit();
 
             }catch (RuntimeException e)
             {
@@ -72,6 +67,11 @@ public class CartService {
         else {
             throw new RuntimeException("Error, Add product or user not valid");
         }
+    }
+
+    public List<UserProductCart> getUserCartProducts(User user){
+        List<UserProductCart> productCartList= cartDao.getCartByUser(user);
+        return productCartList;
     }
 
 
