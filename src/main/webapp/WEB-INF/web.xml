@@ -87,6 +87,16 @@
         <servlet-name>listCategory</servlet-name>
         <url-pattern>/list-category</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>shop-page</servlet-name>
+        <servlet-class>org.example.servlet.ShopSetupServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>shop-page</servlet-name>
+        <url-pattern>/shop-page</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->

@@ -1,5 +1,13 @@
 
 /*** Spinner Start ***/
+.subcategories-container {
+    display: none; /* Hide subcategories by default */
+    padding-left: 15px;
+}
+
+.subcategory-item {
+    margin-bottom: 5px;
+}
 #spinner {
     opacity: 0;
     visibility: hidden;
