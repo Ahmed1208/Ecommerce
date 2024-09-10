@@ -9,6 +9,22 @@
     </listener>
 
     <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class> org.example.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>getCart</servlet-name>
+        <servlet-class> org.example.servlet.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getCart</servlet-name>
+        <url-pattern>/getCart</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>org.example.servlet.loginServlet</servlet-class>
     </servlet>
