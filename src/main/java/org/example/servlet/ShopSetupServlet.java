@@ -21,12 +21,23 @@ public class ShopSetupServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
-        EntityManagerFactory emf=(EntityManagerFactory) request.getServletContext().getAttribute("emf");
-        CategoryService categoryService =new CategoryService(emf.createEntityManager());
-        request.setAttribute("ParentCategories",categoryService.getParentCategories());
-        request.getRequestDispatcher("shop.jsp").forward(request,response);
+        EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
+
+        CategoryService categoryService = new CategoryService(emf.createEntityManager());
+        ProductService productService = new ProductService(emf.createEntityManager());
+
+        try {
+            request.setAttribute("ParentCategories", categoryService.getParentCategories());
+
+            request.setAttribute("products", productService.findAllProducts());
+
+            request.getRequestDispatcher("shop.jsp").forward(request, response);
+
+        } catch (RuntimeException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher("shop.jsp").forward(request, response);
+        }
+
     }
-
-
 
 }
