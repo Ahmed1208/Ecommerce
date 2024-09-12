@@ -75,4 +75,9 @@ public class CartService {
     }
 
 
+    public Integer cartProductsCount(int userId)
+    {
+        return cartDao.countProductsByUser(userId);
+    }
+
 }

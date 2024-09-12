@@ -1,10 +1,12 @@
 package org.example.servlet;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import org.example.entity.GENDER;
 import org.example.entity.User;
+import org.example.service.CartService;
 import org.example.service.UserService;
 
 import java.io.IOException;
@@ -24,13 +26,18 @@ public class loginServlet extends HttpServlet {
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
         if (role.equals("User")) {
-            UserService userService = new UserService(emf.createEntityManager());
+            EntityManager entityManager = emf.createEntityManager();
+            UserService userService = new UserService(entityManager);
             try {
                 User user = userService.loginCheck(email, password);
                 if (user != null) {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("user", user);
                     session.setAttribute("role", role);
+
+                    Integer cartSize = new CartService(entityManager).cartProductsCount(user.getId());
+                    session.setAttribute("cartSize",cartSize);
+
                     System.out.println("User added to session: " + session.getAttribute("user"));
                     response.sendRedirect("/ecommerce");
 

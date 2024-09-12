@@ -173,7 +173,7 @@
                 </div>
             </div>
             <form>
-                <button type="button" class="add-to-cart-btn" onclick="addToCart('${product.id}', '1')">Add to cart</button>
+                <button type="button" class="add-to-cart-btn" onclick="addToCart('${product.id}','${sessionScope.user.id}')">Add to cart</button>
             </form>
         </div>
     </c:forEach>

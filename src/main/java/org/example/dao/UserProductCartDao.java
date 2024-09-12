@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.example.Factory;
 import org.example.entity.Order;
@@ -30,6 +31,13 @@ public class UserProductCartDao extends Repository<UserProductCart>
         UserProductCart userProductCart = entityManager.find(UserProductCart.class,new UserProductId(userId,productId));
 
         return Optional.ofNullable(userProductCart);
+    }
+
+    public Integer countProductsByUser(int userId) {
+        String s = "select count(up) from UserProductCart up where up.user.id = :id";
+        Query q = entityManager.createQuery(s).setParameter("id", userId);
+        Long countResult = (Long) q.getSingleResult(); // Cast to Long
+        return countResult != null ? countResult.intValue() : null; // Convert Long to Integer
     }
 
 }

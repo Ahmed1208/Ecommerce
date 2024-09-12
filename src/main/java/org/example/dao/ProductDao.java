@@ -65,7 +65,7 @@ public class ProductDao extends Repository<Product>
 
     //filter by subcategorys(for loop) , range of price, sort by price , sort by quantity
 
-    public List<Product> filterProducts(List<Category> subCategories,Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity)
+    public List<Product> filterProducts(List<Category> subCategories,Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity,int pageNumber, int pageSize)
     {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -95,9 +95,42 @@ public class ProductDao extends Repository<Product>
         if(sortByPrice)
             query.orderBy(criteriaBuilder.asc(root.get("price") ));
 
-        return entityManager.createQuery(query).getResultList();
+
+        // Create TypedQuery from CriteriaQuery
+        TypedQuery<Product> typedQuery = entityManager.createQuery(query);
+
+        // Apply pagination parameters to TypedQuery
+        int firstResult = (pageNumber - 1) * pageSize;
+        typedQuery.setFirstResult(firstResult);
+        typedQuery.setMaxResults(pageSize);
+
+        // Execute the query and return the results
+        return typedQuery.getResultList();
     }
 
+
+    public List<Product> getProducts(int pageNumber, int pageSize) {
+        // Calculate the starting position of the records
+        int firstResult = (pageNumber - 1) * pageSize;
+
+        // Create a query
+        String jpql = "SELECT p FROM Product p";
+        Query query = entityManager.createQuery(jpql);
+
+        // Set pagination parameters
+        query.setFirstResult(firstResult);
+        query.setMaxResults(pageSize);
+
+        // Execute the query and get the results
+        return query.getResultList();
+    }
+
+    public Integer getProductCount() {
+        String s = "SELECT COUNT(p) FROM Product p";
+        Query q = entityManager.createQuery(s);
+        Long countResult = (Long) q.getSingleResult(); // Cast to Long
+        return countResult != null ? countResult.intValue() : null; // Convert Long to Integer
+    }
 
 
 

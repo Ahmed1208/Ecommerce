@@ -11,6 +11,7 @@ import org.example.service.ProductService;
 import org.example.service.UserService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class showProductServlet extends HttpServlet {
 
@@ -21,6 +22,16 @@ public class showProductServlet extends HttpServlet {
 
         String id = request.getParameter("id");
 
+        System.out.println("This id is from doGet showProductServlet: " + id);
+
+        if(id == null || id.isEmpty())
+        {
+            System.out.println("This id is from doGet showProductServlet: " + id);
+
+            response.sendRedirect("/ecommerce/shop-page");
+            return;
+        }
+
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
         ProductService productService = new ProductService(emf.createEntityManager());
@@ -28,14 +39,18 @@ public class showProductServlet extends HttpServlet {
         try {
             Product product = productService.findProductById(Integer.parseInt(id));
 
-            request.setAttribute("product", product);
+            List<Product> relatedProducts = productService.findProductsBySubcategory(product.getCategory().getId());
 
-            request.getRequestDispatcher("/productDetails.jsp").forward(request, response);
+            request.setAttribute("product", product);
+            request.setAttribute("relatedProducts", relatedProducts);
+
+
+            request.getRequestDispatcher("/product-details.jsp").forward(request, response);
 
         }catch (RuntimeException e)
         {
             request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher("/productDetails.jsp").forward(request, response);
+            request.getRequestDispatcher("/product-details.jsp").forward(request, response);
         }
     }
 
