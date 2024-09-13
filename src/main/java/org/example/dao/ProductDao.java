@@ -73,15 +73,16 @@ public class ProductDao extends Repository<Product>
         // Initialize a list of predicates
         List<Predicate> predicates = new ArrayList<>();
 
+        if(searchText != null && !searchText.isEmpty())
+            predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("productName"), "%" + searchText + "%")));
+
+
         if (subCategories != null && !subCategories.isEmpty()) {
             predicates.add(root.get("category").in(subCategories));
         }
 
         if(minPrice != null && maxPrice != null)
             predicates.add( criteriaBuilder.and(criteriaBuilder.between(root.get("price"),minPrice,maxPrice) ) );
-
-        if(searchText != null && !searchText.isEmpty())
-            predicates.add(criteriaBuilder.and( criteriaBuilder.equal(root.get("productName"),searchText) ) );
 
 
         // Apply predicates to the query
