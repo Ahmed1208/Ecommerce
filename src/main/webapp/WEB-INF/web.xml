@@ -157,14 +157,17 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>pagination</servlet-name>
-        <servlet-class>org.example.servlet.TestServlet</servlet-class>
+        <servlet-name>admin-dashboard</servlet-name>
+        <servlet-class>org.example.servlet.AdminDetailsServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>pagination</servlet-name>
-        <url-pattern>/pagination</url-pattern>
+        <servlet-name>admin-dashboard</servlet-name>
+        <url-pattern>/adminDashboard</url-pattern>
     </servlet-mapping>
+
+
+
     <!-- web server -->
 
     <!-- web container -->
