@@ -11,7 +11,9 @@ import org.example.entity.User;
 import org.example.mapper.ProductMapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ProductService {
     private ProductDao productDao;
@@ -82,8 +84,41 @@ public class ProductService {
     }
 
 
-    public List<Product> findAllProducts()
+    public Map<Integer,List<Product>> findAllProducts(List<String> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize)
     {
-        return productDao.filterProducts(null,null, null, false, false);
+
+        if(subCategories == null)
+            return productDao.filterProducts(null, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize);
+        else
+        {
+            List<Category> subs = null;
+            try {
+                    subs = subCategories.stream().map(x -> {
+                    return categoryDao.findCategoryByName(x).get();
+                }).collect(Collectors.toList());
+            }catch (Exception e)
+            {
+                throw new RuntimeException("SubCategory not found");
+            }
+
+            return productDao.filterProducts(subs, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize);
+
+        }
+
+    }
+
+
+    public List<Product> findProductsBySubcategory(int subCategoryId)
+    {
+        return productDao.findProductsBySubCategory(subCategoryId);
+    }
+
+    public List<Product> getProductsByPage(int pageNumber) {
+        int pageSize = 9; // Set the number of products per page
+        return productDao.getProducts(pageNumber, pageSize);
+    }
+
+    public Integer getTotalProductCount() {
+        return productDao.getProductCount();
     }
 }

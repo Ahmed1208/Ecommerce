@@ -10,10 +10,7 @@ import jakarta.persistence.criteria.Root;
 import org.example.Factory;
 import org.example.entity.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ProductDao extends Repository<Product>
 {
@@ -65,7 +62,7 @@ public class ProductDao extends Repository<Product>
 
     //filter by subcategorys(for loop) , range of price, sort by price , sort by quantity
 
-    public List<Product> filterProducts(List<Category> subCategories,Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity)
+    public Map<Integer,List<Product>> filterProducts(List<Category> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize)
     {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -95,9 +92,48 @@ public class ProductDao extends Repository<Product>
         if(sortByPrice)
             query.orderBy(criteriaBuilder.asc(root.get("price") ));
 
-        return entityManager.createQuery(query).getResultList();
+
+        // Create TypedQuery from CriteriaQuery
+        TypedQuery<Product> typedQuery = entityManager.createQuery(query);
+        int cartSize = typedQuery.getResultList().size();
+
+        // Apply pagination parameters to TypedQuery
+        int firstResult = (pageNumber - 1) * pageSize;
+        typedQuery.setFirstResult(firstResult);
+        typedQuery.setMaxResults(pageSize);
+
+
+        Map<Integer,List<Product>> result = new HashMap<>();
+
+        result.put(cartSize,typedQuery.getResultList());
+
+        // Execute the query and return the results
+        return result;
     }
 
+
+    public List<Product> getProducts(int pageNumber, int pageSize) {
+        // Calculate the starting position of the records
+        int firstResult = (pageNumber - 1) * pageSize;
+
+        // Create a query
+        String jpql = "SELECT p FROM Product p";
+        Query query = entityManager.createQuery(jpql);
+
+        // Set pagination parameters
+        query.setFirstResult(firstResult);
+        query.setMaxResults(pageSize);
+
+        // Execute the query and get the results
+        return query.getResultList();
+    }
+
+    public Integer getProductCount() {
+        String s = "SELECT COUNT(p) FROM Product p";
+        Query q = entityManager.createQuery(s);
+        Long countResult = (Long) q.getSingleResult(); // Cast to Long
+        return countResult != null ? countResult.intValue() : null; // Convert Long to Integer
+    }
 
 
 

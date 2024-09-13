@@ -73,29 +73,76 @@
         .add-to-cart-btn:hover {
             background-color: #0056b3;
         }
+
+        .notification {
+            position: relative;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.success {
+            background-color: #4caf50;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+
     </style>
 
     <script>
         function addToCart(productId, userId) {
+            // Debugging: Check if productId and userId are valid
+            if (!productId || !userId) {
+                showNotification("Invalid productId or userId", "error");
+                return;
+            }
+
             $.ajax({
                 url: '/ecommerce/add-to-cart',  // The URL to handle the request
-                type: 'POST',         // Type of the request (POST for adding data)
+                type: 'POST',                   // Type of the request (POST for adding data)
                 data: {
-                    id: productId,    // Product ID sent to the server
-                    userId: userId    // User ID sent to the server
+                    productId: productId,              // Product ID sent to the server
+                    userId: userId              // User ID sent to the server
                 },
                 success: function(response) {
-                    // Handle the response, such as updating the cart count or showing a message
-                    alert('Product added to cart successfully!');
+                    // Show success message in a notification
+                    showNotification(response, "success");
                 },
                 error: function(error) {
-                    // Handle the error
+                    // Handle the error with a notification
+                    showNotification("Error adding product to cart", "error");
                     console.log('Error adding product to cart:', error);
                 }
             });
         }
 
+        function showNotification(message, type) {
+            var container = document.getElementById('notification-container');
+
+            // Create notification element
+            var notification = document.createElement('div');
+            notification.className = 'notification ' + type; // Add classes for styling
+            notification.innerText = message;
+
+            // Add some basic styles (you can replace this with your own CSS classes)
+            notification.style.padding = '10px 20px';
+            notification.style.marginTop = '10px';
+            notification.style.borderRadius = '5px';
+            notification.style.color = '#fff';
+            notification.style.backgroundColor = (type === 'success') ? '#4caf50' : '#f44336'; // Green for success, Red for error
+            notification.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+
+            // Append notification to the container
+            container.appendChild(notification);
+
+            // Automatically remove the notification after 3 seconds
+            setTimeout(function() {
+                container.removeChild(notification);
+            }, 3000);
+        }
     </script>
+
 </head>
 
 <body>
@@ -126,7 +173,7 @@
                 </div>
             </div>
             <form>
-                <button type="button" class="add-to-cart-btn" onclick="addToCart('${product.id}', '${sessionScope.user.id}')">Add to cart</button>
+                <button type="button" class="add-to-cart-btn" onclick="addToCart('${product.id}','${sessionScope.user.id}')">Add to cart</button>
             </form>
         </div>
     </c:forEach>
@@ -134,6 +181,9 @@
 
 
 </c:if>
+
+
+<div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
 
 
 

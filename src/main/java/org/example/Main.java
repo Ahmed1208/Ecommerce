@@ -419,8 +419,14 @@ public class Main {
 
 
 
-        UserProductCart xc = entityManager.find(UserProductCart.class,new UserProductId(25,1));
-        System.out.println(xc.getProductQuantity());
+//        UserProductCart xc = entityManager.find(UserProductCart.class,new UserProductId(25,1));
+//        System.out.println(xc.getProductQuantity());
+
+
+//        UserProductCartDao userProductCartDao = new UserProductCartDao(entityManager);
+//        Integer x = userProductCartDao.countProductsByUser(1);
+//
+//        System.out.println(x);
     }
 
 }

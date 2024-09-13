@@ -89,5 +89,10 @@ public class CartService {
             throw new RuntimeException(e.getMessage());
         }
 
+    public Integer cartProductsCount(int userId)
+    {
+        return cartDao.countProductsByUser(userId);
+    }
+
     }
 }

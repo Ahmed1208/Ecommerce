@@ -163,7 +163,17 @@
         <servlet-name>shop-page</servlet-name>
         <url-pattern>/shop-page</url-pattern>
     </servlet-mapping>
-    
+
+    <servlet>
+        <servlet-name>pagination</servlet-name>
+        <servlet-class>org.example.servlet.TestServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>pagination</servlet-name>
+        <url-pattern>/pagination</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>editcart</servlet-name>
         <servlet-class> org.example.servlet.EditCartServlet</servlet-class>
