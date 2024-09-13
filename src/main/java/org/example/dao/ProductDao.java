@@ -62,7 +62,7 @@ public class ProductDao extends Repository<Product>
 
     //filter by subcategorys(for loop) , range of price, sort by price , sort by quantity
 
-    public Map<Integer,List<Product>> filterProducts(List<Category> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize)
+    public Map<Integer,List<Product>> filterProducts(List<Category> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize,String searchText)
     {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -80,11 +80,15 @@ public class ProductDao extends Repository<Product>
         if(minPrice != null && maxPrice != null)
             predicates.add( criteriaBuilder.and(criteriaBuilder.between(root.get("price"),minPrice,maxPrice) ) );
 
+        if(searchText != null && !searchText.isEmpty())
+            predicates.add(criteriaBuilder.and( criteriaBuilder.equal(root.get("productName"),searchText) ) );
+
 
         // Apply predicates to the query
         if (!predicates.isEmpty()) {
             query.select(root).where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
         }
+
 
 
         if(sortByQuantity)
