@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class showProductsServlet extends HttpServlet {
 
@@ -27,7 +28,6 @@ public class showProductsServlet extends HttpServlet {
                 ? Arrays.asList(subCategoriesArray)
                 : null;
 
-        System.out.println(subCategories.size());
         // Retrieve min and max price
         Double minPrice = null;
         Double maxPrice = null;
@@ -73,23 +73,28 @@ public class showProductsServlet extends HttpServlet {
         ProductService productService = new ProductService(emf.createEntityManager());
 
         try {
-            List<Product> products = productService.findAllProducts(subCategories, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize);
+            // Call the service method, which returns a Map<Integer, List<Product>>
+            Map<Integer, List<Product>> productsMap = productService.findAllProducts(subCategories, minPrice, maxPrice, sortByPrice, sortByQuantity, pageNumber, pageSize);
+
+            // Extract the total product count (key) and the paginated list of products (value)
+            int totalProductCount = productsMap.keySet().iterator().next(); // This gives you the total number of products
+            List<Product> products = productsMap.get(totalProductCount);   // This gives you the list of products for the current page
 
             ///////////////////////////////// continue from here ///////////////////////////////
 
-            long totalProducts = products.size();
+            long totalProducts = totalProductCount;
             int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
             request.setAttribute("products", products);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("currentPage", pageNumber);
 
-            request.getRequestDispatcher("/test.jsp").forward(request,response);
+            request.getRequestDispatcher("/shop.jsp").forward(request,response);
 
         }catch (RuntimeException e)
         {
             request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher("/products.jsp").forward(request, response);
+            request.getRequestDispatcher("/shop.jsp").forward(request, response);
         }
     }
 

@@ -24,14 +24,14 @@ public class ShopSetupServlet extends HttpServlet {
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
         CategoryService categoryService = new CategoryService(emf.createEntityManager());
-        ProductService productService = new ProductService(emf.createEntityManager());
+        //ProductService productService = new ProductService(emf.createEntityManager());
 
         try {
             request.setAttribute("ParentCategories", categoryService.getParentCategories());
 
-            request.setAttribute("products", productService.findAllProducts());
+            //request.setAttribute("products", productService.findAllProducts());
 
-            request.getRequestDispatcher("shop.jsp").forward(request, response);
+            request.getRequestDispatcher("/all-products").forward(request, response);
 
         } catch (RuntimeException e) {
             request.setAttribute("errorMessage", e.getMessage());

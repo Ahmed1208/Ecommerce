@@ -34,7 +34,7 @@ public class UserProductCartDao extends Repository<UserProductCart>
     }
 
     public Integer countProductsByUser(int userId) {
-        String s = "select count(up) from UserProductCart up where up.user.id = :id";
+        String s = "select sum(up.productQuantity) from UserProductCart up where up.user.id = :id";
         Query q = entityManager.createQuery(s).setParameter("id", userId);
         Long countResult = (Long) q.getSingleResult(); // Cast to Long
         return countResult != null ? countResult.intValue() : null; // Convert Long to Integer

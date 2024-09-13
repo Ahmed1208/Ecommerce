@@ -64,7 +64,6 @@
                         <div class="navbar-nav mx-auto">
                             <a href="index.html" class="nav-item nav-link">Home</a>
                             <a href="shop.html" class="nav-item nav-link active">Shop</a>
-                            <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -80,7 +79,7 @@
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                             <a href="#" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.cartSize}</span>
+                                <span id="cart-size" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.cartSize}</span>
                             </a>
                             <a href="/ecommerce/profile" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
@@ -322,14 +321,16 @@
 
                                     <div class="col-12">
                                         <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                            <a href="#" class="rounded">4</a>
-                                            <a href="#" class="rounded">5</a>
-                                            <a href="#" class="rounded">6</a>
-                                            <a href="#" class="rounded">&raquo;</a>
+                                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                                <c:choose>
+                                                    <c:when test="${i == currentPage}">
+                                                        <a class="active rounded">${i}</a> <!-- Current page -->
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="shop-page?pageNumber=${i}" class="rounded">${i}</a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                 </div>
@@ -441,73 +442,7 @@
 
 
     <!-- JavaScript Libraries -->
-    <script>
-            function toggleSubcategories(event, categoryId) {
-                event.preventDefault(); // Prevent the default link behavior
-
-                // Get the container for the subcategories
-                var container = document.getElementById("subcategories-" + categoryId);
-
-                // Toggle the display of the container
-                if (container.style.display === "none" || container.style.display === "") {
-                    container.style.display = "block";
-                } else {
-                    container.style.display = "none";
-                }
-            }
-            function addToCart(productId, userId) {
-
-                // Debugging: Check if productId and userId are valid
-                if (!productId || !userId) {
-                    //alert("login first");
-                    showNotification("Invalid productId or userId", "error");
-                    return;
-                }
-
-                $.ajax({
-                    url: '/ecommerce/add-to-cart',  // The URL to handle the request
-                    type: 'POST',                   // Type of the request (POST for adding data)
-                    data: {
-                        productId: productId,              // Product ID sent to the server
-                        userId: userId              // User ID sent to the server
-                    },
-                    success: function (response) {
-                        // Show success message in a notification
-                        showNotification(response, "success");
-                    },
-                    error: function (error) {
-                        // Handle the error with a notification
-                        showNotification("Error adding product to cart", "error");
-                        console.log('Error adding product to cart:', error);
-                    }
-                });
-            }
-
-            function showNotification(message, type) {
-                var container = document.getElementById('notification-container');
-
-                // Create notification element
-                var notification = document.createElement('div');
-                notification.className = 'notification ' + type; // Add classes for styling
-                notification.innerText = message;
-
-                // Add some basic styles (you can replace this with your own CSS classes)
-                notification.style.padding = '10px 20px';
-                notification.style.marginTop = '10px';
-                notification.style.borderRadius = '5px';
-                notification.style.color = '#fff';
-                notification.style.backgroundColor = (type === 'success') ? '#4caf50' : '#f44336'; // Green for success, Red for error
-                notification.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
-
-                // Append notification to the container
-                container.appendChild(notification);
-
-                // Automatically remove the notification after 3 seconds
-                setTimeout(function () {
-                    container.removeChild(notification);
-                }, 3000);
-            }
-     </script>
+       <script src="js/addToCartButton.js"></script>
 
        <style>
            .notification {

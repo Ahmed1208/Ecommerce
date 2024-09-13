@@ -11,6 +11,7 @@ import org.example.entity.User;
 import org.example.mapper.ProductMapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -83,7 +84,7 @@ public class ProductService {
     }
 
 
-    public List<Product> findAllProducts(List<String> subCategories,Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity,int pageNumber, int pageSize)
+    public Map<Integer,List<Product>> findAllProducts(List<String> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize)
     {
 
         if(subCategories == null)
