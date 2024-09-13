@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
+
+
     <style>
         /* Reset margin and padding */
         * {
@@ -213,6 +215,7 @@
             <form action="/ecommerce/submitUser.jsp" method="post">
 
                 <input type="hidden"  name="id"  value="${sessionScope.user.id}" >
+                <input type="hidden"  name="balance"  value="${sessionScope.user.balance}" >
 
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name"  value="${sessionScope.user.name}" >
@@ -244,7 +247,7 @@
 
                 <label for="phone">Phone Number:</label>
                 <input type="tel" id="phone" name="phone" value="${sessionScope.user.phone}" >
-
+                    <script>console.log("user balance : ${sessionScope.user.balance}")</script>
                 <input type="submit" value="Update">
             </form>
 
@@ -263,10 +266,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
-                <c:forEach var="order" items="${sessionScope.user.orders}">
-                    <tr>
-                        <script>console.log("i'm here inside")</script>
+                <c:forEach var="order" items="${requestScope.orders}">
+                    <tr style="cursor: pointer;" onclick="window.location.href='/ecommerce/orderDetails?orderid=${order.id}'">
                         <td>${order.id}</td>
                         <td>${order.orderDate}</td>
                         <td>${order.totalPrice}</td>
@@ -289,10 +290,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
-                <c:forEach var="log" items="${sessionScope.user.balanceLogs}">
+                <c:forEach var="log" items="${requestScope.balanceLogs}">
                     <tr>
-                        <script>console.log("i'm here inside")</script>
                         <td>${log.id}</td>
                         <td>${log.amount}</td>
                         <td>${log.paymentType}</td>

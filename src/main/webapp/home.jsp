@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
 
+
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -25,7 +26,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="css/header.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -91,78 +92,118 @@
                     </a>
 
                     <!-- Profile Icon -->
-                    <a href="/ecommerce/profile" class="my-auto" style="position: relative;">
+                    <a href="/ecommerce/profile" class="my-auto" style="position: relative; margin-right: 15px;">
                         <i class="fas fa-user fa-2x text-dark"></i>
                         <span class="tooltip-text">Profile</span>
                     </a>
-                    <script>
-                        console.log("i'm outside" +
-                            " the if condition for id : ${not empty sessionScope}")
-                    </script>
+
                     <c:if test="${not empty sessionScope.user}">
-                        <script>
-                            console.log("i'm inside the if condition for id : ${sessionScope.user.id}")
-                        </script>
+                        <!-- Modal Trigger -->
+                        <a href="javascript:void(0);" class="my-auto" style="position: relative; margin-right: 15px;" onclick="openPaymentModal()">
+                            <div class="d-flex align-items-center justify-content-center" style="gap: 8px;">
+                                <i class="fas fa-wallet fa-2x text-dark"></i>
+                                <span class="fw-bold" style="font-size: 18px;"> $${sessionScope.user.balance}</span>
+                            </div>
+                            <span class="tooltip-text">Wallet</span>
+                        </a>
+
                         <!-- Logout Icon -->
-                        <a href="/ecommerce/logout" class="my-auto ms-4" style="position: relative;">
+                        <a href="/ecommerce/logout" class="my-auto" style="position: relative; margin-left: 20px;">
                             <i class="fas fa-sign-out-alt fa-2x text-dark"></i>
                             <span class="tooltip-text">Logout</span>
                         </a>
                     </c:if>
 
+                    <!-- Modal Structure -->
+                    <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel">Make a Payment</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Modal Content -->
+                                    <div class="form-group">
+                                        <label for="paymentAmount">Enter Amount to Pay:</label>
+                                        <input type="number" id="paymentAmount" class="form-control" placeholder="Enter amount">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Choose Payment Method:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="payWithVisa" value="visa" checked>
+                                            <label class="form-check-label" for="payWithVisa">
+                                                Pay with Visa
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="payWithPaypal" value="paypal">
+                                            <label class="form-check-label" for="payWithPaypal">
+                                                Pay with PayPal
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Cancel</button>
+                                    <button type="button" class="btn btn-primary" onclick="submitPayment()">Pay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        // Function to open the payment modal
+                        // Function to open the payment modal
+
+                        function openPaymentModal() {
+                            $('#paymentModal').modal({ backdrop: false });
+                            $('#paymentModal').modal('show');// Disable backdrop blocking
+                        }
+                        function closemodal(){
+                            $('#paymentModal').modal('hide');
+
+                        }
+
+                        // Function to handle payment submission
+                        function submitPayment() {
+                            const amount = document.getElementById("paymentAmount").value;
+                            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+                            if (amount <= 0 || isNaN(amount)) {
+                                alert("Please enter a valid amount.");
+                                return;
+                            }
+
+                            console.log("Payment amount:", amount);
+                            console.log("Selected payment method:", paymentMethod);
+
+                            // Perform AJAX request to add balance
+                            var req = new XMLHttpRequest();
+                            req.open("GET", "/ecommerce/addBalance?amount=" + encodeURIComponent(amount), true);
+                            req.onreadystatechange = function() {
+                                if (req.readyState === 4) {
+                                    if (req.status === 200) {
+                                        $('#paymentModal').modal('hide'); // Close modal
+                                        alert("Payment Done.");
+                                        window.location.reload();
+                                    } else {
+                                        alert("Error: " + req.responseText);
+                                    }
+                                }
+                            };
+                            req.send(null);
+
+
+                        // Close the modal after payment
+
+
+                        }
+
+                    </script>
                 </div>
 
-                <style>
-                    /* Basic styling for icons and layout */
-                    .d-flex .my-auto {
-                        position: relative;
-                    }
-
-                    /* Hover Effects */
-                    a, button {
-                        transition: transform 0.3s ease, color 0.3s ease;
-                    }
-
-                    a:hover i, button:hover i {
-                        transform: scale(1.1);
-                        color: #007bff; /* Highlight color on hover */
-                    }
-
-                    /* Tooltip Text */
-                    .tooltip-text {
-                        display: none;
-                        position: absolute;
-                        bottom: -30px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background: rgba(0, 0, 0, 0.7);
-                        color: white;
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        font-size: 12px;
-                        white-space: nowrap;
-                    }
-
-                    /* Show tooltip on hover */
-                    a:hover .tooltip-text, button:hover .tooltip-text {
-                        display: block;
-                    }
-
-                    /* Shopping Bag Badge */
-                    .fa-shopping-bag {
-                        color: #333;
-                    }
-
-                    .position-absolute {
-                        font-size: 12px;
-                        padding: 0 6px;
-                    }
-
-                    /* Additional Spacing for Logout Icon */
-                    .ms-4 {
-                        margin-left: 20px;
-                    }
-                </style>
 
             </div>
         </nav>

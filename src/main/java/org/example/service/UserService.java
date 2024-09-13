@@ -2,25 +2,21 @@ package org.example.service;
 
 import jakarta.persistence.EntityManager;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.example.dao.BalanceLogsDao;
 import org.example.dao.UserDao;
-import org.example.entity.Address;
-import org.example.entity.GENDER;
-import org.example.entity.User;
+import org.example.entity.*;
 
-import java.security.PublicKey;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Optional;
 
 public class UserService {
     private UserDao userDao;
     private EntityManager em;
+    BalanceLogsDao balanceLogsDao;
     public UserService(EntityManager entityManager)
     {
         em = entityManager;
         this.userDao = new UserDao(entityManager);
+        balanceLogsDao = new BalanceLogsDao(entityManager);
     }
     public boolean checkIfEmailExist(String email){
 
@@ -122,6 +118,27 @@ public class UserService {
             System.out.println("exception happened, commit is rolled back");
             throw new RuntimeException("Can't update this user");
         }
+    }
+    public Optional<User> AddBalanceToUser(int userId, double amount){
+        Optional<User> user = userDao.findById(userId);
+        if (user.isPresent()) {
+            try {
+                em.getTransaction().begin();
+                user.get().setBalance(user.get().getBalance() + amount);
+                BalanceLogs balanceLogs=new BalanceLogs(amount,PAYMENT.VISA,user.get());
+                balanceLogsDao.create(balanceLogs);
+                em.getTransaction().commit();
+                return userDao.findById(userId);
+            }catch (Exception e) {
+                em.getTransaction().rollback();
+                throw new RuntimeException(e.getMessage());
+            }
+
+
+
+
+        }
+        return user;
     }
 
 }

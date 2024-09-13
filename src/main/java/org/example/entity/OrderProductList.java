@@ -36,8 +36,10 @@ public class OrderProductList  implements Serializable {
     private Order order;
 
 
-
-
-
-
+    public OrderProductList(Integer productQuantity, Double productPrice, Product product, Order order) {
+        this.productQuantity = productQuantity;
+        this.productPrice = productPrice;
+        this.product = product;
+        this.order = order;
+    }
 }

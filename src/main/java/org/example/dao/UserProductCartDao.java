@@ -32,4 +32,26 @@ public class UserProductCartDao extends Repository<UserProductCart>
         return Optional.ofNullable(userProductCart);
     }
 
+    public boolean deleteProductFromCart(int userid,int productId){
+       int rows= entityManager.createQuery(
+                "delete  from UserProductCart where user.id=:userid and product.id=:productId")
+                .setParameter("userid",userid).setParameter("productId",productId).executeUpdate();
+       if (rows>0){
+           return true;
+       }else {
+           return false;
+       }
+
+    }
+    public void updateProductQuantity(int userid,int productId,int quantity){
+        UserProductCart userProductCart=entityManager.
+                createQuery("select u from UserProductCart u where u.user.id=:userid and u.product.id=:productid", UserProductCart.class)
+                .setParameter("userid",userid).setParameter("productid",productId).getSingleResult();
+        userProductCart.setProductQuantity(quantity);
+        super.update(userProductCart);
+    }
+    public void deleteAllProductsFromCartByUserId(int userid){
+        entityManager.createQuery("delete from UserProductCart  where user.id=:userid"
+                ).setParameter("userid",userid).executeUpdate();
+    }
 }

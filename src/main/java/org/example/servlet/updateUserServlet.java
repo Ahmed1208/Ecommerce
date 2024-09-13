@@ -19,7 +19,8 @@ public class updateUserServlet extends HttpServlet {
     {
         User user = (User) request.getAttribute("userDetailes");
 
-        //System.out.println("printing user id inside log from updateUserServlet " + user.getId());
+
+        System.out.println("printing user balance inside log from updateUserServlet " + user.getBalance());
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 

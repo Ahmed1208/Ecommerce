@@ -19,7 +19,7 @@ public class CartService {
 
     public CartService(EntityManager entityManager)
     {
-        entityManager = entityManager;
+        this.entityManager = entityManager;
         this.cartDao = new UserProductCartDao(entityManager);
     }
 
@@ -74,5 +74,20 @@ public class CartService {
         return productCartList;
     }
 
+    public boolean deleteProductFromCart(int userId,int productId){
+        entityManager.getTransaction().begin();
+        boolean result= cartDao.deleteProductFromCart(userId,productId);
+        entityManager.getTransaction().commit();
+        return result;
+    }
+    public void updateProductQuantity(int userId,int productId,int quantity){
+        try {
+            entityManager.getTransaction().begin();
+            cartDao.updateProductQuantity(userId,productId,quantity);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
 
+    }
 }

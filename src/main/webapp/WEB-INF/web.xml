@@ -9,6 +9,14 @@
     </listener>
 
     <servlet>
+        <servlet-name>checkout</servlet-name>
+        <servlet-class> org.example.servlet.orderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkout</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>logout</servlet-name>
         <servlet-class> org.example.servlet.LogoutServlet</servlet-class>
     </servlet>
@@ -154,6 +162,15 @@
     <servlet-mapping>
         <servlet-name>shop-page</servlet-name>
         <url-pattern>/shop-page</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>editcart</servlet-name>
+        <servlet-class> org.example.servlet.EditCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editcart</servlet-name>
+        <url-pattern>/editcart</url-pattern>
     </servlet-mapping>
     <!-- web server -->
 

@@ -48,7 +48,7 @@ public class Main {
     public static void main(String[] args) {
 
     EntityManagerFactory entityManagerFactory = Factory.entityManagerFactory;
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
+   EntityManager entityManager = entityManagerFactory.createEntityManager();
 //    entityManager.getTransaction().begin();
 ////        // add new user WITH ADDRESS
 //       User u = new User("Men3m", "men3m@yahoo.com", "123", GENDER.FEMALE, 2400.0
@@ -335,6 +335,36 @@ public class Main {
 ////
 //        UserDao userDao = new UserDao(entityManager);
 //        userDao.create(user1);
+       // User user1 = new User("ahmed","ahmedali@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
+
+        UserDao userDao = new UserDao(entityManager);
+        Optional<User> u=userDao.findById(1);
+        System.out.println("orders for user 1 size : " + u.get().getOrders().size());
+//        CategoryDao categoryDao = new CategoryDao(entityManager);
+//        Category category = categoryDao.findById(3).get();
+//        Set<Product> products=category.getProducts();
+//        products.forEach(System.out::println);
+//      entityManager.getTransaction().begin();
+//       OrderDao orderDao = new OrderDao(entityManager);
+//       System.out.println( orderDao.findById(3).get().getUser().getName());
+//
+////      Order order = new Order(50.0,LocalDate.parse("2025-10-15"),STATUS.CANCELED,PAYMENT.VISA,u.get());
+////      orderDao.create(order);
+////        Set<Order> orderSet=new HashSet<>();
+////        orderSet.add(order);
+////        u.get().setOrders(orderSet);
+//       entityManager.getTransaction().commit();
+//        System.out.println("logs for user 1 size : "+ u.get().getBalanceLogs().size());
+//       System.out.println( "order for user 1 size : "+ u.get().getOrders().isEmpty());
+
+
+//         System.out.println ("Size: "+orderDao.findAll().size());
+//
+////
+//
+//
+//         System.out.println( u.get().getOrders().size());
+  //     userDao.create(user1);
 //
 ////
 ////        userDao.findById(1).ifPresent(user -> System.out.println(user));
@@ -357,6 +387,14 @@ public class Main {
 //        entityManager.getTransaction().begin();
 //        entityManager.getTransaction().commit();
 
+//        LocalDate dateFromString = LocalDate.parse("2025-09-15");
+//        System.out.println(dateFromString);
+//        User user = entityManager.find(User.class,1);
+//        user.setDateOfBirth(dateFromString);
+//
+//        entityManager.merge(user);
+//        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().commit();
 
 
 //        User user = entityManager.find(User.class,1);

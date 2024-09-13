@@ -1,0 +1,72 @@
+    /* Basic styling for icons and layout */
+.d-flex .my-auto {
+    position: relative;
+}
+
+/* Hover Effects */
+a, button {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+a:hover i, button:hover i {
+    transform: scale(1.1);
+    color: #007bff; /* Highlight color on hover */
+}
+
+/* Tooltip Text */
+.tooltip-text {
+    display: none;
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Show tooltip on hover */
+a:hover .tooltip-text, button:hover .tooltip-text {
+    display: block;
+}
+
+/* Shopping Bag Badge */
+.fa-shopping-bag {
+    color: #333;
+}
+
+.position-absolute {
+    font-size: 12px;
+    padding: 0 6px;
+}
+
+/* Additional Spacing for Logout Icon */
+.ms-4 {
+    margin-left: 20px;
+}
+
+    .modal-header {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .modal-footer {
+        background-color: #f8f9fa;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+    }
+    .modal {
+        z-index: 1050;
+    }
+    .modal-backdrop {
+        z-index: 1040;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+
