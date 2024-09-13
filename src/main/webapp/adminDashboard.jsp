@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>User Dashboard</title>
     <style>
         /* Reset margin and padding */
         * {
@@ -182,79 +182,117 @@
             background-color: #45a049;
         }
 
+        input[readonly] {
+            background-color: #f0f0f0; /* Light gray background */
+            color: #555; /* Dark gray text */
+            border: 1px solid #ccc; /* Light border */
+            cursor: not-allowed; /* Show a "not-allowed" cursor */
+            opacity: 0.7; /* Slight transparency */
+        }
+
+        input[readonly]:focus {
+            outline: none; /* Remove focus outline */
+        }
+
     </style>
 </head>
 <body>
+
+<jsp:include page="notification.jsp"/>
+
+
 <div class="dashboard-container">
     <!-- Left Navigation -->
     <nav class="sidebar">
         <ul>
-            <li><a href="javascript:void(0)" onclick="showSection('user-info')">Admin Information</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('order-history')">Products</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('balancelogs-history')">Users</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('balancelogs-history')">Orders</a></li>
-
+            <li><a href="javascript:void(0)" onclick="showSection('user-info')">User Information</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('order-history')">Order History</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('balancelogs-history')">Balance Logs History</a></li>
         </ul>
     </nav>
 
-    <c:if test="${not empty errorMessage}">
-        <script>
-            alert("${requestScope.errorMessage}");
-        </script>
-    </c:if>
+
+
 
     <!-- Content Section -->
     <div class="content">
         <!-- User Info Section -->
         <section id="user-info" class="dashboard-section">
             <h2>Admin Information</h2>
-            <script>
-                console.log("i'm outside" +
-                    " the if condition for id : ${not empty sessionScope}")
-            </script>
 
-            <form action="/ecommerce/submitUser.jsp" method="post">
+            <form action="submitAdmin.jsp" method="post">
 
-                <input type="hidden"  name="id"  value="${sessionScope.user.id}" >
+                <label>ID:</label>
+                <input type="text" name="id" value="${sessionScope.admin.id}" readonly>
 
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name"  value="${sessionScope.user.name}" >
+                <label>Name:</label>
+                <input type="text" id="name" name="name" value="${sessionScope.admin.name}">
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="${sessionScope.user.email}" >
+                <label>Email:</label>
+                <input type="email" id="email" name="email" value="${sessionScope.admin.email}" readonly>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" value="${sessionScope.user.password}" >
+                <label>Password:</label>
+                <input type="text" id="password" name="password" value="${sessionScope.admin.password}">
 
-                <INPUT TYPE="hidden" name="gender" value="${sessionScope.user.gender}">
-
-                <%-- <label for="gender">Gender:</label>--%>
-                <%-- <select id="gender" name="gender" required>--%>
-                <%--    <option value="Female" <c:if test="${sessionScope.user.gender == 'FEMALE'}">selected</c:if>>Female</option>--%>
-                <%--    <option value="Male" <c:if test="${sessionScope.user.gender == 'MALE'}">selected</c:if>>Male</option>--%>
-                <%--              </select>--%>
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dateOfBirth" value="${sessionScope.user.dateOfBirth}" >
-
-                <label for="street">Street:</label>
-                <input type="text" id="street" name="street" value="${sessionScope.user.address.street}" >
-
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" value="${sessionScope.user.address.city}" >
-
-                <label for="country">Country:</label>
-                <input type="text" id="country" name="country" value="${sessionScope.user.address.country}" >
-
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" value="${sessionScope.user.phone}" >
+                <label>Gender:</label>
+                <input type="text" id="gender" name="gender" value="${sessionScope.admin.gender}" readonly>
 
                 <input type="submit" value="Update">
             </form>
 
         </section>
 
+        <!-- Order History Section -->
+        <section id="order-history" class="dashboard-section" style="display:none;">
+            <h2>Order History</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
+                <c:forEach var="order" items="${sessionScope.user.orders}">
+                    <tr>
+                        <script>console.log("i'm here inside")</script>
+                        <td>${order.id}</td>
+                        <td>${order.orderDate}</td>
+                        <td>${order.totalPrice}</td>
+                        <td>${order.status}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </section>
 
-
+        <!-- Balance Logs History Section -->
+        <section id="balancelogs-history" class="dashboard-section" style="display:none;">
+            <h2>Balance Logs History</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Amount</th>
+                    <th>Payment_Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
+                <c:forEach var="log" items="${sessionScope.user.balanceLogs}">
+                    <tr>
+                        <script>console.log("i'm here inside")</script>
+                        <td>${log.id}</td>
+                        <td>${log.amount}</td>
+                        <td>${log.paymentType}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </section>
     </div>
 </div>
 

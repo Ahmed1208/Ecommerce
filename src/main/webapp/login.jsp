@@ -113,9 +113,9 @@
 </head>
 <body>
 
-<c:if test="${not empty requestScope.error}">
+<c:if test="${not empty requestScope.errorMessage}">
     <div class="notification" id="notification">
-            ${requestScope.error}
+            ${requestScope.errorMessage}
     </div>
 </c:if>
 

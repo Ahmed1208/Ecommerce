@@ -63,18 +63,17 @@ public class loginServlet extends HttpServlet {
             AdminService adminService = new AdminService(entityManager);
             try {
                 Admin admin = adminService.checkAdmin(email,password);
+                System.out.println("admin :" + admin.getEmail());
                 if (admin != null) {
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("user", admin);
+                    session.setAttribute("admin", admin);
                     session.setAttribute("role", role);
 
-                    System.out.println("Admin added to session: " + session.getAttribute("admin"));
-                    response.sendRedirect("/ecommerce/adminDetails");
-
+                    response.sendRedirect("/ecommerce/adminDashboard");
                 }
 
             } catch (RuntimeException e) {
-                request.setAttribute("error", e.getMessage());
+                request.setAttribute("errorMessage", e.getMessage());
                 request.getRequestDispatcher( "/login.jsp").include(request, response);
 
             }
