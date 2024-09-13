@@ -27,9 +27,20 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+
     </head>
 
     <body>
+
+    <c:if test="${not empty requestScope.errorMessage}">
+        <script>
+            // Ensure this script runs after the external JavaScript file is loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("${requestScope.errorMessage}", 'error');
+            });
+        </script>
+    </c:if>
+
        <div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
 
         <!-- Spinner Start -->
@@ -92,6 +103,7 @@
         <!-- Navbar End -->
 
 
+
         <!-- Modal Search Start -->
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
@@ -102,7 +114,7 @@
                     </div>
                     <div class="modal-body d-flex align-items-center">
                         <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <input id="search-input" type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                             <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
@@ -133,8 +145,8 @@
                         <div class="row g-4">
                             <div class="col-xl-3">
                                 <div class="input-group w-100 mx-auto d-flex">
-                                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                    <span id="search-icon-2" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                                    <input id="search-input2" type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                                    <span id="search-icon-2" class="input-group-text p-3" onclick="searchtext()"><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
                             <div class="col-6"></div>
@@ -142,10 +154,9 @@
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                                     <label for="fruits">Default Sorting:</label>
                                     <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" >
-                                        <option value="volvo">Nothing</option>
-                                        <option value="saab">Popularity</option>
-                                        <option value="opel">Organic</option>
-                                        <option value="audi">Fantastic</option>
+                                        <option value="Nothing">Nothing</option>
+                                        <option value="Price">Price</option>
+                                        <option value="Quantity">Quantity</option>
                                     </select>
                                 </div>
                             </div>
@@ -171,12 +182,14 @@
                                                                 <ul class="list-unstyled">
                                                                     <c:forEach var="subcategory" items="${category.childCategories}">
                                                                         <li class="subcategory-item">
-                                                                            <!-- Subcategory as a clickable link -->
-                                                                            <a href="#" class="subcategory-link">
-                                                                                ${subcategory.name}
-                                                                            </a>
+                                                                            <!-- Subcategory as a checkbox with data-name attribute -->
+                                                                            <input type="checkbox" name="subcategories" value="${subcategory.id}" id="subcategory_${subcategory.id}" data-name="${subcategory.name}">
+                                                                            <label for="subcategory_${subcategory.id}">
+                                                                                    ${subcategory.name}
+                                                                            </label>
                                                                         </li>
                                                                     </c:forEach>
+
                                                                 </ul>
                                                             </div>
                                                         </li>
@@ -191,6 +204,9 @@
                                             <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
                                             <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-primary w-100" onclick="performFilter()">Filter</button>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="mb-3">
@@ -324,11 +340,12 @@
                                             <c:forEach var="i" begin="1" end="${totalPages}">
                                                 <c:choose>
                                                     <c:when test="${i == currentPage}">
-                                                        <a class="active rounded">${i}</a> <!-- Current page -->
+                                                        <a id=currPage class="active rounded">${i}</a> <!-- Current page -->
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <a href="shop-page?pageNumber=${i}" class="rounded">${i}</a>
+                                                        <a href="javascript:void(0);" onclick="updatePageNumber(${i})" class="rounded">${i}</a>
                                                     </c:otherwise>
+
                                                 </c:choose>
                                             </c:forEach>
                                         </div>
@@ -444,6 +461,95 @@
     <!-- JavaScript Libraries -->
        <script src="js/addToCartButton.js"></script>
 
+       <script>
+           function performFilter(newPageNumber) {
+               var url = "/ecommerce/shop-page?";
+
+               // Get the current URL parameters
+               var queryString = window.location.search;
+
+               // Create a URLSearchParams object to easily manipulate the query parameters
+               var params = new URLSearchParams(queryString);
+
+               // Set the new page number, overriding any existing one
+               if (newPageNumber) {
+                   params.set("pageNumber", newPageNumber);
+               }
+
+               // Get search text and add it to the URL if not empty
+               const searchText = document.getElementById('search-input2').value.trim();
+               if (searchText) {
+                   params.set("searchText", encodeURIComponent(searchText));
+               }
+
+               // Get selected subcategories
+               const selectedSubcategories = Array.from(document.querySelectorAll('input[name="subcategories"]:checked'))
+                   .map(cb => cb.getAttribute('data-name'))
+                   .filter(name => name);
+
+               // Clear previous subCategories and add the new ones
+               params.delete("subCategories");
+               if (selectedSubcategories.length > 0) {
+                   selectedSubcategories.forEach(name => {
+                       params.append("subCategories", encodeURIComponent(name));
+                   });
+               }
+
+               // Get price range
+               const maxprice = document.getElementById('rangeInput').value;
+               if (maxprice !== "0") {
+                   params.set("minPrice", "0");
+                   params.set("maxPrice", maxprice);
+               }
+
+               // Get sort option
+               const sortOption = document.getElementById('fruits').value;
+               if (sortOption === "Price") {
+                   params.set("sortByPrice", "true");
+               } else if (sortOption === "Quantity") {
+                   params.set("sortByQuantity", "true");
+               }
+
+               // Redirect to the new URL with updated parameters
+               window.location.href = url + params.toString();
+           }
+
+           function updatePageNumber(newPageNumber) {
+               // Get the current query string from the URL
+               var queryString = window.location.search;
+
+               // Create a URLSearchParams object to manipulate the query parameters
+               var params = new URLSearchParams(queryString);
+
+               // Set the new page number, overriding any existing one
+               params.set("pageNumber", newPageNumber);
+
+               // Construct the new URL by appending the updated query parameters
+               var newUrl = window.location.pathname + "?" + params.toString();
+
+               // Redirect to the new URL
+               window.location.href = newUrl;
+           }
+
+           function searchtext() {
+               // Get the search text from the input field
+               const searchText = document.getElementById('search-input2').value.trim();
+
+               // Process the search text or perform the search action
+               if (searchText) {
+                   // Example: Redirect to a search results page with the query
+                   const url = '/ecommerce/shop-page?searchText=' + encodeURIComponent(searchText);
+                   window.location.href = url;
+               } else {
+                   // Handle the case where the search text is empty
+                   console.log('Search text is empty');
+               }
+
+
+           }
+
+       </script>
+
        <style>
            .notification {
                position: fixed;
@@ -467,7 +573,6 @@
            }
        </style>
 
-
        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -477,7 +582,7 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+       <script src="js/main.js"></script>
     </body>
 
 </html>
