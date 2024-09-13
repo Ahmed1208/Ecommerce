@@ -14,7 +14,10 @@ function addToCart(productId, userId) {
         },
         success: function(response) {
             // Show success message in a notification
-            document.getElementById('cart-size').innerText = parseInt(document.getElementById('cart-size').innerText)+1;
+            if (response !=='No Enough quantity for the product'){
+                document.getElementById('cart-size').innerText = parseInt(document.getElementById('cart-size').innerText)+1;
+
+            }
             showNotification(response, "success");
         },
         error: function(error) {

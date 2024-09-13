@@ -47,7 +47,7 @@ public class AddToCartServlet extends HttpServlet {
             HttpSession session = request.getSession(false);
             if (session != null)
             {
-                Integer cartSize = new CartService(entityManager).cartProductsCount(Integer.parseInt(userId));
+                int cartSize = new CartService(entityManager).cartProductsCount(Integer.parseInt(userId));
                 session.setAttribute("cartSize",cartSize);
             }
 

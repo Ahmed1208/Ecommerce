@@ -99,4 +99,12 @@ public class OrderService {
     public Optional<Order> getOrderById(int id){
         return Optional.of(orderDao.findById(id).get());
     }
+    public Optional<Order> cancelOrder(int orderId){
+        entityManager.getTransaction().begin();
+        Order order=orderDao.findById(orderId).get();
+        order.setStatus(STATUS.CANCELED);
+        orderDao.update(order);
+        entityManager.getTransaction().commit();
+        return Optional.of(order);
+    }
 }

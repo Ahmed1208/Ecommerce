@@ -35,7 +35,7 @@ public class loginServlet extends HttpServlet {
                     session.setAttribute("user", user);
                     session.setAttribute("role", role);
 
-                    Integer cartSize = new CartService(entityManager).cartProductsCount(user.getId());
+                    int cartSize = new CartService(entityManager).cartProductsCount(user.getId());
                     session.setAttribute("cartSize",cartSize);
 
                     System.out.println("User added to session: " + session.getAttribute("user"));

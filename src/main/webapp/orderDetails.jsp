@@ -144,42 +144,11 @@
 
     <div class="order-actions">
         <c:if test="${requestScope.order.status == 'PENDING'}">
-            <button class="btn-orange">Cancel Order</button>
+            <button class="btn-orange" onclick="window.location.href='/ecommerce/orderDetails?action=cancel&orderid=${order.id}'">Cancel Order</button>
         </c:if>
     </div>
 
 </section>
-
-
-
-
-
-
-
-
-
-<%--<h3>Products in this Order</h3>--%>
-<%--<table>--%>
-<%--    <thead>--%>
-<%--    <tr>--%>
-<%--        <th>Product Name</th>--%>
-<%--        <th>Quantity</th>--%>
-<%--        <th>Price</th>--%>
-<%--        <th>Total</th>--%>
-<%--    </tr>--%>
-<%--    </thead>--%>
-<%--    <tbody>--%>
-<%--    <c:forEach var="item" items="${requestScope.products}">--%>
-<%--        <tr>--%>
-<%--            <td>${item.product.productName}</td>--%>
-<%--            <td>${item.productQuantity}</td>--%>
-<%--            <td>${item.productPrice}</td>--%>
-<%--            <td>${item.productQuantity * item.productPrice}</td>--%>
-<%--        </tr>--%>
-<%--    </c:forEach>--%>
-<%--    </tbody>--%>
-<%--</table>--%>
-
 
 </body>
 </html>

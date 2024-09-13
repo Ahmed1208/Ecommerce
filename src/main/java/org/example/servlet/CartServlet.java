@@ -28,6 +28,8 @@ public class CartServlet extends HttpServlet {
                 req.setAttribute("cart", cartProducts);
                 req.getRequestDispatcher("cart.jsp").forward(req, resp);
                 //req.getSession().setAttribute("cart",cartProducts);
+            }else{
+                resp.sendRedirect("login.jsp");
             }
         }else {
             resp.sendRedirect("login.jsp");

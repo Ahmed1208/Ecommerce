@@ -24,6 +24,7 @@ public class OrderDetailsServlet extends HttpServlet {
             return;
         }
         String orderIdParam = request.getParameter("orderid");
+        String action = request.getParameter("action");
         // Check if orderIdParam is not null or empty
         if (orderIdParam == null || orderIdParam.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or invalid order ID");
@@ -33,22 +34,30 @@ public class OrderDetailsServlet extends HttpServlet {
         try {
             // Convert orderIdParam to an integer (assuming it's a valid integer)
             int orderId = Integer.parseInt(orderIdParam);
+            if (action == null) {
+                // Fetch the order details using the orderId (you may need to use a service or DAO here)
+                Optional<Order> order=orderService.getOrderById(orderId);
+                // Check if the order exists
+                if (!order.isPresent()) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Order not found");
+                    return;
+                }
+                // Set the order in the request scope
+                request.setAttribute("order", order.get());
+                request.setAttribute("products", order.get().getOrderProductList());
 
-            // Fetch the order details using the orderId (you may need to use a service or DAO here)
-            Optional<Order> order=orderService.getOrderById(orderId);
-            // Check if the order exists
-            if (!order.isPresent()) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Order not found");
-                return;
+                // Forward to the JSP page to display order details
+                RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
+                dispatcher.forward(request, response);
+            }else{
+               Optional<Order> order= orderService.cancelOrder(orderId);
+                request.setAttribute("order", order.get());
+                request.setAttribute("products", order.get().getOrderProductList());
+                RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
+                dispatcher.forward(request, response);
             }
 
-            // Set the order in the request scope
-            request.setAttribute("order", order.get());
-            request.setAttribute("products", order.get().getOrderProductList());
 
-            // Forward to the JSP page to display order details
-            RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
-            dispatcher.forward(request, response);
 
         } catch (NumberFormatException e) {
             // Handle the case where orderId is not a valid integer

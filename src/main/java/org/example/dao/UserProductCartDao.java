@@ -33,11 +33,11 @@ public class UserProductCartDao extends Repository<UserProductCart>
         return Optional.ofNullable(userProductCart);
     }
 
-    public Integer countProductsByUser(int userId) {
+    public int countProductsByUser(int userId) {
         String s = "select sum(up.productQuantity) from UserProductCart up where up.user.id = :id";
         Query q = entityManager.createQuery(s).setParameter("id", userId);
         Long countResult = (Long) q.getSingleResult(); // Cast to Long
-        return countResult != null ? countResult.intValue() : null; // Convert Long to Integer
+        return countResult != null ? countResult.intValue() : 0; // Convert Long to Integer
     }
 
     public boolean deleteProductFromCart(int userid,int productId){

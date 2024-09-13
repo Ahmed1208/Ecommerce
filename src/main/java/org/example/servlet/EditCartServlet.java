@@ -24,6 +24,8 @@ public class EditCartServlet extends HttpServlet {
             int userID = Integer.parseInt(userid);
             int productID = Integer.parseInt(productid);
             if(cartService.deleteProductFromCart(userID, productID)) {
+                int cartSize = new CartService(entityManagerFactory.createEntityManager()).cartProductsCount(userID);
+                request.getSession().setAttribute("cartSize",cartSize);
                 response.sendRedirect("/ecommerce/cart.jsp");
             }
         }
@@ -42,6 +44,8 @@ public class EditCartServlet extends HttpServlet {
             int newQuantity = Integer.parseInt(quantity);
             try {
                 cartService.updateProductQuantity(userID, productID, newQuantity);
+                int cartSize = new CartService(entityManagerFactory.createEntityManager()).cartProductsCount(userID);
+                request.getSession().setAttribute("cartSize",cartSize);
                 response.setStatus(HttpServletResponse.SC_OK);
 
             }catch(Exception e) {
