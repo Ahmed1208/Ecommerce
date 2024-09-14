@@ -2,12 +2,16 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.example.entity.Admin;
 import org.example.entity.GENDER;
+import org.example.entity.Order;
 import org.example.entity.User;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class UserDao extends Repository<User> {
 
@@ -53,7 +57,38 @@ public class UserDao extends Repository<User> {
                 return findBy("gender",gender);
         }
 
+        public Map<Integer,List<User>> findAllUsers(int pageNumber,int pageSize)
+        {
 
+                // Get the CriteriaBuilder from the EntityManager
+                CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+                // Create a CriteriaQuery object for the User entity
+                CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+
+                // Define the root of the query, which represents the User entity
+                Root<User> root = query.from(User.class);
+
+                // Define the query selection
+                query.select(root);
+
+                // Create TypedQuery from CriteriaQuery
+                TypedQuery<User> typedQuery = entityManager.createQuery(query);
+                int usersNumber = typedQuery.getResultList().size();
+
+                // Apply pagination parameters to TypedQuery
+                int firstResult = (pageNumber - 1) * pageSize;
+                typedQuery.setFirstResult(firstResult);
+                typedQuery.setMaxResults(pageSize);
+
+
+                Map<Integer,List<User>> result = new HashMap<>();
+
+                result.put(usersNumber,typedQuery.getResultList());
+
+                // Execute the query and return the results
+                return result;
+        }
 
 
 

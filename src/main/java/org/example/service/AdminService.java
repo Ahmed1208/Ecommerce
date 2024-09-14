@@ -2,11 +2,15 @@ package org.example.service;
 
 import jakarta.persistence.EntityManager;
 import org.example.dao.AdminDao;
+import org.example.dao.OrderDao;
 import org.example.dao.UserDao;
-import org.example.entity.Admin;
-import org.example.entity.User;
+import org.example.entity.*;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AdminService {
 
@@ -49,6 +53,28 @@ public class AdminService {
         } catch (RuntimeException e) {
 
             throw new RuntimeException("Can't update this admin");
+        }
+    }
+
+    public Map<Integer, List<Order>> getOrders(int pageNumber,int pageSize,Double minPrice,Double maxPrice,boolean sortByPrice,PAYMENT payment,STATUS status) throws Exception
+    {
+        try {
+            OrderDao orderDao = new OrderDao(entityManager);
+            return orderDao.filterOrders(status, payment, null, null, minPrice, maxPrice, sortByPrice, pageNumber, pageSize);
+        }catch (Exception e)
+        {
+            throw new Exception("Something went wrong");
+        }
+    }
+
+    public Map<Integer, List<User>> getUsers(int pageNumber,int pageSize) throws Exception
+    {
+        try {
+            UserDao userDao = new UserDao(entityManager);
+            return userDao.findAllUsers(pageNumber, pageSize);
+        }catch (Exception e)
+        {
+            throw new Exception("Something went wrong");
         }
     }
 

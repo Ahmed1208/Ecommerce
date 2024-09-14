@@ -2,6 +2,7 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -26,7 +27,7 @@ public class OrderDao extends Repository<Order>{
         return query.getResultList();
     }
 
-    public List<Order> filterOrders(STATUS status,PAYMENT payment,Date startDate, Date endDate,Double minPrice,Double maxPrice,boolean sortByPrice)
+    public Map<Integer,List<Order>> filterOrders(STATUS status,PAYMENT payment,Date startDate, Date endDate,Double minPrice,Double maxPrice,boolean sortByPrice,int pageNumber, int pageSize)
     {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -59,7 +60,23 @@ public class OrderDao extends Repository<Order>{
         if(sortByPrice == true)
             query.orderBy(criteriaBuilder.asc(root.get("totalPrice") ));
 
-        return entityManager.createQuery(query).getResultList();
+
+        // Create TypedQuery from CriteriaQuery
+        TypedQuery<Order> typedQuery = entityManager.createQuery(query);
+        int ordersNumber = typedQuery.getResultList().size();
+
+        // Apply pagination parameters to TypedQuery
+        int firstResult = (pageNumber - 1) * pageSize;
+        typedQuery.setFirstResult(firstResult);
+        typedQuery.setMaxResults(pageSize);
+
+
+        Map<Integer,List<Order>> result = new HashMap<>();
+
+        result.put(ordersNumber,typedQuery.getResultList());
+
+        // Execute the query and return the results
+        return result;
     }
 
 
