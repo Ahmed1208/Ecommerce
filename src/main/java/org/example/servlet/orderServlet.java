@@ -28,6 +28,8 @@ public class orderServlet extends HttpServlet {
         if (user!=null && paymentType!=null && bill!=null && cart!=null&&payedFromBalance!=null) {
             try {
                orderService.placeOrder(user,cart,paymentType,bill,payedFromBalance);
+                int cartSize = new CartService(entityManagerFactory.createEntityManager()).cartProductsCount(user.getId());
+                req.getSession().setAttribute("cartSize",cartSize);
                 resp.setContentType("text/plain");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.getWriter().print("Order placed successfully");

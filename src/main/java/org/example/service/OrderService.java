@@ -61,7 +61,8 @@ public class OrderService {
                     OrderProductList orderProduct=new OrderProductList(cartItem.getProductQuantity(), product.getPrice(),product,order );
                     entityManager.persist(orderProduct);
                 }
-                user.setBalance(user.getBalance()-payedFromBalance);
+                double newBalance = Math.round((user.getBalance() - payedFromBalance) * 100.0) / 100.0;
+                user.setBalance(newBalance);
                 userDao.update(user);
                 userProductCartDao.deleteAllProductsFromCartByUserId(user.getId());
                 entityManager.getTransaction().commit();

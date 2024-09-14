@@ -26,6 +26,8 @@ public class CartServlet extends HttpServlet {
             if (user!=null&&user.getId()!=null){
                 List<UserProductCart> cartProducts = cartService.getUserCartProducts(user);
                 req.setAttribute("cart", cartProducts);
+                int cartSize = new CartService(entityManagerFactory.createEntityManager()).cartProductsCount(user.getId());
+                req.getSession().setAttribute("cartSize",cartSize);
                 req.getRequestDispatcher("cart.jsp").forward(req, resp);
                 //req.getSession().setAttribute("cart",cartProducts);
             }else{
