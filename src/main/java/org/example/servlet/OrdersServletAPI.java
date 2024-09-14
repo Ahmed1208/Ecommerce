@@ -27,7 +27,7 @@ public class OrdersServletAPI extends HttpServlet {
 //        } else {
 
         int pageNumber = 1;
-        int pageSize = 9;
+        int pageSize = 10;
 
         String pageNum = request.getParameter("pageNumber");
         if(pageNum != null && !pageNum.isEmpty())

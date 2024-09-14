@@ -203,6 +203,15 @@
         <servlet-name>editcart</servlet-name>
         <url-pattern>/editcart</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>users-filter</servlet-name>
+        <servlet-class> org.example.servlet.UsersServletAPI</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>users-filter</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->

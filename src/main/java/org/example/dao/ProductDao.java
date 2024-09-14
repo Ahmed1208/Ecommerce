@@ -84,12 +84,13 @@ public class ProductDao extends Repository<Product>
         if(minPrice != null && maxPrice != null)
             predicates.add( criteriaBuilder.and(criteriaBuilder.between(root.get("price"),minPrice,maxPrice) ) );
 
+        predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("isDeleted"), false)));
+
 
         // Apply predicates to the query
         if (!predicates.isEmpty()) {
             query.select(root).where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
         }
-
 
 
         if(sortByQuantity)

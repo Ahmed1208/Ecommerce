@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.entity.Admin;
 import org.example.entity.Order;
 import org.example.entity.User;
 import org.example.service.OrderService;
@@ -19,7 +20,8 @@ public class OrderDetailsServlet extends HttpServlet {
         EntityManagerFactory entityManagerFactory= (EntityManagerFactory) request.getServletContext().getAttribute("emf");
         OrderService orderService= new OrderService(entityManagerFactory.createEntityManager());
         User user= (User) request.getSession().getAttribute("user");
-        if (user==null){
+        Admin admin= (Admin) request.getSession().getAttribute("admin");
+        if (user==null&& admin==null){
             response.sendRedirect("/ecommerce/profile");
             return;
         }
@@ -50,11 +52,20 @@ public class OrderDetailsServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
                 dispatcher.forward(request, response);
             }else{
-               Optional<Order> order= orderService.cancelOrder(orderId);
-                request.setAttribute("order", order.get());
-                request.setAttribute("products", order.get().getOrderProductList());
-                RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
-                dispatcher.forward(request, response);
+                if (action.equals("cancel")) {
+                    Optional<Order> order = orderService.cancelOrder(orderId);
+                    request.setAttribute("order", order.get());
+                    request.setAttribute("products", order.get().getOrderProductList());
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
+                    dispatcher.forward(request, response);
+                }
+                if (action.equals("approve")) {
+                    Optional<Order> order = orderService.approveOrder(orderId);
+                    request.setAttribute("order", order.get());
+                    request.setAttribute("products", order.get().getOrderProductList());
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
+                    dispatcher.forward(request, response);
+                }
             }
 
 
