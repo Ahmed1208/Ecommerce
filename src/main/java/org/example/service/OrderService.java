@@ -32,6 +32,9 @@ public class OrderService {
 
 
     public void placeOrder(User user, List<UserProductCart> cart,String paymentType,double bill,double payedFromBalance){
+        if (cart == null || cart.isEmpty()){
+            throw new RuntimeException("cart is empty");
+        }
         double totalBill = payedFromBalance + bill;
         PAYMENT payment;
         if (bill==0){

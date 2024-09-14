@@ -155,8 +155,8 @@
                             req.onreadystatechange = function() {
                                 if (req.readyState === 4) {
                                     if (req.status === 200) {
-                                        $('#paymentModal').modal('hide'); // Close modal
-                                        alert("Payment Done.");
+                                        closemodal() // Close modal
+                                        //alert("Payment Done.");
                                         window.location.reload();
                                     } else {
                                         alert("Error: " + req.responseText);
