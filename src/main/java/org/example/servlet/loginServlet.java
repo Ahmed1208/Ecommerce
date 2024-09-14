@@ -4,8 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
+import org.example.entity.Admin;
 import org.example.entity.GENDER;
 import org.example.entity.User;
+import org.example.service.AdminService;
 import org.example.service.CartService;
 import org.example.service.UserService;
 
@@ -14,6 +16,12 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 public class loginServlet extends HttpServlet {
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        request.getRequestDispatcher("/login.jsp").forward(request,response);
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        response.setContentType("text/html");
@@ -45,6 +53,27 @@ public class loginServlet extends HttpServlet {
 
             } catch (RuntimeException e) {
                 request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher( "/login.jsp").include(request, response);
+
+            }
+        }
+
+        if (role.equals("Admin")) {
+            EntityManager entityManager = emf.createEntityManager();
+            AdminService adminService = new AdminService(entityManager);
+            try {
+                Admin admin = adminService.checkAdmin(email,password);
+                System.out.println("admin :" + admin.getEmail());
+                if (admin != null) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("admin", admin);
+                    session.setAttribute("role", role);
+
+                    response.sendRedirect("/ecommerce/adminDashboard");
+                }
+
+            } catch (RuntimeException e) {
+                request.setAttribute("errorMessage", e.getMessage());
                 request.getRequestDispatcher( "/login.jsp").include(request, response);
 
             }

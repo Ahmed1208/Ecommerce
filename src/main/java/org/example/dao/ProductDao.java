@@ -62,7 +62,7 @@ public class ProductDao extends Repository<Product>
 
     //filter by subcategorys(for loop) , range of price, sort by price , sort by quantity
 
-    public Map<Integer,List<Product>> filterProducts(List<Category> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize)
+    public Map<Integer,List<Product>> filterProducts(List<Category> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize,String searchText)
     {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -72,6 +72,10 @@ public class ProductDao extends Repository<Product>
 
         // Initialize a list of predicates
         List<Predicate> predicates = new ArrayList<>();
+
+        if(searchText != null && !searchText.isEmpty())
+            predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("productName"), "%" + searchText + "%")));
+
 
         if (subCategories != null && !subCategories.isEmpty()) {
             predicates.add(root.get("category").in(subCategories));
@@ -85,6 +89,7 @@ public class ProductDao extends Repository<Product>
         if (!predicates.isEmpty()) {
             query.select(root).where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
         }
+
 
 
         if(sortByQuantity)

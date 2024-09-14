@@ -92,6 +92,16 @@
         <url-pattern>/add-product</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>filter</servlet-name>
+        <servlet-class>org.example.servlet.FilterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>filter</servlet-name>
+        <url-pattern>/filter</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>uploadServlet</servlet-name>
@@ -165,13 +175,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>pagination</servlet-name>
-        <servlet-class>org.example.servlet.TestServlet</servlet-class>
+        <servlet-name>admin-dashboard</servlet-name>
+        <servlet-class>org.example.servlet.AdminDetailsServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>pagination</servlet-name>
-        <url-pattern>/pagination</url-pattern>
+        <servlet-name>admin-dashboard</servlet-name>
+        <url-pattern>/adminDashboard</url-pattern>
     </servlet-mapping>
 
     <servlet>

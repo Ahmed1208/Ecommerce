@@ -67,6 +67,10 @@ public class showProductsServlet extends HttpServlet {
             pageNumber = Integer.parseInt(pageNumberParam);
         }
 
+        String searchText = request.getParameter("searchText");
+        if(searchText == null || searchText.isEmpty())
+            searchText = null;
+
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
@@ -74,7 +78,7 @@ public class showProductsServlet extends HttpServlet {
 
         try {
             // Call the service method, which returns a Map<Integer, List<Product>>
-            Map<Integer, List<Product>> productsMap = productService.findAllProducts(subCategories, minPrice, maxPrice, sortByPrice, sortByQuantity, pageNumber, pageSize);
+            Map<Integer, List<Product>> productsMap = productService.findAllProducts(subCategories, minPrice, maxPrice, sortByPrice, sortByQuantity, pageNumber, pageSize,searchText);
 
             // Extract the total product count (key) and the paginated list of products (value)
             int totalProductCount = productsMap.keySet().iterator().next(); // This gives you the total number of products

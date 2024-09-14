@@ -94,14 +94,31 @@
             text-decoration: underline;
         }
 
+        .notification {
+            background-color: #f44336; /* Red background */
+            color: white; /* White text */
+            padding: 15px;
+            position: fixed; /* Fixed at the top */
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            border-radius: 5px;
+        }
+
+
+
     </style>
 </head>
 <body>
-<c:if test="${not empty requestScope.error}">
-    <script>
-        alert("${requestScope.error}");
-    </script>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="notification" id="notification">
+            ${requestScope.errorMessage}
+    </div>
 </c:if>
+
 <div class="login-container" >
     <h2>Login</h2>
     <form id="loginForm" method="post" action="login">
@@ -131,5 +148,16 @@
 </div>
 
 <script src="login.js"></script>
+<script>
+    window.onload = function() {
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = 'block'; // Show notification
+            setTimeout(function() {
+                notification.style.display = 'none'; // Hide notification after 5 seconds
+            }, 5000);
+        }
+    };
+</script>
 </body>
 </html>

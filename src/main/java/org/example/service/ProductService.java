@@ -84,11 +84,11 @@ public class ProductService {
     }
 
 
-    public Map<Integer,List<Product>> findAllProducts(List<String> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize)
+    public Map<Integer,List<Product>> findAllProducts(List<String> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize,String searchText)
     {
 
         if(subCategories == null)
-            return productDao.filterProducts(null, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize);
+            return productDao.filterProducts(null, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize,searchText);
         else
         {
             List<Category> subs = null;
@@ -101,7 +101,7 @@ public class ProductService {
                 throw new RuntimeException("SubCategory not found");
             }
 
-            return productDao.filterProducts(subs, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize);
+            return productDao.filterProducts(subs, minPrice,  maxPrice,  sortByPrice,  sortByQuantity, pageNumber,  pageSize,searchText);
 
         }
 
