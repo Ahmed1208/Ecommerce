@@ -80,10 +80,10 @@
         req.onreadystatechange=function (){
             if (req.readyState===4){
                 if (req.status===200){
-                    alert(req.responseText)
+                    showNotification(req.responseText,'success')
                     window.location.reload()
                 } else {
-                    alert(req.responseText)
+                    showNotification(req.responseText,'error')
                 }
             }
         }
@@ -112,6 +112,7 @@
         req.send(null)
         req.onreadystatechange = function (){
             if (req.status===200&&req.readyState===4){
+                showNotification("product deleted successfully",'success')
                 window.location.reload()
             }
         }
@@ -215,7 +216,7 @@
                 // Reload the page to reflect the updated quantity
                 window.location.reload();
             } else if (xhr.readyState === 4 && xhr.status !== 200) {
-                alert("Failed to update quantity")
+                showNotification("Failed to update quantity",'error')
                 console.error("Failed to update quantity");
             }
         };

@@ -1,11 +1,35 @@
 <!-- Spinner Start -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
+
 <link href="css/header.css" rel="stylesheet">
 <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
 
+<style>
+    .notification {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+        padding: 15px;
+        border-radius: 5px;
+        color: #fff;
+        z-index: 1000;
+    }
+
+    .notification.success {
+        background-color: #4caf50;
+    }
+
+    .notification.error {
+        background-color: #f44336;
+    }
+</style>
 
 <!-- Navbar start -->
 <div class="container-fluid fixed-top">
@@ -100,6 +124,8 @@
                                         <label for="paymentAmount">Enter Amount to Pay:</label>
                                         <input type="number" id="paymentAmount" class="form-control" placeholder="Enter amount">
                                     </div>
+                                    <div id="msg"></div>
+
                                     <div class="form-group">
                                         <label>Choose Payment Method:</label>
                                         <div class="form-check">
@@ -142,7 +168,10 @@
                             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
                             if (amount <= 0 || isNaN(amount)) {
-                                alert("Please enter a valid amount.");
+                                document.getElementById("msg").innerHTML=""
+
+                                    showNotification("Please enter a valid amount.", 'error');
+                               // alert("Please enter a valid amount.");
                                 return;
                             }
 
@@ -155,11 +184,14 @@
                             req.onreadystatechange = function() {
                                 if (req.readyState === 4) {
                                     if (req.status === 200) {
-                                        closemodal() // Close modal
-                                        //alert("Payment Done.");
+                                        closemodal()
+                                        setTimeout(function (){},4000)
+                                        showNotification("Balance added successfully",'success')
+                                        setTimeout(function (){},4000)
                                         window.location.reload();
                                     } else {
-                                        alert("Error: " + req.responseText);
+                                        showNotification(req.responseText,'error')
+                                       // alert("Error: " + req.responseText);
                                     }
                                 }
                             };
@@ -174,6 +206,8 @@
                     </script>
                 </div>
 
+<%--                <script src="js/main.js"></script>--%>
+                <script src="js/addToCartButton.js"></script>
 
             </div>
         </nav>
