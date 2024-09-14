@@ -14,6 +14,7 @@
     <jsp:setProperty name="address" property="*" />
     <jsp:setProperty name="address" property="user" value="${requestScope.userDetailes}"/>
     <jsp:setProperty name="userDetailes" property="address" value="${requestScope.address}" />
+    <script>console.log("user balance : ${sessionScope.user.balance}")</script>
 
 <%--    <span>${userBean.id}</span>--%>
 

@@ -33,6 +33,12 @@ public class loginServlet extends HttpServlet {
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
+//        if (request.getSession().getAttribute("admin") != null ) {
+//            response.sendRedirect("/ecommerce/adminDashboard");
+//        }
+//        if (request.getSession().getAttribute("user") != null ) {
+//            response.sendRedirect("/ecommerce");
+//        }
         if (role.equals("User")) {
             EntityManager entityManager = emf.createEntityManager();
             UserService userService = new UserService(entityManager);
@@ -43,7 +49,7 @@ public class loginServlet extends HttpServlet {
                     session.setAttribute("user", user);
                     session.setAttribute("role", role);
 
-                    Integer cartSize = new CartService(entityManager).cartProductsCount(user.getId());
+                    int cartSize = new CartService(entityManager).cartProductsCount(user.getId());
                     session.setAttribute("cartSize",cartSize);
 
                     System.out.println("User added to session: " + session.getAttribute("user"));
@@ -52,6 +58,9 @@ public class loginServlet extends HttpServlet {
                 }
 
             } catch (RuntimeException e) {
+                System.out.println("Error in login : " + e.getMessage());
+                HttpSession session = request.getSession();
+                session.invalidate();
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher( "/login.jsp").include(request, response);
 

@@ -8,7 +8,6 @@ import java.util.List;
 
 public class BalanceLogsDao extends Repository<BalanceLogs> {
 
-    private EntityManager entityManager;
 
     public BalanceLogsDao(EntityManager entityManager)
     {

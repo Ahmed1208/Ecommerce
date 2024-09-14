@@ -23,12 +23,13 @@ public class CartServlet extends HttpServlet {
         HttpSession session =req.getSession(false);
         if(session!=null){
             User user= (User) req.getSession(false).getAttribute("user");
-            System.out.println("i'm inside the servlet : "+user.getName());
             if (user!=null&&user.getId()!=null){
                 List<UserProductCart> cartProducts = cartService.getUserCartProducts(user);
                 req.setAttribute("cart", cartProducts);
                 req.getRequestDispatcher("cart.jsp").forward(req, resp);
                 //req.getSession().setAttribute("cart",cartProducts);
+            }else{
+                resp.sendRedirect("login.jsp");
             }
         }else {
             resp.sendRedirect("login.jsp");

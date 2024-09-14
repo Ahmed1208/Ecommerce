@@ -60,7 +60,8 @@ public class AdminDetailsServlet extends HttpServlet {
 
                 request.getSession(false).setAttribute("admin", admin);
 
-                response.sendRedirect("/ecommerce/adminDashboard.jsp");
+                request.setAttribute("errorMessage","Successfully Updated!");
+                request.getRequestDispatcher("/adminDashboard.jsp").forward(request, response);
 
             }catch (RuntimeException e)
             {

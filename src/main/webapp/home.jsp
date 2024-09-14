@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
 
+
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -25,151 +26,15 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="css/header.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- Spinner Start -->
-<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-    <div class="spinner-grow text-primary" role="status"></div>
-</div>
-<!-- Spinner End -->
 
-
-<!-- Navbar start -->
-<div class="container-fluid fixed-top">
-    <div class="container topbar bg-primary d-none d-lg-block">
-        <div class="d-flex justify-content-between">
-            <div class="top-info ps-2">
-                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
-            </div>
-            <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-            </div>
-        </div>
-    </div>
-    <div class="container px-0">
-        <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Prime Mart</h1></a>
-            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars text-primary"></span>
-            </button>
-            <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                <div class="navbar-nav mx-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="/ecommerce/shop-page" class="nav-item nav-link">Shop</a>
-                    <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="cart.jsp" class="dropdown-item">Cart</a>
-                            <a href="chackout.html" class="dropdown-item">Chackout</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <div class="d-flex align-items-center justify-content-end m-3">
-                    <!-- Search Button -->
-                    <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal" style="position: relative;">
-                        <i class="fas fa-search text-primary"></i>
-                        <span class="tooltip-text">Search</span>
-                    </button>
-
-                    <!-- Cart Icon with Badge -->
-                    <a href="/ecommerce/getCart" class="position-relative me-4 my-auto" style="position: relative;">
-                        <i class="fa fa-shopping-bag fa-2x text-dark"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white" style="top: -5px; left: 15px; height: 20px; min-width: 20px; font-size: 12px;">${sessionScope.cartSize}</span>
-                        <span class="tooltip-text">Cart</span>
-                    </a>
-
-                    <!-- Profile Icon -->
-                    <a href="/ecommerce/profile" class="my-auto" style="position: relative;">
-                        <i class="fas fa-user fa-2x text-dark"></i>
-                        <span class="tooltip-text">Profile</span>
-                    </a>
-                    <script>
-                        console.log("i'm outside" +
-                            " the if condition for id : ${not empty sessionScope}")
-                    </script>
-                    <c:if test="${not empty sessionScope.user}">
-                        <script>
-                            console.log("i'm inside the if condition for id : ${sessionScope.user.id}")
-                        </script>
-                        <!-- Logout Icon -->
-                        <a href="/ecommerce/logout" class="my-auto ms-4" style="position: relative;">
-                            <i class="fas fa-sign-out-alt fa-2x text-dark"></i>
-                            <span class="tooltip-text">Logout</span>
-                        </a>
-                    </c:if>
-
-                </div>
-
-                <style>
-                    /* Basic styling for icons and layout */
-                    .d-flex .my-auto {
-                        position: relative;
-                    }
-
-                    /* Hover Effects */
-                    a, button {
-                        transition: transform 0.3s ease, color 0.3s ease;
-                    }
-
-                    a:hover i, button:hover i {
-                        transform: scale(1.1);
-                        color: #007bff; /* Highlight color on hover */
-                    }
-
-                    /* Tooltip Text */
-                    .tooltip-text {
-                        display: none;
-                        position: absolute;
-                        bottom: -30px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background: rgba(0, 0, 0, 0.7);
-                        color: white;
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        font-size: 12px;
-                        white-space: nowrap;
-                    }
-
-                    /* Show tooltip on hover */
-                    a:hover .tooltip-text, button:hover .tooltip-text {
-                        display: block;
-                    }
-
-                    /* Shopping Bag Badge */
-                    .fa-shopping-bag {
-                        color: #333;
-                    }
-
-                    .position-absolute {
-                        font-size: 12px;
-                        padding: 0 6px;
-                    }
-
-                    /* Additional Spacing for Logout Icon */
-                    .ms-4 {
-                        margin-left: 20px;
-                    }
-                </style>
-
-            </div>
-        </nav>
-    </div>
-</div>
-<!-- Navbar End -->
-
+<jsp:include page="header.jsp"/>
 
 <!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
