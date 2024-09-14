@@ -31,6 +31,7 @@ public class AddBalanceServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
             }catch (Exception e) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().println(e.getMessage());
             }
 
         }else {
