@@ -29,6 +29,7 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private Double price;
     private String image;
+    private boolean isDeleted;
 
     public Product(String productName, Integer quantity, Double price, Category category) {
         this.productName = productName;

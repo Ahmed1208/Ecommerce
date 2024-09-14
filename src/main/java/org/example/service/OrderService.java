@@ -111,4 +111,12 @@ public class OrderService {
         entityManager.getTransaction().commit();
         return Optional.of(order);
     }
+    public Optional<Order> approveOrder(int orderId){
+        entityManager.getTransaction().begin();
+        Order order=orderDao.findById(orderId).get();
+        order.setStatus(STATUS.SHIPPED);
+        orderDao.update(order);
+        entityManager.getTransaction().commit();
+        return Optional.of(order);
+    }
 }

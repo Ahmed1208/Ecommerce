@@ -144,6 +144,11 @@
 
     <div class="order-actions">
         <c:if test="${requestScope.order.status == 'PENDING'}">
+            <c:if test="${not empty sessionScope.admin}">
+                <button class="btn-green" onclick="window.location.href='/ecommerce/orderDetails?action=approve&orderid=${order.id}'">Ship Order</button>
+
+            </c:if>
+
             <button class="btn-orange" onclick="window.location.href='/ecommerce/orderDetails?action=cancel&orderid=${order.id}'">Cancel Order</button>
         </c:if>
     </div>

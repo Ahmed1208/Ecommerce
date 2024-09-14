@@ -161,8 +161,8 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="order" items="${requestScope.orders}">
-        <tr>
+    <c:forEach var="order" items="${requestScope.orders}" >
+        <tr onclick="window.location.href='/ecommerce/orderDetails?orderid=${order.id}'" >
             <td>${order.id}</td>
             <td>${order.paymentType}</td>
             <td>${order.totalPrice}</td>
