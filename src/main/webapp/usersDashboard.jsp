@@ -13,7 +13,7 @@
         }
 
         .content {
-            margin-top: 30px; /* Adjust this value to ensure content starts below the header */
+            margin-top: 35px; /* Adjust this value to ensure content starts below the header */
             padding: 20px;
         }
 
