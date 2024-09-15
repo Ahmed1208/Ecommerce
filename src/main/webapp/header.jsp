@@ -56,7 +56,6 @@
                 <div class="navbar-nav mx-auto">
                     <a href="/ecommerce" class="nav-item nav-link active">Home</a>
                     <a href="/ecommerce/shop-page" class="nav-item nav-link">Shop</a>
-                    <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -69,11 +68,7 @@
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
                 <div class="d-flex align-items-center justify-content-end m-3">
-                    <!-- Search Button -->
-                    <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal" style="position: relative;">
-                        <i class="fas fa-search text-primary"></i>
-                        <span class="tooltip-text">Search</span>
-                    </button>
+
 
                     <!-- Cart Icon with Badge -->
                     <a href="/ecommerce/getCart" class="position-relative me-4 my-auto" style="position: relative;">
@@ -108,47 +103,7 @@
                         </a>
                     </c:if>
 
-                    <!-- Modal Structure -->
-                    <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="paymentModalLabel">Make a Payment</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- Modal Content -->
-                                    <div class="form-group">
-                                        <label for="paymentAmount">Enter Amount to Pay:</label>
-                                        <input type="number" id="paymentAmount" class="form-control" placeholder="Enter amount">
-                                    </div>
-                                    <div id="msg"></div>
 
-                                    <div class="form-group">
-                                        <label>Choose Payment Method:</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="paymentMethod" id="payWithVisa" value="visa" checked>
-                                            <label class="form-check-label" for="payWithVisa">
-                                                Pay with Visa
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="paymentMethod" id="payWithPaypal" value="paypal">
-                                            <label class="form-check-label" for="payWithPaypal">
-                                                Pay with PayPal
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Cancel</button>
-                                    <button type="button" class="btn btn-primary" onclick="submitPayment()">Pay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <script>
                         // Function to open the payment modal
                         // Function to open the payment modal
