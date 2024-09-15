@@ -5,14 +5,22 @@
     <title>Admin Information</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f9;
         }
 
+        /* Add a margin-top to ensure content starts below the header */
+        .content {
+            margin-top: 30px; /* Adjust the value to match the height of your header */
+            padding: 20px;
+        }
+
         h2 {
-            color: #4CAF50;
+            color: #333;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         form {
@@ -58,21 +66,23 @@
     </style>
 </head>
 <body>
-<h2>Admin Information</h2>
-<form action="submitAdmin.jsp" method="post">
-    <label>ID:</label>
-    <input type="text" name="id" value="${sessionScope.admin.id}" readonly>
+<div class="content">
+    <h2>Admin Information</h2>
+    <form action="submitAdmin.jsp" method="post">
+        <label>ID:</label>
+        <input type="text" name="id" value="${sessionScope.admin.id}" readonly>
 
-    <label>Name:</label>
-    <input type="text" name="name" value="${sessionScope.admin.name}">
+        <label>Name:</label>
+        <input type="text" name="name" value="${sessionScope.admin.name}">
 
-    <label>Email:</label>
-    <input type="email" name="email" value="${sessionScope.admin.email}" readonly>
+        <label>Email:</label>
+        <input type="email" name="email" value="${sessionScope.admin.email}" readonly>
 
-    <label>Password:</label>
-    <input type="password" name="password" value="${sessionScope.admin.password}">
+        <label>Password:</label>
+        <input type="password" name="password" value="${sessionScope.admin.password}">
 
-    <input type="submit" value="Update">
-</form>
+        <input type="submit" value="Update">
+    </form>
+</div>
 </body>
 </html>

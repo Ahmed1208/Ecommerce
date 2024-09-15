@@ -5,15 +5,44 @@
 <head>
     <title>Orders</title>
     <style>
+        .reset-btn {
+            background-color: transparent;
+            color: #333;
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .reset-btn:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
         body {
-            margin-top: 60px;
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f9;
         }
 
-        h1, legend {
-            color: #4CAF50;
+        .content-wrapper {
+            padding-top: 50px; /* Ensure content starts below the header */
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        /* Flexbox for header and filter */
+        .header-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           /*margin-bottom: 5px;*/
         }
 
         /* Filter Form */
@@ -112,82 +141,83 @@
 </head>
 <body>
 
-<h1>Order Management</h1>
+<div class="content-wrapper">
+    <!-- Header and Reset Filter -->
+    <div class="header-filter">
+        <h1>Order Management</h1>
+        <a href="/ecommerce/orders" class="reset-btn">Reset Filter</a>
+    </div>
 
-<!-- Filter Form -->
-<form method="get" action="">
-    <fieldset>
-        <legend>Filter Orders</legend>
+    <!-- Filter Form -->
+    <form method="get" action="">
+        <fieldset>
+            <legend>Filter Orders</legend>
 
-        <!-- Filter by Min Price -->
-        <label for="minPrice">Min Price:</label>
-        <input type="number" id="minPrice" name="minPrice" value="${param.minPrice}" step="0.01">
+            <label for="minPrice">Min Price:</label>
+            <input type="number" id="minPrice" name="minPrice" value="${param.minPrice}" step="0.01">
 
-        <!-- Filter by Max Price -->
-        <label for="maxPrice">Max Price:</label>
-        <input type="number" id="maxPrice" name="maxPrice" value="${param.maxPrice}" step="0.01">
+            <label for="maxPrice">Max Price:</label>
+            <input type="number" id="maxPrice" name="maxPrice" value="${param.maxPrice}" step="0.01">
 
-        <!-- Filter by Status -->
-        <label for="status">Status:</label>
-        <select id="status" name="status">
-            <option value="">Select</option>
-            <option value="PENDING" ${param.status == 'PENDING' ? 'selected' : ''}>Pending</option>
-            <option value="SHIPPED" ${param.status == 'SHIPPED' ? 'selected' : ''}>Shipped</option>
-            <option value="DELIVERED" ${param.status == 'DELIVERED' ? 'selected' : ''}>Delivered</option>
-            <option value="CANCELED" ${param.status == 'CANCELED' ? 'selected' : ''}>Canceled</option>
-        </select>
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="">Select</option>
+                <option value="PENDING" ${param.status == 'PENDING' ? 'selected' : ''}>Pending</option>
+                <option value="SHIPPED" ${param.status == 'SHIPPED' ? 'selected' : ''}>Shipped</option>
+                <option value="DELIVERED" ${param.status == 'DELIVERED' ? 'selected' : ''}>Delivered</option>
+                <option value="CANCELED" ${param.status == 'CANCELED' ? 'selected' : ''}>Canceled</option>
+            </select>
 
-        <!-- Filter by Payment Type -->
-        <label for="payment">Payment Type:</label>
-        <select id="payment" name="payment">
-            <option value="">Select</option>
-            <option value="CASH" ${param.payment == 'CASH' ? 'selected' : ''}>Cash</option>
-            <option value="VISA" ${param.payment == 'VISA' ? 'selected' : ''}>Visa</option>
-        </select>
+            <label for="payment">Payment Type:</label>
+            <select id="payment" name="payment">
+                <option value="">Select</option>
+                <option value="CASH" ${param.payment == 'CASH' ? 'selected' : ''}>Cash</option>
+                <option value="VISA" ${param.payment == 'VISA' ? 'selected' : ''}>Visa</option>
+            </select>
 
-        <!-- Submit Button -->
-        <button type="submit">Filter</button>
-    </fieldset>
-</form>
+            <button type="submit">Filter</button>
+        </fieldset>
+    </form>
 
-<!-- Orders Table -->
-<table>
-    <thead>
-    <tr>
-        <th>OrderId</th>
-        <th>Payment Type</th>
-        <th>Total Price</th>
-        <th>UserId</th>
-        <th>Order Date</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="order" items="${requestScope.orders}" >
-        <tr onclick="window.location.href='/ecommerce/orderDetails?orderid=${order.id}'" >
-            <td>${order.id}</td>
-            <td>${order.paymentType}</td>
-            <td>${order.totalPrice}</td>
-            <td>${order.user.id}</td>
-            <td>${order.orderDate}</td>
-            <td>${order.status}</td>
+    <!-- Orders Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>OrderId</th>
+            <th>Payment Type</th>
+            <th>Total Price</th>
+            <th>UserId</th>
+            <th>Order Date</th>
+            <th>Status</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach var="order" items="${requestScope.orders}">
+            <tr onclick="window.location.href='/ecommerce/orderDetails?orderid=${order.id}'">
+                <td>${order.id}</td>
+                <td>${order.paymentType}</td>
+                <td>${order.totalPrice}</td>
+                <td>${order.user.id}</td>
+                <td>${order.orderDate}</td>
+                <td>${order.status}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
-<!-- Pagination -->
-<div class="pagination">
-    <c:forEach var="i" begin="1" end="${totalPages}">
-        <c:choose>
-            <c:when test="${i == currentPage}">
-                <a id="currPage" class="active">${i}</a> <!-- Current page -->
-            </c:when>
-            <c:otherwise>
-                <a href="?pageNumber=${i}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&status=${param.status}&payment=${param.payment}">${i}</a>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
+    <!-- Pagination -->
+    <div class="pagination">
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <c:choose>
+                <c:when test="${i == currentPage}">
+                    <a id="currPage" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="?pageNumber=${i}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&status=${param.status}&payment=${param.payment}">${i}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </div>
 </div>
 
 </body>
