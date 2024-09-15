@@ -248,11 +248,20 @@
         <servlet-name>updateproduct</servlet-name>
         <url-pattern>/update-product</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>home</servlet-name>
+        <servlet-class> org.example.servlet.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <!-- web server -->
 
     <!-- web container -->
-<welcome-file-list>
-    <welcome-file>home.jsp</welcome-file>
-</welcome-file-list>
+<!--<welcome-file-list>-->
+<!--    <welcome-file>home.jsp</welcome-file>-->
+<!--</welcome-file-list>-->
 
 </web-app>

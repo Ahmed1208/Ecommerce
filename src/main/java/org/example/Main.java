@@ -327,12 +327,12 @@ public class Main {
 //        entityManager.persist(order1);
 //        entityManager.getTransaction().begin();
 //        entityManager.getTransaction().commit();
-entityManager.getTransaction().begin();
- ProductDao productDao= new ProductDao(entityManager);
- Product product = productDao.findById(1).get();
- product.setDeleted(true);
- productDao.update(product);
- entityManager.getTransaction().commit();
+//entityManager.getTransaction().begin();
+// ProductDao productDao= new ProductDao(entityManager);
+// Product product = productDao.findById(1).get();
+// product.setDeleted(true);
+// productDao.update(product);
+// entityManager.getTransaction().commit();
 
 //        User user1 = new User("ahmed","ahmedali@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
 ////

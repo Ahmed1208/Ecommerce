@@ -29,7 +29,7 @@ public class loginServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String role = request.getParameter("role");
+       // String role = request.getParameter("role");
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
@@ -39,25 +39,39 @@ public class loginServlet extends HttpServlet {
 //        if (request.getSession().getAttribute("user") != null ) {
 //            response.sendRedirect("/ecommerce");
 //        }
-        if (role.equals("User")) {
+
+
             EntityManager entityManager = emf.createEntityManager();
             UserService userService = new UserService(entityManager);
-            try {
+            AdminService adminService = new AdminService(entityManager);
+
+        try {
                 User user = userService.loginCheck(email, password);
-                if (user != null) {
+                Admin admin = adminService.checkAdmin(email,password);
+
+            if (user != null) {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("user", user);
-                    session.setAttribute("role", role);
-
+                    session.setAttribute("role", "User");
                     int cartSize = new CartService(entityManager).cartProductsCount(user.getId());
                     session.setAttribute("cartSize",cartSize);
 
                     System.out.println("User added to session: " + session.getAttribute("user"));
                     response.sendRedirect("/ecommerce");
 
-                }
+            }else if (admin!=null) {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("admin", admin);
+                session.setAttribute("role", "Admin");
+                response.sendRedirect("/ecommerce/adminInfo.jsp");
+            }else {
+                HttpSession session = request.getSession();
+                session.invalidate();
+                request.setAttribute("error", "wrong email or password");
+                request.getRequestDispatcher( "/login.jsp").include(request, response);
+            }
 
-            } catch (RuntimeException e) {
+        } catch (RuntimeException e) {
                 System.out.println("Error in login : " + e.getMessage());
                 HttpSession session = request.getSession();
                 session.invalidate();
@@ -65,27 +79,9 @@ public class loginServlet extends HttpServlet {
                 request.getRequestDispatcher( "/login.jsp").include(request, response);
 
             }
-        }
 
-        if (role.equals("Admin")) {
-            EntityManager entityManager = emf.createEntityManager();
-            AdminService adminService = new AdminService(entityManager);
-            try {
-                Admin admin = adminService.checkAdmin(email,password);
-                System.out.println("admin :" + admin.getEmail());
-                if (admin != null) {
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("admin", admin);
-                    session.setAttribute("role", role);
 
-                    response.sendRedirect("/ecommerce/adminInfo.jsp");
-                }
 
-            } catch (RuntimeException e) {
-                request.setAttribute("errorMessage", e.getMessage());
-                request.getRequestDispatcher( "/login.jsp").include(request, response);
 
-            }
-        }
     }
 }

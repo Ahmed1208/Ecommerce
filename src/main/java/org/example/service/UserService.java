@@ -34,7 +34,7 @@ public class UserService {
                 return result.get();
             }
         }
-        throw new RuntimeException("Wrong email or password, user not found");
+        return null;
     }
 
     public User registerNewUser(String name, String email, String password
