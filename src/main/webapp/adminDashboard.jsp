@@ -1,311 +1,120 @@
+<%@ include file="HeaderAdmin.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>Admin Dashboard</title>
     <style>
-        /* Reset margin and padding */
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background-color: #f4f4f9;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif; /* Use the same font as Fruitables */
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .dashboard-container {
-            display: flex;
-            height: 100vh;
-        }
-
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 250px;
-            background-color: #4CAF50; /* Green color matching the theme */
-            padding-top: 30px;
+        /* Header styles */
+        .header {
+            background-color: #4CAF50;
             color: white;
+            padding: 15px 20px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
-        .sidebar ul {
+        .header ul {
             list-style: none;
             padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
         }
 
-        .sidebar ul li {
-            margin: 20px 0;
+        .header ul li {
+            margin: 0 15px;
         }
 
-        .sidebar ul li a {
+        .header ul li a {
             text-decoration: none;
             color: white;
             font-size: 18px;
-            padding: 10px;
-            display: block;
-            text-align: center;
-            transition: background-color 0.3s;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .sidebar ul li a:hover {
-            background-color: #388E3C; /* Darker green on hover */
+        .header ul li a:hover,
+        .header ul li a.active {
+            background-color: #45a049;
+            color: white;
+            text-decoration: none;
         }
 
-        /* Content Area */
+        /* Content section styles */
         .content {
-            flex: 1;
+            margin-top: 70px; /* To accommodate the fixed header */
             padding: 30px;
             background-color: #ffffff;
-            overflow-y: auto;
+            min-height: calc(100vh - 70px);
         }
-
-        h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #4CAF50; /* Green headings */
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        form label {
-            margin-top: 10px;
-            color: #333;
-        }
-
-        form input {
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        form button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        form button:hover {
-            background-color: #388E3C;
-        }
-
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table th, table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        table tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Section display control */
-        .dashboard-section {
-            display: none;
-        }
-
-        #user-info, #order-history {
-            display: block; /* Initially show User Info */
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="date"],
-        input[type="tel"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        input[readonly] {
-            background-color: #f0f0f0; /* Light gray background */
-            color: #555; /* Dark gray text */
-            border: 1px solid #ccc; /* Light border */
-            cursor: not-allowed; /* Show a "not-allowed" cursor */
-            opacity: 0.7; /* Slight transparency */
-        }
-
-        input[readonly]:focus {
-            outline: none; /* Remove focus outline */
-        }
-
     </style>
+
+    <!-- Include jQuery for AJAX functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Function to load the content dynamically
+        function loadSection(url) {
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(data) {
+                    // Insert the returned HTML content into the content div
+                    $('.content').html(data);
+                },
+                error: function() {
+                    alert("Failed to load content. Please try again.");
+                }
+            });
+        }
+
+        // On document ready, load the default admin info section
+        $(document).ready(function() {
+            loadSection('/ecommerce/adminInfo.jsp'); // Load admin info by default
+        });
+
+        // Event listeners for the navigation links
+        $(document).on('click', '.header a', function(e) {
+            e.preventDefault();
+            const url = $(this).attr('href');
+            loadSection(url);
+            // Update the active class
+            $('.header a').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
 </head>
 <body>
 
-<jsp:include page="notification.jsp"/>
+<!-- Header -->
+<header class="header">
+    <ul>
+        <li><a href="/ecommerce/adminInfo.jsp">Admin Information</a></li>
+        <li><a href="/ecommerce/orders">Orders</a></li>
+        <li><a href="/ecommerce/admin-products">Products</a></li>
+        <li><a href="/ecommerce/users">Users</a></li>
+    </ul>
+</header>
 
-
-<div class="dashboard-container">
-    <!-- Left Navigation -->
-    <nav class="sidebar">
-        <ul>
-            <li><a href="javascript:void(0)" onclick="showSection('user-info')">User Information</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('order-history')">Order History</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('balancelogs-history')">Balance Logs History</a></li>
-        </ul>
-    </nav>
-
-
-
-
-    <!-- Content Section -->
-    <div class="content">
-        <!-- User Info Section -->
-        <section id="user-info" class="dashboard-section">
-            <h2>Admin Information</h2>
-
-            <form action="submitAdmin.jsp" method="post">
-
-                <label>ID:</label>
-                <input type="text" name="id" value="${sessionScope.admin.id}" readonly>
-
-                <label>Name:</label>
-                <input type="text" id="name" name="name" value="${sessionScope.admin.name}">
-
-                <label>Email:</label>
-                <input type="email" id="email" name="email" value="${sessionScope.admin.email}" readonly>
-
-                <label>Password:</label>
-                <input type="text" id="password" name="password" value="${sessionScope.admin.password}">
-
-                <label>Gender:</label>
-                <input type="text" id="gender" name="gender" value="${sessionScope.admin.gender}" readonly>
-
-                <input type="submit" value="Update">
-            </form>
-
-        </section>
-
-        <!-- Order History Section -->
-        <section id="order-history" class="dashboard-section" style="display:none;">
-            <h2>Order History</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
-                <c:forEach var="order" items="${sessionScope.user.orders}">
-                    <tr>
-                        <script>console.log("i'm here inside")</script>
-                        <td>${order.id}</td>
-                        <td>${order.orderDate}</td>
-                        <td>${order.totalPrice}</td>
-                        <td>${order.status}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Balance Logs History Section -->
-        <section id="balancelogs-history" class="dashboard-section" style="display:none;">
-            <h2>Balance Logs History</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>Amount</th>
-                    <th>Payment_Type</th>
-                </tr>
-                </thead>
-                <tbody>
-                <script>console.log("i'm here outside : "+${sessionScope.user.id})</script>
-                <c:forEach var="log" items="${sessionScope.user.balanceLogs}">
-                    <tr>
-                        <script>console.log("i'm here inside")</script>
-                        <td>${log.id}</td>
-                        <td>${log.amount}</td>
-                        <td>${log.paymentType}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </section>
-    </div>
+<!-- Content Section -->
+<div class="content">
+    <!-- Content from AJAX requests will be loaded here -->
 </div>
 
-<script>
-    // Function to toggle between User Info and Order History
-    function showSection(sectionId) {
-        // Hide all sections
-        document.querySelectorAll('.dashboard-section').forEach(section => {
-            section.style.display = 'none';
-        });
-        // Display the selected section
-        document.getElementById(sectionId).style.display = 'block';
-    }
-</script>
 </body>
 </html>

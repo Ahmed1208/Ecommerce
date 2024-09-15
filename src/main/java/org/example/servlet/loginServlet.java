@@ -78,7 +78,7 @@ public class loginServlet extends HttpServlet {
                     session.setAttribute("admin", admin);
                     session.setAttribute("role", role);
 
-                    response.sendRedirect("/ecommerce/adminDashboard");
+                    response.sendRedirect("/ecommerce/adminInfo.jsp");
                 }
 
             } catch (RuntimeException e) {

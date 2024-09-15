@@ -83,6 +83,22 @@ public class ProductService {
         }
     }
 
+    public void deleteproduct(int id)
+    {
+        Optional<Product> product = productDao.findById(id);
+
+        if(product.isPresent())
+        {
+            em.getTransaction().begin();
+            product.get().setDeleted(true);
+            productDao.update(product.get());
+            em.getTransaction().commit();
+        }
+        else{
+            throw new RuntimeException("Product not found");
+        }
+    }
+
 
     public Map<Integer,List<Product>> findAllProducts(List<String> subCategories, Double minPrice, Double maxPrice, boolean sortByPrice, boolean sortByQuantity, int pageNumber, int pageSize,String searchText)
     {
@@ -120,5 +136,19 @@ public class ProductService {
 
     public Integer getTotalProductCount() {
         return productDao.getProductCount();
+    }
+
+    public void updateProduct(int id, String name, String description, int quantity, double price,String category){
+        em.getTransaction().begin();
+        Product product = findProductById(id);
+        product.setProductName(name);
+        product.setDescription(description);
+        product.setQuantity(quantity);
+        product.setPrice(price);
+        Optional<Category> category1=categoryDao.findCategoryByName(category);
+        product.setCategory(category1.get());
+        productDao.update(product);
+        em.getTransaction().commit();
+
     }
 }

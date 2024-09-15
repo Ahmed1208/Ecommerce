@@ -31,7 +31,8 @@ public class ShopSetupServlet extends HttpServlet {
 
             //request.setAttribute("products", productService.findAllProducts());
 
-            request.getRequestDispatcher("/all-products").forward(request, response);
+            request.getRequestDispatcher("/all-products").include(request, response);
+            request.getRequestDispatcher("shop.jsp").forward(request, response);
 
         } catch (RuntimeException e) {
             request.setAttribute("errorMessage", e.getMessage());
