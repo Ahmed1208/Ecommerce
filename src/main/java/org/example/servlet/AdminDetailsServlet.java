@@ -23,30 +23,18 @@ public class AdminDetailsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        HttpSession httpSession = request.getSession(false);
-        if(httpSession == null || httpSession.getAttribute("role") == null)
-        {
-            request.setAttribute("errorMessage", "Error, sign-in first, bro");
-            request.getRequestDispatcher("/login.jsp").forward(request,response);
-        }
-        else
-        {
+            System.out.println("i am here at adminDashboard servlet");
+
+            request.setAttribute("giftToFilter","aaaaaaaa");  // just to test the filter
             request.setAttribute("errorMessage", "Welcome Back!");
             request.getRequestDispatcher("/adminDashboard.jsp").forward(request,response);
-        }
+//            response.sendRedirect("/ecommerce/adminDashboard.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        HttpSession httpSession = request.getSession(false);
-        if(httpSession == null || httpSession.getAttribute("role") == null)
-        {
-            request.setAttribute("errorMessage", "Error, sign-in first, bro");
-            request.getRequestDispatcher("/login.jsp").forward(request,response);
-        }
-        else
-        {
+
             Admin admin = (Admin) request.getAttribute("adminBean");
 
             System.out.println(admin.getEmail());
@@ -68,10 +56,9 @@ public class AdminDetailsServlet extends HttpServlet {
                 request.setAttribute("errorMessage", "Error," + e.getMessage());
                 request.getRequestDispatcher("/adminDashboard.jsp").forward(request, response);
             }
-
-        }
-
     }
+
+
 
 }
 

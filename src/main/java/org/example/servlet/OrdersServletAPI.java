@@ -20,11 +20,6 @@ public class OrdersServletAPI extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        HttpSession httpSession = request.getSession(false);
-//        if (httpSession == null || httpSession.getAttribute("role") == null) {
-//            request.setAttribute("errorMessage", "Error, sign-in first, bro");
-//            request.getRequestDispatcher("/login.jsp").forward(request, response);
-//        } else {
 
         int pageNumber = 1;
         int pageSize = 10;
@@ -103,5 +98,4 @@ public class OrdersServletAPI extends HttpServlet {
         }
 
 
-//    }
 }

@@ -257,6 +257,26 @@
         <servlet-name>home</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
+
+    <!--    validation filter-->
+    <filter>
+        <filter-name>adminFilter</filter-name>
+        <filter-class>org.example.filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>adminFilter</filter-name>
+        <url-pattern>/adminDashboard</url-pattern>
+        <url-pattern>/orders</url-pattern>
+        <url-pattern>/users</url-pattern>
+        <url-pattern>/add-product</url-pattern>
+        <url-pattern>/admin-products</url-pattern>
+        <url-pattern>/adminDashoard.jsp</url-pattern>
+        <url-pattern>/addProduct.jsp</url-pattern>
+        <url-pattern>/adminInfo.jsp</url-pattern>
+    </filter-mapping>
+
     <!-- web server -->
 
     <!-- web container -->
