@@ -8,7 +8,6 @@
 
 
     <style>
-        /* Reset margin and padding */
         * {
             margin: 0;
             padding: 0;
@@ -16,22 +15,30 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif; /* Use the same font as Fruitables */
+            font-family: 'Poppins', sans-serif;
             background-color: #f5f5f5;
             color: #333;
         }
 
         .dashboard-container {
             display: flex;
+            flex-direction: column;
             height: 100vh;
+            overflow: hidden;
         }
 
         /* Sidebar Navigation */
         .sidebar {
-            width: 250px;
-            background-color: #4CAF50; /* Green color matching the theme */
-            padding-top: 30px;
+            background-color: #4CAF50;
             color: white;
+            padding: 20px;
+            width: 100%;
+            max-width: 250px;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
         }
 
         .sidebar ul {
@@ -54,21 +61,22 @@
         }
 
         .sidebar ul li a:hover {
-            background-color: #388E3C; /* Darker green on hover */
+            background-color: #388E3C;
         }
 
         /* Content Area */
         .content {
-            flex: 1;
+            margin-left: 250px; /* Account for sidebar width */
             padding: 30px;
             background-color: #ffffff;
             overflow-y: auto;
+            flex: 1;
         }
 
         h2 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #4CAF50; /* Green headings */
+            color: #4CAF50;
         }
 
         form {
@@ -134,12 +142,14 @@
         #user-info, #order-history {
             display: block; /* Initially show User Info */
         }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 500px;
             margin: 50px auto;
@@ -148,15 +158,18 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         label {
             font-weight: bold;
             margin-bottom: 5px;
             display: block;
         }
+
         input[type="text"],
         input[type="email"],
         input[type="password"],
@@ -170,6 +183,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         input[type="submit"] {
             width: 100%;
             background-color: #4CAF50;
@@ -180,10 +194,29 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         input[type="submit"]:hover {
             background-color: #45a049;
         }
 
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                max-width: none;
+                height: auto;
+                overflow: visible;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 <body>

@@ -4,15 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
 
         .login-container {
-            width: 350px;
+            width: 90%;
+            max-width: 350px;
             margin: 0 auto;
             padding: 30px;
             background-color: white;
@@ -46,7 +50,6 @@
             box-sizing: border-box;
         }
 
-        /* Style for the role dropdown */
         select {
             width: 100%;
             padding: 10px;
@@ -107,8 +110,42 @@
             border-radius: 5px;
         }
 
+        /* Media Query for Mobile Devices */
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+                margin-top: 20px;
+                padding: 20px;
+            }
 
+            h2 {
+                font-size: 20px;
+            }
 
+            .form-group label,
+            .form-group input,
+            .btn {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+                margin-top: 20px;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .form-group label,
+            .form-group input,
+            .btn {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>

@@ -30,7 +30,7 @@ public class ProductDao extends Repository<Product>
 
     public List<Product> findProductsBySubCategory(int subCategoryId)
     {
-        String s = "from Product p where p.category.id = :subCategoryId";
+        String s = "from Product p where p.category.id = :subCategoryId and p.isDeleted=false";
         Query q = entityManager.createQuery(s).setParameter("subCategoryId",subCategoryId);
         return q.getResultList();
     }

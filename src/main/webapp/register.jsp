@@ -116,10 +116,11 @@
         <input type="text" id="country" name="country" required>
 
         <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" required>
+        <input type="tel" id="phone" name="phone" required pattern="01[0-9]{9}" title="Phone number must start with 01 and be 11 digits long">
 
-        <input type="submit" value="Register" id="subBTN" >
+        <input type="submit" value="Register" id="subBTN">
     </form>
+
 </div>
 <script>
     var isEmailValid = false;
@@ -198,9 +199,30 @@
             alert("Please fill in all required fields.");
             return false;
         }
+        var phone = document.getElementById('phone').value;
+        var phonePattern = /^01\d{9}$/;
+
+        // Check if phone number matches the pattern
+        if (!phonePattern.test(phone)) {
+            alert('Phone number must start with 01 and be 11 digits long.');
+            return false; // Prevent form submission
+        }
+        var password = document.getElementById('password').value;
+        // Check if password is at least 8 characters long and contains both numbers and letters
+        if (!isValidPassword(password)) {
+            alert('Password must be at least 8 characters long and contain both numbers and letters.');
+            return false; // Prevent form submission
+        }
+
         return true;
     }
-
+    function isValidPassword(password) {
+        // Ensure password is at least 8 characters long, contains at least one letter and one number
+        var minLength = 8;
+        var hasLetter = /[a-zA-Z]/.test(password);
+        var hasNumber = /[0-9]/.test(password);
+        return password.length >= minLength && hasLetter && hasNumber;
+    }
 </script>
 </body>
 </html>
