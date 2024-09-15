@@ -31,11 +31,9 @@ public class AdminService {
         {
             if(password.equals( admin.get().getPassword()) )
                 return admin.get();
-            else
-                throw new RuntimeException("Password is wrong");
+
         }
-        else
-            throw new RuntimeException("Email not found");
+        return null;
     }
 
     public void updateAdmin(Admin admin)

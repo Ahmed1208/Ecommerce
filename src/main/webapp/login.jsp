@@ -133,13 +133,13 @@
         </div>
 
         <!-- Role Selection Dropdown -->
-        <div class="form-group">
-            <label for="role">Role:</label>
-            <select id="role" name="role" required>
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-            </select>
-        </div>
+<%--        <div class="form-group">--%>
+<%--            <label for="role">Role:</label>--%>
+<%--            <select id="role" name="role" required>--%>
+<%--                <option value="User">User</option>--%>
+<%--                <option value="Admin">Admin</option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
 
         <div class="form-group">
             <button type="submit" class="btn">Login</button>
