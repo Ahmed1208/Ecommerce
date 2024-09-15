@@ -188,7 +188,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="notification.jsp"/>
 <!-- Header and Add Product Button -->
 <div class="header-container">
     <h1>Product Management</h1>

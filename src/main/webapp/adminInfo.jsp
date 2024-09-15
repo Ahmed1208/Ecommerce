@@ -66,23 +66,29 @@
     </style>
 </head>
 <body>
+<jsp:include page="notification.jsp"/>
 <div class="content">
     <h2>Admin Information</h2>
     <form action="submitAdmin.jsp" method="post">
+
         <label>ID:</label>
         <input type="text" name="id" value="${sessionScope.admin.id}" readonly>
 
         <label>Name:</label>
-        <input type="text" name="name" value="${sessionScope.admin.name}">
+        <input type="text" id="name" name="name" value="${sessionScope.admin.name}">
 
         <label>Email:</label>
-        <input type="email" name="email" value="${sessionScope.admin.email}" readonly>
+        <input type="email" id="email" name="email" value="${sessionScope.admin.email}" readonly>
 
         <label>Password:</label>
-        <input type="password" name="password" value="${sessionScope.admin.password}">
+        <input type="text" id="password" name="password" value="${sessionScope.admin.password}">
+
+        <label>Gender:</label>
+        <input type="text" id="gender" name="gender" value="${sessionScope.admin.gender}" readonly>
 
         <input type="submit" value="Update">
     </form>
+
 </div>
 </body>
 </html>
