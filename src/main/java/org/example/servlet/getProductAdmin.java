@@ -15,28 +15,23 @@ import org.example.service.ProductService;
 import java.io.IOException;
 import java.util.List;
 
-public class ShopSetupServlet extends HttpServlet {
+public class getProductAdmin extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
-
         CategoryService categoryService = new CategoryService(emf.createEntityManager());
-        //ProductService productService = new ProductService(emf.createEntityManager());
 
         try {
             request.setAttribute("ParentCategories", categoryService.getParentCategories());
-
-            //request.setAttribute("products", productService.findAllProducts());
-
             request.getRequestDispatcher("/all-products").include(request, response);
-            request.getRequestDispatcher("shop.jsp").forward(request, response);
+            request.getRequestDispatcher("/productsDashboard.jsp").forward(request, response);
 
         } catch (RuntimeException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher("shop.jsp").forward(request, response);
+
         }
 
     }

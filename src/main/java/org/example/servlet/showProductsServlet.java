@@ -24,7 +24,7 @@ public class showProductsServlet extends HttpServlet {
 
         // Retrieve subcategories (list of category names or IDs)
         String[] subCategoriesArray = request.getParameterValues("subCategories");
-        List<String> subCategories = (subCategoriesArray != null && subCategoriesArray.length > 0)
+        List<String> subCategories = (subCategoriesArray != null && subCategoriesArray.length > 0 && !subCategoriesArray[0].isEmpty())
                 ? Arrays.asList(subCategoriesArray)
                 : null;
 
@@ -93,11 +93,13 @@ public class showProductsServlet extends HttpServlet {
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("currentPage", pageNumber);
 
-            request.getRequestDispatcher("/shop.jsp").forward(request,response);
+           // request.getRequestDispatcher("/shop.jsp").forward(request,response);
 
         }catch (RuntimeException e)
         {
             request.setAttribute("errorMessage", e.getMessage());
+            System.out.println("errrorrr "+e.getMessage());
+            System.out.println(subCategories.get(0));
             request.getRequestDispatcher("/shop.jsp").forward(request, response);
         }
     }

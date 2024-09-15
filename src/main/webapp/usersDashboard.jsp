@@ -5,6 +5,7 @@
   Time: 3:50 AM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ include file="HeaderAdmin.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -13,6 +14,7 @@
 </head>
 <style>
     body {
+        margin-top: 60px;
         font-family: Arial, sans-serif;
         margin: 20px;
         background-color: #f4f4f9;
@@ -136,13 +138,13 @@
     <tbody>
     <c:forEach var="user" items="${requestScope.users}">
 
-    <tr>
-        <td>${user.id}</td>
-        <td>${user.name}</td>
-        <td>${user.balance}</td>
-        <td>${user.phone}</td>
+        <tr>
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.balance}</td>
+            <td>${user.phone}</td>
 
-    </tr>
+        </tr>
     </c:forEach>
     </tbody>
 </table>
@@ -150,17 +152,17 @@
 
 <div class="pagination">
 
-<c:forEach var="i" begin="1" end="${totalPages}">
-            <c:choose>
-                <c:when test="${i == currentPage}">
-                    <a id=currPage class="active rounded">${i}</a> <!-- Current page -->
-                </c:when>
-                <c:otherwise>
-                    <a href="?pageNumber=${i}" class="rounded">${i}</a>
-                </c:otherwise>
+    <c:forEach var="i" begin="1" end="${totalPages}">
+        <c:choose>
+            <c:when test="${i == currentPage}">
+                <a id=currPage class="active rounded">${i}</a> <!-- Current page -->
+            </c:when>
+            <c:otherwise>
+                <a href="?pageNumber=${i}" class="rounded">${i}</a>
+            </c:otherwise>
 
-            </c:choose>
-        </c:forEach>
+        </c:choose>
+    </c:forEach>
 </div>
 
 

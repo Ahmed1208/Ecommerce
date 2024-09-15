@@ -92,6 +92,15 @@
         <url-pattern>/add-product</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>org.example.servlet.admin</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
 <!--    <servlet>-->
 <!--        <servlet-name>filter</servlet-name>-->
 <!--        <servlet-class>org.example.servlet.FilterServlet</servlet-class>-->
@@ -211,6 +220,33 @@
     <servlet-mapping>
         <servlet-name>users-filter</servlet-name>
         <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>productadmin</servlet-name>
+        <servlet-class> org.example.servlet.getProductAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>productadmin</servlet-name>
+        <url-pattern>/admin-products</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteproduct</servlet-name>
+        <servlet-class> org.example.servlet.DeleteProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteproduct</servlet-name>
+        <url-pattern>/delete-product</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>updateproduct</servlet-name>
+        <servlet-class> org.example.servlet.UpdateProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateproduct</servlet-name>
+        <url-pattern>/update-product</url-pattern>
     </servlet-mapping>
     <!-- web server -->
 

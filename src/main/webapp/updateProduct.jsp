@@ -24,11 +24,15 @@
             color: #ff6600; /* Orange theme */
             font-size: 2rem;
             font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .form-label {
             color: #333;
             font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .form-control {
@@ -37,6 +41,7 @@
             padding: 10px;
             font-size: 1rem;
             width: 100%;
+            margin-bottom: 20px;
         }
 
         .form-control:focus {
@@ -81,54 +86,51 @@
             background-color: #222;
         }
 
-        img.img-thumbnail {
-            margin-top: 10px;
-            border: 2px solid #ff6600;
+        select.form-control {
+            padding: 10px;
             border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2 class="text-center mb-4">Update Product</h2>
+    <h2>Update Product</h2>
 
     <!-- Product Update Form -->
-    <form action="updateProduct" method="post">
+    <form action="update-product" method="post" >
         <!-- Hidden ID Field -->
-        <input type="hidden" class="form-control" id="id" name="id" value="${product.id}" readonly>
+        <input type="hidden" class="form-control" id="id" name="id" value="${requestScope.productid}" readonly>
 
         <!-- Product Name -->
-        <div class="mb-3">
-            <label for="productName" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="productName" name="productName" value="${product.productName}" required>
-        </div>
+        <label for="productName" class="form-label">Product Name</label>
+        <input type="text" class="form-control" id="productName" name="productName" value="${requestScope.productName}" required>
 
         <!-- Description -->
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required>${product.description}</textarea>
-        </div>
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required>${requestScope.description}</textarea>
+
+        <!-- Category Name -->
+        <label for="subcategory" class="form-label">Category Name</label>
+        <select id="subcategory" name="subCategories" class="form-control">
+            <option value="">Select Subcategory</option>
+            <c:forEach var="category" items="${ParentCategories}">
+                <c:forEach var="subcategory" items="${category.childCategories}">
+                    <option value="${subcategory.name}" ${requestScope.categoryname == subcategory.name ? 'selected' : ''}>
+                            ${subcategory.name}
+                    </option>
+                </c:forEach>
+            </c:forEach>
+        </select>
 
         <!-- Quantity -->
-        <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" value="${product.quantity}" min="0" required>
-        </div>
-
-        <!-- Image -->
-        <div class="mb-3">
-            <label for="image" class="form-label">Product Image</label>
-            <input type="file" class="form-control" id="image" name="image" accept="image/*">
-            <div class="mt-2">
-                <img src="${product.image}" alt="${product.name}" class="img-thumbnail" style="width: 150px; height: auto;">
-            </div>
-        </div>
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" value="${requestScope.quantity}" min="0" required>
 
         <!-- Price -->
-        <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" class="form-control" id="price" name="price" value="${product.price}" step="0.01" required>
-        </div>
+        <label for="price" class="form-label">Price</label>
+        <input type="number" class="form-control" id="price" name="price" value="${requestScope.price}" step="0.01" required>
 
         <!-- Buttons -->
         <button type="submit" class="btn btn-primary">Update Product</button>
