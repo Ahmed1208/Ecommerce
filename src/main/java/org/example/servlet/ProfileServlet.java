@@ -8,9 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.dao.OrderDao;
 import org.example.entity.BalanceLogs;
+import org.example.entity.Interest;
 import org.example.entity.Order;
 import org.example.entity.User;
 import org.example.service.BalanceLogsService;
+import org.example.service.InterestService;
 import org.example.service.OrderService;
 
 import java.io.IOException;
@@ -22,6 +24,8 @@ public class ProfileServlet extends HttpServlet {
         EntityManagerFactory entityManagerFactory=(EntityManagerFactory) req.getServletContext().getAttribute("emf");
         BalanceLogsService balanceLogsService=new BalanceLogsService(entityManagerFactory.createEntityManager());
         OrderService orderService=new OrderService(entityManagerFactory.createEntityManager());
+      // InterestService interestService=new InterestService(entityManagerFactory.createEntityManager());
+
         HttpSession session = req.getSession(false);
         if (session != null) {
             User user = (User) session.getAttribute("user");
@@ -30,8 +34,10 @@ public class ProfileServlet extends HttpServlet {
             if (user != null) {
                 List<BalanceLogs> balanceLogs=balanceLogsService.getUserBalanceLogs(user.getId());
                 List<Order> orders=orderService.getOrdersByUserId(user.getId());
+               // List<Interest> interests= interestService.getUserInterests(user);
                 req.setAttribute("balanceLogs", balanceLogs);
                 req.setAttribute("orders", orders);
+                //req.setAttribute("interest", interests);
                 req.getRequestDispatcher("userDashboard.jsp").forward(req, resp);
             }else {
                 resp.sendRedirect(getServletContext().getContextPath() + "/login.jsp");

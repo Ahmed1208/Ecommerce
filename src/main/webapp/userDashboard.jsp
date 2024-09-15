@@ -22,7 +22,7 @@
 
         .dashboard-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             height: 100vh;
             overflow: hidden;
         }
@@ -38,7 +38,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            overflow-y: auto;
+            overflow-y: auto; /* Ensure the sidebar can scroll if needed */
         }
 
         .sidebar ul {
@@ -69,7 +69,7 @@
             margin-left: 250px; /* Account for sidebar width */
             padding: 30px;
             background-color: #ffffff;
-            overflow-y: auto;
+            overflow-y: auto; /* Ensure the content area can scroll */
             flex: 1;
         }
 
@@ -143,13 +143,6 @@
             display: block; /* Initially show User Info */
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-
         .container {
             max-width: 500px;
             margin: 50px auto;
@@ -218,6 +211,7 @@
             }
         }
     </style>
+
 </head>
 <body>
 <div class="dashboard-container">
@@ -227,6 +221,7 @@
             <li><a href="javascript:void(0)" onclick="showSection('user-info')">User Information</a></li>
             <li><a href="javascript:void(0)" onclick="showSection('order-history')">Order History</a></li>
             <li><a href="javascript:void(0)" onclick="showSection('balancelogs-history')">Balance Logs History</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('interests')">Interests</a></li>
         </ul>
     </nav>
 
@@ -328,6 +323,25 @@
                         <td>${log.id}</td>
                         <td>${log.amount}</td>
                         <td>${log.paymentType}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </section>
+        <section id="interests" class="dashboard-section" style="display:none;">
+            <h2>Interests</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Interest ID</th>
+                    <th>Interest Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="i" items="${sessionScope.user.interests}">
+                    <tr>
+                        <td>${i.id}</td>
+                        <td>${i.name}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
