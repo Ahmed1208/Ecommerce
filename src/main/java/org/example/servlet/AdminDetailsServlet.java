@@ -32,7 +32,7 @@ public class AdminDetailsServlet extends HttpServlet {
         else
         {
             request.setAttribute("errorMessage", "Welcome Back!");
-            request.getRequestDispatcher("/adminDashboard.jsp").forward(request,response);
+            request.getRequestDispatcher("/adminInfo.jsp").forward(request,response);
         }
     }
 

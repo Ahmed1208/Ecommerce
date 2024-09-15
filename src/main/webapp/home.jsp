@@ -403,7 +403,7 @@
             <c:forEach var="product" items="${requestScope.products}" >
             <div class="border border-primary rounded position-relative vesitable-item">
                 <div class="vesitable-img">
-                    <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
+                    <img src="${product.image}" class="img-fluid w-100 rounded-top" alt="">
                 </div>
                 <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${product.category.name}</div>
                 <div class="p-4 rounded-bottom">
@@ -416,20 +416,6 @@
                 </div>
             </div>
             </c:forEach>
-            <div class="border border-primary rounded position-relative vesitable-item">
-                <div class="vesitable-img">
-                    <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                </div>
-                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                <div class="p-4 rounded-bottom">
-                    <h4>Parsely</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                    <div class="d-flex justify-content-between flex-lg-wrap">
-                        <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -478,10 +464,10 @@
                 <div class="p-4 rounded bg-light">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <img src="img/best-product-2.jpg" class="img-fluid rounded-circle w-100" alt="">
+                            <img src="${product.image}" class="img-fluid rounded-circle w-100" alt="">
                         </div>
                         <div class="col-6">
-                            <a href="ecommerce/show-product?id=${product.id}" class="h5"> ${product.productName}</a>
+                            <a href="show-product?id=${product.id}" class="h5"> ${product.productName}</a>
                             <div class="d-flex my-3">
                                 <i class="fas fa-star text-primary"></i>
                                 <i class="fas fa-star text-primary"></i>
@@ -496,35 +482,14 @@
                 </div>
             </div>
                 </c:forEach>
-            <div class="col-lg-6 col-xl-4">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img src="img/best-product-2.jpg" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">Organic Tomato</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">3.12 $</h4>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <c:forEach var="product" items="${requestScope.products}" begin="5" >
 
             <div class="col-md-6 col-lg-6 col-xl-3">
                 <div class="text-center">
-                    <img src="img/fruite-item-1.jpg" class="img-fluid rounded" alt="">
+                    <img src="${product.image}" class="img-fluid rounded" alt="">
                     <div class="py-4">
-                        <a href="ecommerce/show-product?id=${product.id}" class="h5">${product.productName}</a>
+                        <a href="show-product?id=${product.id}" class="h5">${product.productName}</a>
                         <div class="d-flex my-3 justify-content-center">
                             <i class="fas fa-star text-primary"></i>
                             <i class="fas fa-star text-primary"></i>

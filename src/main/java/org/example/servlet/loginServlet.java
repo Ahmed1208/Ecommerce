@@ -24,22 +24,12 @@ public class loginServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.setContentType("text/html");
-//        PrintWriter out = response.getWriter();
+
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-       // String role = request.getParameter("role");
 
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
-
-//        if (request.getSession().getAttribute("admin") != null ) {
-//            response.sendRedirect("/ecommerce/adminDashboard");
-//        }
-//        if (request.getSession().getAttribute("user") != null ) {
-//            response.sendRedirect("/ecommerce");
-//        }
-
 
             EntityManager entityManager = emf.createEntityManager();
             UserService userService = new UserService(entityManager);
@@ -67,16 +57,16 @@ public class loginServlet extends HttpServlet {
             }else {
                 HttpSession session = request.getSession();
                 session.invalidate();
-                request.setAttribute("error", "wrong email or password");
-                request.getRequestDispatcher( "/login.jsp").include(request, response);
+                request.setAttribute("errorMessage", "Error wrong email or password");
+                request.getRequestDispatcher( "/login.jsp").forward(request, response);
             }
 
         } catch (RuntimeException e) {
                 System.out.println("Error in login : " + e.getMessage());
                 HttpSession session = request.getSession();
                 session.invalidate();
-                request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher( "/login.jsp").include(request, response);
+                request.setAttribute("errorMessage","Error"+ e.getMessage());
+                request.getRequestDispatcher( "/login.jsp").forward(request, response);
 
             }
 
