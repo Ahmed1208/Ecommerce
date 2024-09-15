@@ -103,6 +103,47 @@
                         </a>
                     </c:if>
 
+                    <!-- Modal Structure -->
+                    <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel">Make a Payment</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Modal Content -->
+                                    <div class="form-group">
+                                        <label for="paymentAmount">Enter Amount to Pay:</label>
+                                        <input type="number" id="paymentAmount" class="form-control" placeholder="Enter amount">
+                                    </div>
+                                    <div id="msg"></div>
+
+                                    <div class="form-group">
+                                        <label>Choose Payment Method:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="payWithVisa" value="visa" checked>
+                                            <label class="form-check-label" for="payWithVisa">
+                                                Pay with Visa
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="payWithPaypal" value="paypal">
+                                            <label class="form-check-label" for="payWithPaypal">
+                                                Pay with PayPal
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Cancel</button>
+                                    <button type="button" class="btn btn-primary" onclick="submitPayment()">Pay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <script>
                         // Function to open the payment modal
