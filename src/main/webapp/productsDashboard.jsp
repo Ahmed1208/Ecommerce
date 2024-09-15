@@ -7,26 +7,23 @@
     <style>
         /* Content Styles */
         body {
-            margin-top: 80px; /* Space for fixed header */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f9;
         }
 
-        h1, legend {
-            color: #4CAF50; /* Consistent with header background */
-        }
-
-        /* Container for heading and button */
         .header-container {
+            margin-top: 80px; /* Increased margin-top to provide more space from the header */
+            padding: 0 20px; /* Ensure padding for content */
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            justify-content: space-between; /* Align items to the ends of the container */
+            align-items: center; /* Center items vertically */
         }
 
         .header-container h1 {
             margin: 0;
+            color: #333; /* Restore color to match previous design */
         }
 
         /* Add Product Button */
@@ -46,7 +43,29 @@
             background-color: #45a049;
         }
 
+        /* Reset Filter Button */
+        .reset-btn {
+            background-color: transparent; /* Transparent background */
+            color: #333; /* Dark text color */
+            padding: 8px 16px; /* Consistent padding for links */
+            border: 1px solid #333; /* Dark border */
+            border-radius: 4px;
+            text-decoration: none; /* Remove underline */
+            font-size: 16px; /* Adjust font size */
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        .reset-btn:hover {
+            background-color: #333; /* Dark background on hover */
+            color: #fff; /* White text on hover */
+        }
+
         /* Filter Form */
+        form {
+            margin-top: 20px; /* Add space between Add Product button and the form */
+        }
+
         fieldset {
             border: 1px solid #4CAF50; /* Green border matching header */
             padding: 20px;
@@ -169,11 +188,14 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="notification.jsp"/>
 <!-- Header and Add Product Button -->
 <div class="header-container">
     <h1>Product Management</h1>
-    <a href="/ecommerce/add-product" class="add-product-btn">Add New Product</a>
+    <div>
+        <a href="/ecommerce/add-product" class="add-product-btn">Add New Product</a>
+        <a href="/ecommerce/admin-products" class="reset-btn">Reset Filter</a>
+    </div>
 </div>
 
 <!-- Filter Form -->

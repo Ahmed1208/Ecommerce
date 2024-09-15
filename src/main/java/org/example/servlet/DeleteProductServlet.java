@@ -27,10 +27,11 @@ public class DeleteProductServlet extends HttpServlet {
 
         try {
             productService.deleteproduct(Integer.parseInt(productId));
+            request.setAttribute("errorMessage", "Product deleted successfully");
             request.getRequestDispatcher("/admin-products").forward(request, response);
 
         } catch (RuntimeException e) {
-            request.setAttribute("errorMessage", e.getMessage());
+            request.setAttribute("errorMessage", "Error," + e.getMessage());
             request.getRequestDispatcher("/admin-products").forward(request, response);
         }
 

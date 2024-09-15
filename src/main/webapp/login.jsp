@@ -112,10 +112,10 @@
     </style>
 </head>
 <body>
-<jsp:include page="notification.jsp"/>
-<c:if test="${not empty requestScope.error}">
+<%--<jsp:include page="notification.jsp"/>--%>
+<c:if test="${not empty requestScope.errorMessage}">
     <div class="notification" id="notification">
-            ${requestScope.error}
+            ${requestScope.errorMessage}
     </div>
 </c:if>
 

@@ -29,6 +29,8 @@ public class AdminDetailsServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Welcome Back!");
             request.getRequestDispatcher("/adminDashboard.jsp").forward(request,response);
 //            response.sendRedirect("/ecommerce/adminDashboard.jsp");
+            request.getRequestDispatcher("/adminInfo.jsp").forward(request,response);
+        }
     }
 
     @Override
@@ -49,16 +51,17 @@ public class AdminDetailsServlet extends HttpServlet {
                 request.getSession(false).setAttribute("admin", admin);
 
                 request.setAttribute("errorMessage","Successfully Updated!");
-                request.getRequestDispatcher("/adminDashboard.jsp").forward(request, response);
+                request.getRequestDispatcher("/adminInfo.jsp").forward(request, response);
 
             }catch (RuntimeException e)
             {
                 request.setAttribute("errorMessage", "Error," + e.getMessage());
-                request.getRequestDispatcher("/adminDashboard.jsp").forward(request, response);
+                request.getRequestDispatcher("/adminInfo.jsp").forward(request, response);
             }
+
+        }
+
     }
-
-
 
 }
 
