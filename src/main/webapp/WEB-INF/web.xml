@@ -249,16 +249,6 @@
         <url-pattern>/update-product</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>home</servlet-name>
-        <servlet-class> org.example.servlet.HomeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>home</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
-
 
     <!--    validation filter-->
     <filter>
@@ -275,6 +265,9 @@
         <url-pattern>/adminDashoard.jsp</url-pattern>
         <url-pattern>/addProduct.jsp</url-pattern>
         <url-pattern>/adminInfo.jsp</url-pattern>
+        <url-pattern>/updateProduct.jsp</url-pattern>
+        <url-pattern>/ordersDashboard.jsp</url-pattern>
+        <url-pattern>/productsDashboard.jsp</url-pattern>
     </filter-mapping>
 
     <!-- web server -->
