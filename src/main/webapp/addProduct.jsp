@@ -8,6 +8,9 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+
+<jsp:include page="notification.jsp"/>
+
 <div class="container">
     <h1>Add New Product</h1>
 

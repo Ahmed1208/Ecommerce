@@ -16,6 +16,8 @@
 
     // Get the file name from the request
     String fileName = request.getParameter("file");
+    if(fileName == null || fileName.isEmpty())
+        fileName = "default.jpeg";
 
     // Construct the new value with the current time appended to the file name
     String imagePath = "uploads\\"  + fileName;

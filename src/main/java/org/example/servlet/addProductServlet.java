@@ -43,12 +43,32 @@ public class addProductServlet extends HttpServlet {
 
         Product product = (Product) request.getAttribute("productBean");
 
-        EntityManagerFactory emf=(EntityManagerFactory) request.getServletContext().getAttribute("emf");
-        ProductService prductService=new ProductService(emf.createEntityManager());
+        String pic = product.getImage();
 
-        prductService.addNewProduct(product);
+        if(!pic.equals("uploads\\default.jpeg") )
+        {
+            // Assuming fileName has an extension like "example.txt"
+            String fileNameWithoutExt = pic.substring(0, pic.lastIndexOf('.'));
+            String fileExtension = pic.substring(pic.lastIndexOf('.'));
 
-        response.sendRedirect("/ecommerce/show-product?id="+product.getId());
+            product.setImage(fileNameWithoutExt + "_" + UploadServlet.counter + fileExtension);
+            UploadServlet.counter++;
+
+        }
+
+
+        try {
+            EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
+            ProductService prductService = new ProductService(emf.createEntityManager());
+
+            prductService.addNewProduct(product);
+            response.sendRedirect("/ecommerce/show-product?id="+product.getId());
+
+        }catch (Exception e)
+        {
+            request.setAttribute("errorMessage","Error, Product name duplicated");
+            request.getRequestDispatcher("addProduct.jsp").forward(request,response);
+        }
     }
 
 }

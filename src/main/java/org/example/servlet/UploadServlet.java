@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 public class UploadServlet extends HttpServlet {
 
     private static final String UPLOAD_DIRECTORY = "uploads";
+    public static int counter =0;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -32,7 +33,13 @@ public class UploadServlet extends HttpServlet {
         // Get file part and process it
         Part filePart = request.getPart("file");
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        File file = new File(uploadPath + File.separator + fileName);
+
+        // Assuming fileName has an extension like "example.txt"
+        String fileNameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
+        String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+
+        File file = new File(uploadPath + File.separator + fileNameWithoutExt + "_" + counter + fileExtension);
+
         filePart.write(file.getAbsolutePath());
 
         System.out.println("uploaded suceefully");
