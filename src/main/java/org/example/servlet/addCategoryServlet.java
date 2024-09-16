@@ -35,6 +35,7 @@ public class addCategoryServlet extends HttpServlet {
         CategoryService categoryService=new CategoryService(emf.createEntityManager());
 
         categoryService.addNewCategory(category);
+        response.sendRedirect("/ecommerce/admin-products");
 
     }
 

@@ -8,7 +8,7 @@
     <style>
         /* Header Styles */
         .header {
-            background-color: transparent;
+            background-color: #f4f4f9;
             color: #333;
             padding: 10px;
             text-align: center;

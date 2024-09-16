@@ -31,7 +31,7 @@
         }
 
         .content-wrapper {
-            padding-top: 50px;
+            padding-top: 80px; /* Adjusted to match header height */
             padding-left: 20px;
             padding-right: 20px;
         }
@@ -45,6 +45,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
 
         /* Filter Form */
@@ -86,24 +87,20 @@
 
         /* Responsive Form */
         @media (max-width: 768px) {
+            .header-filter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
             fieldset {
                 display: flex;
                 flex-direction: column;
-            }
-            @media (max-width: 768px) {
-                .content-wrapper {
-                    padding-top: 120px; /* Increase padding when the screen size is smaller */
-                }
             }
 
             label, input[type="number"], select {
                 width: 100%;
                 margin-right: 0;
                 margin-bottom: 10px;
-            }
-
-            input[type="number"], select {
-                margin-left: 0;
             }
 
             /* Ensure both label and input go together on second line */
@@ -116,13 +113,22 @@
             input, select {
                 width: 48%;
             }
+
+            .reset-btn {
+                padding: 8px 12px; /* Adjust padding for smaller screens */
+                font-size: 14px; /* Smaller font size */
+            }
         }
 
-        /* Table */
+        /* Table Container for Horizontal Scrolling */
+        .table-container {
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin-bottom: 20px; /* Space below the table */
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
         }
 
         table, th, td {
@@ -174,7 +180,6 @@
             color: white;
         }
     </style>
-
 </head>
 <body>
 
@@ -216,31 +221,34 @@
         </fieldset>
     </form>
 
-    <!-- Orders Table -->
-    <table>
-        <thead>
-        <tr>
-            <th>OrderId</th>
-            <th>Payment Type</th>
-            <th>Total Price</th>
-            <th>UserId</th>
-            <th>Order Date</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="order" items="${requestScope.orders}">
-            <tr onclick="window.location.href='/ecommerce/orderDetails?orderid=${order.id}'">
-                <td>${order.id}</td>
-                <td>${order.paymentType}</td>
-                <td>${order.totalPrice}</td>
-                <td>${order.user.id}</td>
-                <td>${order.orderDate}</td>
-                <td>${order.status}</td>
+    <!-- Table Container -->
+    <div class="table-container">
+        <!-- Orders Table -->
+        <table>
+            <thead>
+            <tr>
+                <th>OrderId</th>
+                <th>Payment Type</th>
+                <th>Total Price</th>
+                <th>UserId</th>
+                <th>Order Date</th>
+                <th>Status</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <c:forEach var="order" items="${requestScope.orders}">
+                <tr onclick="window.location.href='/ecommerce/orderDetails?orderid=${order.id}'">
+                    <td>${order.id}</td>
+                    <td>${order.paymentType}</td>
+                    <td>${order.totalPrice}</td>
+                    <td>${order.user.id}</td>
+                    <td>${order.orderDate}</td>
+                    <td>${order.status}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Pagination -->
     <div class="pagination">

@@ -13,6 +13,7 @@
 
         h1 {
             color: #4CAF50;
+            text-align: center;
         }
 
         /* Form Styles */
@@ -22,6 +23,10 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            max-width: 600px;
+            margin: 0 auto; /* Center the form */
+            width: 100%; /* Make the form take full width */
+            box-sizing: border-box;
         }
 
         .form-group {
@@ -56,13 +61,13 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            width: 100%;
         }
 
         button:hover {
             background-color: #45a049;
         }
 
-        /* Spinner Styles */
         /* Spinner Styles */
         .spinner {
             display: none;
@@ -106,11 +111,62 @@
             }
         }
 
-
         /* Divider */
         hr {
             border: 1px solid #ddd;
             margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                margin: 10px;
+            }
+
+            .form {
+                padding: 15px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                max-width: 100%; /* Take up full width on medium screens */
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            input[type="text"], input[type="number"], select, textarea {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                margin: 5px;
+            }
+
+            .form {
+                padding: 10px;
+                max-width: 100%; /* Take up full width on small screens */
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            input[type="text"], input[type="number"], select, textarea {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
         }
 
     </style>
@@ -168,32 +224,31 @@
         <button type="submit" class="btn">Submit</button>
     </form>
 
-
-
-
     <!-- Spinner -->
     <div id="spinner" class="spinner"></div>
 
     <!-- Message -->
     <div id="message" class="message">Uploaded!</div>
 </div>
+
 <script>
-document.getElementById('fileInput').addEventListener('change', function() {
-const spinner = document.getElementById('spinner');
-const message = document.getElementById('message');
+    document.getElementById('fileInput').addEventListener('change', function() {
+        const spinner = document.getElementById('spinner');
+        const message = document.getElementById('message');
 
-// Show the spinner
-spinner.style.display = 'inline-block';
+        // Show the spinner
+        spinner.style.display = 'inline-block';
 
-// Simulate file upload process
-setTimeout(() => {
-// Hide the spinner after uploading
-spinner.style.display = 'none';
+        // Simulate file upload process
+        setTimeout(() => {
+            // Hide the spinner after uploading
+            spinner.style.display = 'none';
 
-// Show the success message
-message.style.display = 'block';
-}, 2000); // Simulating a 2-second delay for file upload
-});
+            // Show the success message
+            message.style.display = 'block';
+        }, 2000); // Simulating a 2-second delay for file upload
+    });
 </script>
+
 </body>
 </html>
