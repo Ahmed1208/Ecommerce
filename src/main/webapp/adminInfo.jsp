@@ -11,9 +11,9 @@
             background-color: #f4f4f9;
         }
 
-        /* Add a margin-top to ensure content starts below the header */
+        /* Adjust the margin-top to accommodate the fixed header */
         .content {
-            margin-top: 30px; /* Adjust the value to match the height of your header */
+            margin-top: 80px; /* Match this value with the height of your header */
             padding: 20px;
         }
 
@@ -58,10 +58,94 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            display: block; /* Ensures submit button is centered */
+            margin-top: 10px; /* Space above the button */
         }
 
         input[type="submit"]:hover {
             background-color: #45a049;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .content {
+                padding: 15px; /* Adjust padding for medium screens */
+            }
+
+            form {
+                max-width: 100%; /* Full width on smaller screens */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="submit"] {
+                font-size: 14px; /* Slightly smaller text */
+            }
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                padding: 10px; /* Further adjust padding */
+            }
+
+            form {
+                padding: 15px; /* Adjust form padding */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                font-size: 13px; /* Smaller font size */
+            }
+
+            input[type="submit"] {
+                font-size: 14px; /* Adjust font size for the submit button */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px; /* Further adjust padding */
+            }
+
+            form {
+                padding: 10px; /* Adjust form padding */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                font-size: 12px; /* Smaller font size */
+                padding: 8px; /* Adjust input padding */
+            }
+
+            input[type="submit"] {
+                font-size: 12px; /* Adjust font size for the submit button */
+                padding: 8px 16px; /* Adjust padding */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content {
+                padding: 5px; /* Minimal padding for very small screens */
+            }
+
+            form {
+                padding: 5px; /* Minimal form padding */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                font-size: 11px; /* Smallest font size */
+                padding: 6px; /* Adjust input padding */
+            }
+
+            input[type="submit"] {
+                font-size: 11px; /* Smallest font size for the submit button */
+                padding: 6px 12px; /* Adjust padding */
+            }
         }
     </style>
 </head>
@@ -88,7 +172,6 @@
 
         <input type="submit" value="Update">
     </form>
-
 </div>
 </body>
 </html>

@@ -264,7 +264,7 @@
         <url-pattern>/admin-products</url-pattern>
         <url-pattern>/adminDashoard.jsp</url-pattern>
         <url-pattern>/addProduct.jsp</url-pattern>
-        <url-pattern>/adminInfo.jsp</url-pattern>
+<!--        <url-pattern>/adminInfo.jsp</url-pattern>-->
         <url-pattern>/updateProduct.jsp</url-pattern>
         <url-pattern>/ordersDashboard.jsp</url-pattern>
         <url-pattern>/productsDashboard.jsp</url-pattern>

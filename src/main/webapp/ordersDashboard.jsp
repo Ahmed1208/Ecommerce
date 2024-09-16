@@ -4,7 +4,9 @@
 <html>
 <head>
     <title>Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Reset Button */
         .reset-btn {
             background-color: transparent;
             color: #333;
@@ -20,6 +22,7 @@
             color: #fff;
         }
 
+        /* Main Body and Layout */
         body {
             margin: 0;
             padding: 0;
@@ -28,7 +31,7 @@
         }
 
         .content-wrapper {
-            padding-top: 50px; /* Ensure content starts below the header */
+            padding-top: 50px;
             padding-left: 20px;
             padding-right: 20px;
         }
@@ -42,7 +45,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-           /*margin-bottom: 5px;*/
         }
 
         /* Filter Form */
@@ -80,6 +82,40 @@
 
         button:hover {
             background-color: #45a049;
+        }
+
+        /* Responsive Form */
+        @media (max-width: 768px) {
+            fieldset {
+                display: flex;
+                flex-direction: column;
+            }
+            @media (max-width: 768px) {
+                .content-wrapper {
+                    padding-top: 120px; /* Increase padding when the screen size is smaller */
+                }
+            }
+
+            label, input[type="number"], select {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            input[type="number"], select {
+                margin-left: 0;
+            }
+
+            /* Ensure both label and input go together on second line */
+            label, input, select {
+                display: inline-block;
+                width: auto;
+                flex-basis: 50%;
+            }
+
+            input, select {
+                width: 48%;
+            }
         }
 
         /* Table */
@@ -138,6 +174,7 @@
             color: white;
         }
     </style>
+
 </head>
 <body>
 

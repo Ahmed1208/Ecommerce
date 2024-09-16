@@ -13,7 +13,7 @@
         }
 
         .content {
-            margin-top: 35px; /* Adjust this value to ensure content starts below the header */
+            margin-top: 80px; /* Adjust this value to match the height of the fixed header */
             padding: 20px;
         }
 
@@ -112,6 +112,87 @@
         div.pagination a:hover {
             background-color: #45a049;
             color: white;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .content {
+                padding: 15px; /* Adjust padding for medium screens */
+            }
+
+            input[type="number"], select {
+                font-size: 14px; /* Slightly smaller font size */
+                padding: 6px; /* Adjust padding */
+            }
+
+            button {
+                font-size: 14px; /* Slightly smaller button font size */
+                padding: 8px 16px; /* Adjust padding */
+            }
+
+            table, th, td {
+                font-size: 14px; /* Slightly smaller font size for table */
+            }
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                padding: 10px; /* Further adjust padding */
+            }
+
+            input[type="number"], select {
+                font-size: 13px; /* Smaller font size */
+                padding: 5px; /* Adjust padding */
+            }
+
+            button {
+                font-size: 13px; /* Smaller button font size */
+                padding: 6px 12px; /* Adjust padding */
+            }
+
+            table, th, td {
+                font-size: 13px; /* Smaller font size for table */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px; /* Further adjust padding */
+            }
+
+            input[type="number"], select {
+                font-size: 12px; /* Smaller font size */
+                padding: 4px; /* Adjust padding */
+            }
+
+            button {
+                font-size: 12px; /* Smaller button font size */
+                padding: 4px 10px; /* Adjust padding */
+            }
+
+            table, th, td {
+                font-size: 12px; /* Smaller font size for table */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content {
+                padding: 5px; /* Minimal padding for very small screens */
+            }
+
+            input[type="number"], select {
+                font-size: 11px; /* Smallest font size */
+                padding: 3px; /* Adjust padding */
+            }
+
+            button {
+                font-size: 11px; /* Smallest button font size */
+                padding: 3px 8px; /* Adjust padding */
+            }
+
+            table, th, td {
+                font-size: 11px; /* Smallest font size for table */
+            }
         }
     </style>
 </head>
