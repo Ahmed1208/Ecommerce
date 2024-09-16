@@ -1,9 +1,12 @@
 package org.example.servlet;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
+import org.example.bean.CartItemBean;
 import org.example.entity.Admin;
 import org.example.entity.GENDER;
 import org.example.entity.User;
@@ -14,6 +17,7 @@ import org.example.service.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 
 public class loginServlet extends HttpServlet {
 
@@ -29,6 +33,9 @@ public class loginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+
+
+
         EntityManagerFactory emf = (EntityManagerFactory) request.getServletContext().getAttribute("emf");
 
             EntityManager entityManager = emf.createEntityManager();
@@ -43,11 +50,35 @@ public class loginServlet extends HttpServlet {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("user", user);
                     session.setAttribute("role", "User");
-                    int cartSize = new CartService(entityManager).cartProductsCount(user.getId());
-                    session.setAttribute("cartSize",cartSize);
 
-                    System.out.println("User added to session: " + session.getAttribute("user"));
-                    response.sendRedirect("/ecommerce");
+                //////////////////////////// cart from local storage ///////////////
+                System.out.println(request.getParameter("cartSize"));
+                String objectDataJson = request.getParameter("cart");
+                // Remove surrounding quotes and unescape if necessary
+                if (objectDataJson != null && objectDataJson.startsWith("\"") && objectDataJson.endsWith("\"")) {
+                    objectDataJson = objectDataJson.substring(1, objectDataJson.length() - 1);
+                    objectDataJson = objectDataJson.replace("\\\"", "\"");
+                }
+                System.out.println(objectDataJson);
+                // Create ObjectMapper instance
+                ObjectMapper objectMapper = new ObjectMapper();
+                // Deserialize JSON array into List<CartItemBean>
+                List<CartItemBean> cartItems = objectMapper.readValue(objectDataJson, new TypeReference<List<CartItemBean>>(){});
+                for(CartItemBean c : cartItems)
+                {
+                    System.out.println("productId : " + c.getProductId() + " quantity : " + c.getQuantity());
+
+                    //add items to user cart
+                    CartService cartService = new CartService(entityManager);
+                    cartService.addProductToCart(user.getId(),c.getProductId());
+                }
+
+                ///////////////////////////////////////////////////////
+                int cartSize = new CartService(entityManager).cartProductsCount(user.getId());
+                session.setAttribute("cartSize",cartSize);
+
+                System.out.println("User added to session: " + session.getAttribute("user"));
+                response.sendRedirect("/ecommerce");
 
             }else if (admin!=null) {
                 HttpSession session = request.getSession(true);

@@ -1,7 +1,8 @@
 function addToCart(productId, userId) {
     // Debugging: Check if productId and userId are valid
     if (!productId || !userId) {
-        showNotification("Invalid productId or userId", "error");
+        // showNotification("Invalid productId or userId", "error");
+        addToLocalStorage(productId);
         return;
     }
 
@@ -65,4 +66,33 @@ function toggleSubcategories(event, categoryId) {
     } else {
         container.style.display = "none";
     }
+}
+
+
+function addToLocalStorage(productId)
+{
+    // Retrieve the cart from local storage or create an empty array if it doesn't exist
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Check if the product is already in the cart
+    let product = cart.find(item => item.id === productId);
+
+    if (product) {
+    // If product exists, increase its quantity
+        product.quantity += 1;
+    } else {
+    // If product doesn't exist, add it with quantity 1
+        cart.push({ productId: parseInt(productId, 10), quantity: 1 });
+    }
+
+    // Save the updated cart back to local storage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Update and store the cart size in local storage
+    let cartSize = cart.reduce((total, item) => total + item.quantity, 0);
+    localStorage.setItem('cartSize', cartSize);
+
+    // Update the cart size display in the UI
+    document.getElementById('cart-size').innerText = cartSize;
+
 }

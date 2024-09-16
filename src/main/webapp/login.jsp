@@ -178,6 +178,12 @@
 <%--            </select>--%>
 <%--        </div>--%>
 
+
+<%--    put the data from the local storage to the servelt by using the form    --%>
+        <input type="hidden" id="cartSize" name="cartSize" value="">
+        <input type="hidden" id="cart" name="cart" value="">
+<%-- ///////////////////////////////////////////////////////////////////////////--%>
+
         <div class="form-group">
             <button type="submit" class="btn">Login</button>
         </div>
@@ -196,6 +202,29 @@
             }, 5000);
         }
     };
+
+
+    ///////////////// event listener to append data inside local storage ///////////
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+
+        let cartSize = localStorage.getItem('cartSize');
+
+        // Set cartSize value before sending the form
+        document.getElementById('cartSize').value = cartSize;
+
+        let cart = localStorage.getItem('cart');
+
+        // Serialize the object to JSON
+        const objectData = JSON.stringify(cart);
+
+        // Set the hidden input field with the serialized object
+        document.getElementById('cart').value = objectData;
+
+        localStorage.clear();
+    });
+    /////////////////////////////////////////////////////////////////////
+
+
 </script>
 </body>
 </html>
