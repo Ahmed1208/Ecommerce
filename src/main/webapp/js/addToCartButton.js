@@ -1,8 +1,9 @@
 function addToCart(productId, userId) {
     // Debugging: Check if productId and userId are valid
     if (!productId || !userId) {
-        // showNotification("Invalid productId or userId", "error");
+        //showNotification("Invalid productId or userId", "error");
         addToLocalStorage(productId);
+        showNotification("Product added correctly", "success");
         return;
     }
 

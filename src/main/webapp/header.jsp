@@ -57,10 +57,24 @@
                     <!-- Cart Icon with Badge -->
                     <a href="/ecommerce/getCart" class="position-relative me-4 my-auto" style="position: relative;">
                         <i class="fa fa-shopping-bag fa-2x text-dark"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white" style="top: -5px; left: 15px; height: 20px; min-width: 20px; font-size: 12px;">
-                           <c:if test="${not empty sessionScope.cartSize }">${sessionScope.cartSize}</c:if>
-                           <c:if test="${ empty sessionScope.cartSize }">0</c:if>
-                        </span>
+<%--                                assign the value from the local storage                    --%>
+                        <c:if test="${empty sessionScope.cartSize}">
+                            <span id="cart-size" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
+
+                            <script>
+                                // On page load, check if cartSize exists in localStorage
+                                window.onload = function() {
+                                    let cartSize = localStorage.getItem('cartSize') || 0;
+                                    document.getElementById('cart-size').innerText = cartSize;
+                                };
+                            </script>
+                        </c:if>
+<%--    /////////////////////////////////////////////////////////////////////////////////--%>
+
+                        <c:if test="${!empty sessionScope.cartSize}">
+                            <span id="cart-size" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.cartSize}</span>
+                        </c:if>
+
                         <span class="tooltip-text">Cart</span>
                     </a>
 
