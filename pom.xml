@@ -108,7 +108,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jackson Databind -->
+        <!-- Jackson Databind mapper -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -118,13 +118,21 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.15.3</version> <!-- Use the latest version -->
+            <version>2.15.3</version>
         </dependency>
         <!-- Jackson Annotations -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.15.3</version> <!-- Use the latest version -->
+            <version>2.15.3</version>
+        </dependency>
+
+
+<!--        HikariCP connection pool-->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
         </dependency>
 
 
