@@ -54,25 +54,27 @@ public class loginServlet extends HttpServlet {
                 //////////////////////////// cart from local storage ///////////////
                 System.out.println(request.getParameter("cartSize"));
                 String objectDataJson = request.getParameter("cart");
-                // Remove surrounding quotes and unescape if necessary
-                if (objectDataJson != null && objectDataJson.startsWith("\"") && objectDataJson.endsWith("\"")) {
-                    objectDataJson = objectDataJson.substring(1, objectDataJson.length() - 1);
-                    objectDataJson = objectDataJson.replace("\\\"", "\"");
-                }
-                System.out.println(objectDataJson);
-                // Create ObjectMapper instance
-                ObjectMapper objectMapper = new ObjectMapper();
-                // Deserialize JSON array into List<CartItemBean>
-                List<CartItemBean> cartItems = objectMapper.readValue(objectDataJson, new TypeReference<List<CartItemBean>>(){});
-                for(CartItemBean c : cartItems)
-                {
-                    System.out.println("productId : " + c.getProductId() + " quantity : " + c.getQuantity());
+                if(objectDataJson!=null && !objectDataJson.isEmpty()&&!objectDataJson.equals("null")) {
+                    // Remove surrounding quotes and unescape if necessary
+                    if (objectDataJson != null && objectDataJson.startsWith("\"") && objectDataJson.endsWith("\"")) {
+                        objectDataJson = objectDataJson.substring(1, objectDataJson.length() - 1);
+                        objectDataJson = objectDataJson.replace("\\\"", "\"");
+                    }
+                    System.out.println(objectDataJson);
+                    // Create ObjectMapper instance
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    // Deserialize JSON array into List<CartItemBean>
+                    List<CartItemBean> cartItems = objectMapper.readValue(objectDataJson, new TypeReference<List<CartItemBean>>() {
+                    });
+                    for (CartItemBean c : cartItems) {
+                        System.out.println("productId : " + c.getProductId() + " quantity : " + c.getQuantity());
 
-                    //add items to user cart
-                    CartService cartService = new CartService(entityManager);
-                    cartService.addProductToCart(user.getId(),c.getProductId());
-                }
+                        //add items to user cart
+                        CartService cartService = new CartService(entityManager);
+                        cartService.addProductToCart(user.getId(), c.getProductId());
+                    }
 
+                }
                 ///////////////////////////////////////////////////////
                 int cartSize = new CartService(entityManager).cartProductsCount(user.getId());
                 session.setAttribute("cartSize",cartSize);

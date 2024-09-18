@@ -32,8 +32,8 @@ public class CartService {
 
         if(user.isPresent() && product.isPresent())
         {
-            if(product.get().getQuantity() < 1)
-                throw new RuntimeException("No Enough quantity for the product");
+//            if(product.get().getQuantity() < 1)
+//                throw new RuntimeException("No Enough quantity for the product");
 
             //no need to decrease product qunatity here, beacuse no action taken to make an order yet
 

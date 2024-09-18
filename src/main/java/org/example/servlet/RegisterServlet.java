@@ -1,5 +1,7 @@
 package org.example.servlet;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletException;
@@ -8,11 +10,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.bean.CartItemBean;
 import org.example.entity.User;
+import org.example.service.CartService;
 import org.example.service.UserService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class RegisterServlet extends HttpServlet {
 
@@ -34,6 +39,31 @@ public class RegisterServlet extends HttpServlet {
             if (u != null) {
                 HttpSession session = req.getSession(true);
                 session.setAttribute("user", u);
+                //////////////////////////// cart from local storage ///////////////
+                System.out.println(req.getParameter("cartSize"));
+                String objectDataJson = req.getParameter("cart");
+                if(objectDataJson!=null && !objectDataJson.isEmpty()&&!objectDataJson.equals("null")) {
+                    // Remove surrounding quotes and unescape if necessary
+                    if (objectDataJson != null && objectDataJson.startsWith("\"") && objectDataJson.endsWith("\"")) {
+                        objectDataJson = objectDataJson.substring(1, objectDataJson.length() - 1);
+                        objectDataJson = objectDataJson.replace("\\\"", "\"");
+                    }
+                    System.out.println(objectDataJson);
+                    // Create ObjectMapper instance
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    // Deserialize JSON array into List<CartItemBean>
+                    List<CartItemBean> cartItems = objectMapper.readValue(objectDataJson, new TypeReference<List<CartItemBean>>() {
+                    });
+                    for (CartItemBean c : cartItems) {
+                        System.out.println("productId : " + c.getProductId() + " quantity : " + c.getQuantity());
+
+                        //add items to user cart
+                        CartService cartService = new CartService(emf.createEntityManager());
+                        cartService.addProductToCart(u.getId(), c.getProductId());
+                    }
+
+                }
+                ///////////////////////////////////////////////////////
                 resp.sendRedirect("/ecommerce");
             }
 
