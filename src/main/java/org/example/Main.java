@@ -342,9 +342,9 @@ public class Main {
 //        userDao.create(user1);
        // User user1 = new User("ahmed","ahmedali@yahoo.com", "123456",GENDER.MALE, 0.0, LocalDate.parse("2023-09-05"), "012345");
 
-        UserDao userDao = new UserDao(entityManager);
-        Optional<User> u=userDao.findById(1);
-        System.out.println("orders for user 1 size : " + u.get().getOrders().size());
+//        UserDao userDao = new UserDao(entityManager);
+//        Optional<User> u=userDao.findById(1);
+//        System.out.println("orders for user 1 size : " + u.get().getOrders().size());
 //        CategoryDao categoryDao = new CategoryDao(entityManager);
 //        Category category = categoryDao.findById(3).get();
 //        Set<Product> products=category.getProducts();
@@ -432,6 +432,20 @@ public class Main {
 //        Integer x = userProductCartDao.countProductsByUser(1);
 //
 //        System.out.println(x);
+
+
+
+        User user1 = entityManager.find(User.class,1);
+        User user2 = entityManager.find(User.class,2);
+
+        // this is the way to insert data inside many to many
+        user2.setInterests(new HashSet<>( user1.getInterests() ) );
+
+
+        entityManager.getTransaction().begin();
+        entityManager.getTransaction().commit();
+
+
     }
 
 }

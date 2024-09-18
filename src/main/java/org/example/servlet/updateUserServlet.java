@@ -10,6 +10,7 @@ import org.example.entity.User;
 import org.example.service.UserService;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 
 public class updateUserServlet extends HttpServlet {
@@ -28,6 +29,11 @@ public class updateUserServlet extends HttpServlet {
         System.out.println("entity manager created");
 
         try {
+            //  This line because the reciceved user already don't contain the data from database
+            //  just from the session and you can't depend on the session to retrive your data
+            user.setInterests(new HashSet<>(userService.findUserById(user.getId()).getInterests()));
+            ///////////////////////////////////////////////////////////////////////////////////////
+
             userService.updateUser(user);
             request.getSession(false).setAttribute("user", user);
             response.sendRedirect("/ecommerce/profile");
