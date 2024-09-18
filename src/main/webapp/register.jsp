@@ -82,7 +82,7 @@
         </script>
     </c:if>
     <h2>Registration Form</h2>
-    <form action="register" method="post" onsubmit="return validateForm()">
+    <form id="registerform" action="register" method="post" onsubmit="return validateForm()">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 
@@ -118,6 +118,8 @@
         <label for="phone">Phone Number:</label>
         <input type="tel" id="phone" name="phone" required pattern="01[0-9]{9}" title="Phone number must start with 01 and be 11 digits long">
 
+        <input type="hidden" id="cartSize" name="cartSize" value="">
+        <input type="hidden" id="cart" name="cart" value="">
         <input type="submit" value="Register" id="subBTN">
     </form>
 
@@ -223,6 +225,28 @@
         var hasNumber = /[0-9]/.test(password);
         return password.length >= minLength && hasLetter && hasNumber;
     }
+
+
+    ///////////////// event listener to append data inside local storage ///////////
+    document.getElementById('registerform').addEventListener('submit', function(e) {
+
+        let cartSize = localStorage.getItem('cartSize');
+
+        // Set cartSize value before sending the form
+        document.getElementById('cartSize').value = cartSize;
+
+        let cart = localStorage.getItem('cart');
+
+        // Serialize the object to JSON
+        const objectData = JSON.stringify(cart);
+
+        // Set the hidden input field with the serialized object
+        document.getElementById('cart').value = objectData;
+
+        localStorage.clear();
+    });
+    /////////////////////////////////////////////////////////////////////
+
 </script>
 </body>
 </html>
