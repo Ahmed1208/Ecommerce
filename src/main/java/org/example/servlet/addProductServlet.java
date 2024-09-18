@@ -62,7 +62,7 @@ public class addProductServlet extends HttpServlet {
             ProductService prductService = new ProductService(emf.createEntityManager());
 
             prductService.addNewProduct(product);
-            response.sendRedirect("/ecommerce/show-product?id="+product.getId());
+            response.sendRedirect("/ecommerce/admin-products");
 
         }catch (Exception e)
         {
