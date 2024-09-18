@@ -1,65 +1,41 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
+@Table(name = "category")
+@Setter
+@Getter
+@NoArgsConstructor
 public class Category implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id",unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
-    @Column(name = "category_name", nullable = false)
+    @Column(nullable=false)
     private String name;
 
+    @Column(nullable=false)
     private String description;
 
-    @Column(name = "main_category_id")
-    private String mainCategoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="parent_category")
+    private Category parentCategory;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="category")
-    private Set<Product> products=new HashSet<Product>();
+    @OneToMany(mappedBy = "parentCategory",fetch = FetchType.LAZY)
+    private Set<Category> childCategories ;
 
-    public Category() {}
-    public Category(String name, String description, String mainCategoryId) {
-        this.name = name;
-        this.description = description;
-        this.mainCategoryId = mainCategoryId;
-    }
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+    private Set<Product> products;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getMainCategoryId() {
-        return mainCategoryId;
-    }
-
-    public void setMainCategoryId(String mainCategoryId) {
-        this.mainCategoryId = mainCategoryId;
-    }
 }

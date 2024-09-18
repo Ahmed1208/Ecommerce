@@ -8,18 +8,26 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce"/>
-            <property name="jakarta.persistence.jdbc.user" value="hossam"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://156.204.38.117:3306/ecommerce"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.password" value="hossam"/>
+            <property name="jakarta.persistence.jdbc.password" value="root"/>
             <property name="hibernate.show_sql" value="true"/>
 
-<!--            <property name="hibernate.format_sql" value="true"/>-->
-<!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
-<!--            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>-->
+            <!-- HikariCP specific settings -->
+            <property name="hibernate.hikari.minimumIdle" value="5"/>
+            <property name="hibernate.hikari.maximumPoolSize" value="20"/>
+            <property name="hibernate.hikari.idleTimeout" value="30000"/>
+            <property name="hibernate.hikari.connectionTimeout" value="20000"/>
+            <property name="hibernate.hikari.maxLifetime" value="1800000"/>
+
+            <!--            <property name="hibernate.format_sql" value="true"/>-->
+            <!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+<!--               <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>-->
 
         </properties>
+
+        <!--        <mapping class="org.example.entity.Category"/>-->
+
     </persistence-unit>
 </persistence>
-
-

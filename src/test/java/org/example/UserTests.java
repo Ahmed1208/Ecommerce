@@ -17,8 +17,6 @@ public class UserTests {
 //    @Test
 //    void testCalc2Function()
 //    {
-//
-//
 //        User user = new User();
 //        assertEquals(15,user.calc(5));
 //        assertEquals(1,user.calc(0));
