@@ -41,13 +41,15 @@ public class ProductService {
     }
     public Product addNewProduct(Product product) throws RuntimeException
     {
+        if (product.getQuantity()<1|| product.getPrice() <1)
+            throw new RuntimeException("Error, please enter valid Price or quantity");
         try {
             em.getTransaction().begin();
             productDao.create(product);
             em.getTransaction().commit();
         }catch (Exception e) {
             em.getTransaction().rollback();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error, Product name duplicated");
         }
         return product;
     }
