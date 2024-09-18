@@ -248,6 +248,20 @@
             message.style.display = 'block';
         }, 2000); // Simulating a 2-second delay for file upload
     });
+    document.getElementById('firstForm').addEventListener('submit', function(event) {
+        // Get the values from the inputs
+        var quantity = document.getElementById('quantity').value;
+        var price = document.getElementById('price').value;
+
+        // Check if either value is negative
+        if (quantity < 0 || price < 0) {
+            // Prevent form submission
+            event.preventDefault();
+            // Display alert
+            alert('Quantity and Price must be non-negative numbers.');
+
+        }
+    });
 </script>
 
 </body>

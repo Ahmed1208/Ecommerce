@@ -66,7 +66,7 @@ public class addProductServlet extends HttpServlet {
 
         }catch (Exception e)
         {
-            request.setAttribute("errorMessage","Error, Product name duplicated");
+            request.setAttribute("errorMessage",e.getMessage());
 //            request.getRequestDispatcher("addProduct.jsp").forward(request,response);
              doGet(request, response);
         }

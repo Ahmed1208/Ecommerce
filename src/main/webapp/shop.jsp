@@ -225,7 +225,7 @@
                                                     <i class="fa fa-star"></i>
                                                 </div>
                                                 <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">${product.price} $</h5>
+                                                    <h5 class="fw-bold me-2"> $ ${product.price} / kg</h5>
                                                     <h5 class="text-danger text-decoration-line-through">${product.price *1.25} $</h5>
                                                 </div>
                                             </div>
@@ -266,7 +266,7 @@
                                                                 ${product.description}
                                                         </p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
-                                                            <p class="text-dark fs-5 fw-bold mb-0">${product.price}</p>
+                                                            <p class="text-dark fs-5 fw-bold mb-0">$ ${product.price} / kg</p>
                                                             <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"
                                                                onclick="event.preventDefault(); addToCart('${product.id}', '${sessionScope.user.id}')">
                                                                 <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart

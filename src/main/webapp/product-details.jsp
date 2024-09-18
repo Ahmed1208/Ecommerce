@@ -194,7 +194,7 @@
                             <div class="col-lg-6">
                                 <h4 class="fw-bold mb-3">${product.productName}</h4>
                                 <p class="mb-3">Category: ${product.category.name}</p>
-                                <h5 class="fw-bold mb-3">Price: ${product.price}</h5>
+                                <h5 class="fw-bold mb-3">Price: $${product.price} / kg</h5>
                                 <div class="d-flex mb-4">
                                     <c:if test="${product.quantity == 0}">
                                         <div style="color: red;">Not available</div>
@@ -288,7 +288,7 @@
                                     <img src="${p.image}" class="img-fluid w-100 rounded-top" alt="" style="object-fit: cover; height: 100%; width: 100%;">
                                 </div>
                                 <!-- Category Badge -->
-                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
+                                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${p.category.name}</div>
                                 <!-- Product Details -->
                                 <div class="p-4 pb-0 rounded-bottom">
                                     <h4>${p.productName}</h4>
