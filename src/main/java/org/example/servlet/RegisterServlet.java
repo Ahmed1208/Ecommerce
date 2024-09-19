@@ -64,6 +64,9 @@ public class RegisterServlet extends HttpServlet {
 
                 }
                 ///////////////////////////////////////////////////////
+                int cartSize = new CartService(emf.createEntityManager()).cartProductsCount(u.getId());
+                session.setAttribute("cartSize",cartSize);
+
                 resp.sendRedirect("/ecommerce");
             }
 
