@@ -51,6 +51,7 @@ public class AddToCartServlet extends HttpServlet {
                 session.setAttribute("cartSize",cartSize);
             }
 
+            entityManager.close();
             // Send the message as plain text
             response.getWriter().write("Product added successfully");
         }
